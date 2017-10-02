@@ -13,7 +13,7 @@
 
         <!-- This can of course also be a regular indeterminate ProgressBar, but then it won't be styled -->
 
-        <kr.co.touchdown.common.ProgressWheel
+        <shop.plea.and.common.view.ProgressWheel
             android:id="@+id/progress_wheel"
             android:layout_width="80dp"
             android:layout_height="80dp"

@@ -10,6 +10,11 @@ public class Constants {
     public static final String REAL_DOMAIN = "was.touch-down.co.kr";
     public static final String TEST_DOMAIN = "test.touch-down.co.kr";
 
+    public static final String DOING_DOMAIN = IS_DEV ? TEST_DOMAIN : REAL_DOMAIN;
+    public static final String BASE_URL = "http://" + Constants.DOING_DOMAIN;
+
+    public static final String LOG_TAG = "PLEA";
+
     public static final String INTENT_DATA_KEY = "INTENT_DATA_KEY";
 
     public final class VIEW_ANIMATION {
