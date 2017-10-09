@@ -145,10 +145,11 @@ public class TransFormerActivity extends PleaActivity implements ActionBar.OnNav
 
             final int position = getArguments().getInt(EXTRA_POSITION);
             final ScrollView scroll = (ScrollView) inflater.inflate(R.layout.item_transformer, container, false);
+
             final ImageView image = (ImageView) scroll.findViewById(R.id.image);
             image.setImageResource(IMGS[position-1]);
 
-            return image;
+            return scroll;
         }
     }
 
