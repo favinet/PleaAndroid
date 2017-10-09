@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="shop.plea.and.ui.activity.TransFormerActivity"
+            android:theme="@style/AppThemeSub"></activity>
     </application>
 
 </manifest>
