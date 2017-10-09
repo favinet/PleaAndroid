@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
+
 import shop.plea.and.R;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
@@ -34,6 +37,7 @@ public class IntroActivity extends PleaActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_intro);
     }
 

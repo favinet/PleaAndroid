@@ -2,6 +2,7 @@ package shop.plea.and.ui.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,8 @@ public class CartActivity extends PleaActivity {
                 {
                     textView1.setText("서버에러발생");
                 }
+
+                forceCrash(textView1);
             }
 
             @Override
@@ -55,4 +58,9 @@ public class CartActivity extends PleaActivity {
         });
 
     }
+
+    public void forceCrash(View view) {
+        //throw new RuntimeException("This is a crash");
+    }
+
 }
