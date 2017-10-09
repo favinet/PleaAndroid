@@ -5,4 +5,5 @@ package shop.plea.and.data.tool;
  */
 
 public class DataManager {
+    //ResponseCallback 형태로 구현되어야 한다. api, sql, pref
 }

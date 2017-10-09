@@ -53,15 +53,15 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error getRealtimeArrivalList = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.E, "error callCartView = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
 
                 @Override
                 public void onFinalFailure(Call<CartViewResponse> call, Throwable t) {
-                    if (callback == null) return;
-
+                    if (callback == null)
+                        return;
                     t.printStackTrace();
                     callback.onError();
                 }

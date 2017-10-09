@@ -14,6 +14,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 import shop.plea.and.R;
+import shop.plea.and.common.dialog.ProgressDialog;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.view.ProgressWheel;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
@@ -24,8 +26,9 @@ import shop.plea.and.data.parcel.IntentData;
 
 public class BaseActivity extends Activity {
 
-    private Dialog materialDg;
-    private ProgressWheel progressWheel;
+    //private Dialog materialDg;
+    //private ProgressWheel progressWheel;
+    private ProgressDialog progressDlg;
     private long backKeyPressedTime;
 
     protected Activity context;
@@ -45,9 +48,8 @@ public class BaseActivity extends Activity {
             //Logger.log(Logger.LogState.D, intent.getParcelableExtra(Constants.intentTitle).toString());
         }
 
-        materialDg = new Dialog(this, R.style.Theme_CustomProgressDialog);
-        materialDg.setContentView(R.layout.progress_dialog_material);
-        progressWheel = (ProgressWheel) materialDg.findViewById(R.id.progress_wheel);
+        progressDlg = new ProgressDialog(this, R.style.Theme_CustomProgressDialog);
+        progressDlg.setContentView(R.layout.progress_dialog_material);
 
         startTransition();
     }
@@ -73,27 +75,26 @@ public class BaseActivity extends Activity {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(!materialDg.isShowing() && !isFinishing())
+
+            if(!progressDlg.isShowing() && !isFinishing())
                 {
                     if (msg.length() > 0) {
 //						message.setText(msg);
-                        materialDg.setCancelable(false);
+                        progressDlg.setCancelable(false);
                     } else {
 //						message.setText("");
-                        materialDg.setCancelable(true);
+                        progressDlg.setCancelable(true);
                     }
-                    progressWheel.spin();
-                    materialDg.show();
+                    progressDlg.show();
                 }
             }
         });
     }
 
     public void stopIndicator() {
-        if(!isFinishing() && materialDg != null && materialDg.isShowing())
+        if(!isFinishing() && progressDlg != null && progressDlg.isShowing())
         {
-            progressWheel.stopSpinning();
-            materialDg.dismiss();
+            progressDlg.dismiss();
         }
     }
 

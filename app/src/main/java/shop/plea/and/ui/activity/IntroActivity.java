@@ -28,4 +28,15 @@ public class IntroActivity extends PleaActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onPause() {
+        stopIndicator();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        startIndicator("");
+        super.onResume();
+    }
 }
