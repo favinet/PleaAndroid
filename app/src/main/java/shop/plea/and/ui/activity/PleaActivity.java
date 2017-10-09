@@ -1,5 +1,6 @@
 package shop.plea.and.ui.activity;
 
+import butterknife.ButterKnife;
 import shop.plea.and.common.activity.BaseActivity;
 
 /**
@@ -7,4 +8,11 @@ import shop.plea.and.common.activity.BaseActivity;
  */
 
 public class PleaActivity extends BaseActivity {
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
+    }
+
 }

@@ -25,7 +25,7 @@ import shop.plea.and.data.model.CartViewResponse;
 
 public interface HttpService {
 
-    @GET("/cart/api/cartView/{_id}?dev=1")
-    Call<CartViewResponse> callCartView(@Path("_id") String cartid);
+    @GET("/cart/api/cartView/{id}?dev=1")
+    Call<CartViewResponse> callCartView(@Path("id") String cartid);
 
 }
