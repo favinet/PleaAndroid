@@ -148,7 +148,7 @@ public class TransFormerActivity extends PleaActivity implements ActionBar.OnNav
 
             final ImageView image = (ImageView) scroll.findViewById(R.id.image);
             image.setImageResource(IMGS[position-1]);
-
+            //테스트 master
             return scroll;
         }
     }
