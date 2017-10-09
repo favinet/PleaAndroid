@@ -16,6 +16,8 @@ public class IntroActivity extends PleaActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        //iss002 check
     }
 
     @Override
