@@ -26,7 +26,7 @@ public class IntroActivity extends PleaActivity {
             stopIndicator();
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-            Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TransFormerActivity.class);
             intent.putExtra(Constants.INTENT_DATA_KEY, indata);
             startActivity(intent);
             finish();
