@@ -2,11 +2,11 @@ package shop.plea.and.common.activity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -15,8 +15,6 @@ import java.util.List;
 
 import shop.plea.and.R;
 import shop.plea.and.common.dialog.ProgressDialog;
-import shop.plea.and.common.tool.Logger;
-import shop.plea.and.common.view.ProgressWheel;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
 
@@ -24,7 +22,7 @@ import shop.plea.and.data.parcel.IntentData;
  * Created by shimtaewoo on 2017-10-02.
  */
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     //private Dialog materialDg;
     //private ProgressWheel progressWheel;
