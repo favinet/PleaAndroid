@@ -1,6 +1,5 @@
 package shop.plea.and.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +25,7 @@ public class IntroActivity extends PleaActivity {
             stopIndicator();
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-            Intent intent = new Intent(getApplicationContext(), TransFormerActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ListSampleActivity.class);
             intent.putExtra(Constants.INTENT_DATA_KEY, indata);
             startActivity(intent);
             finish();

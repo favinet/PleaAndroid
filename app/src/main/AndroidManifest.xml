@@ -22,12 +22,17 @@
             android:theme="@style/AppThemeSub">
         </activity>
 
+        <activity android:name="shop.plea.and.ui.activity.TransFormerActivity"
+            android:theme="@style/AppThemeSub"></activity>
+
+        <activity android:name="shop.plea.and.ui.activity.ListSampleActivity"
+            android:theme="@style/LoadingTheme"></activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="787993b5b56c8505371654f27ef8ae7fae0a8639" />
 
-        <activity android:name="shop.plea.and.ui.activity.TransFormerActivity"
-            android:theme="@style/AppThemeSub"></activity>
+
     </application>
 
 </manifest>
