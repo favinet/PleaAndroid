@@ -1,5 +1,6 @@
 package shop.plea.and.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -7,10 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mightyfrog.widget.CenteringRecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import shop.plea.and.R;
+import shop.plea.and.ui.adapter.SimpleItemAdapter;
+import shop.plea.and.ui.adapter.multiAdapter.MultiItemAdapter;
 
 /**
  * Created by kwon7575 on 2017-10-12.
@@ -18,80 +26,46 @@ import shop.plea.and.R;
 
 public class ListSampleActivity extends PleaActivity{
 
-    private CenteringRecyclerView mCenteringRecyclerView;
-    public String[] mTagList = new String[] {"#test","#testtest", "#test000999", "#test2222", "#test2ddd", "#testsfwaerr2", "#test234szz", "#test2djfjhsl",
-            "#testsafkjrar", "#test3aw2", "#test2zsdfhh2", "#testzfdzghgy", "#testcftguvd", "#test234yxdzr", "#test2cvhkok", "#testxcvtyc", "#testxrdct"};
+    @BindView(R.id.recycler_view) CenteringRecyclerView mCenteringRecyclerView;
+    private SimpleItemAdapter mTagListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_sample);
 
-        mCenteringRecyclerView = (CenteringRecyclerView) findViewById(R.id.recycler_view);
-        mCenteringRecyclerView.setAdapter(new StaggeredDemoAdapter(R.layout.item_staggered_horizontal));
+
+        String[] TAGLIST= new String[] {"ALL 99","#ASOS 92", "#wish 9", "#Ruffle 32", "#DRESSES 30", "#summer 27", "#Ivory 21", "#like 12",
+                "#Ruffle 32", "#red 3", "#summer 20", "#ASOS 91"};
+
+        List<MultiItemAdapter.Row<?>> tagRows = new ArrayList<>();
+
+        for(String tag : TAGLIST)
+        {
+            tagRows.add(MultiItemAdapter.Row.create(tag, SimpleItemAdapter.VIEW_TYPE_LIST));
+        }
+
+        mTagListAdapter = new SimpleItemAdapter();
+        mTagListAdapter.setClickCallback(new SimpleItemAdapter.onClickCallback(){
+
+            @Override
+            public void onClick(View view) {
+                int postion = mCenteringRecyclerView.getChildLayoutPosition(view);
+                TextView textView = (TextView) view;
+                textView.setBackgroundResource(R.drawable.tag_round_on_txt);
+                textView.setTextColor(Color.parseColor("#FFFFFF"));
+                String tag = mTagListAdapter.getItem(postion);
+                Toast.makeText(ListSampleActivity.this, tag, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mTagListAdapter.clear();
+        mTagListAdapter.setRows(tagRows);
+        mCenteringRecyclerView.setAdapter(mTagListAdapter);
         mCenteringRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+
+
     }
 
-    private class DemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
 
-        public final int ITEM_COUNT = mTagList.length;
-
-        protected  final int mLayout;
-
-        public DemoAdapter(int layout)
-        {
-            mLayout = layout;
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-            final View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
-            return new DemoViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-            DemoViewHolder demoViewHolder = (DemoViewHolder) holder;
-            demoViewHolder.mTextView.setText(String.valueOf(position));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return ITEM_COUNT;
-        }
-
-        protected class DemoViewHolder extends RecyclerView.ViewHolder
-        {
-            private TextView mTextView;
-
-            public DemoViewHolder(View itemView)
-            {
-                super(itemView);
-                mTextView = (TextView) itemView.findViewById(R.id.text);
-            }
-        }
-    }
-
-    private class StaggeredDemoAdapter extends DemoAdapter
-    {
-
-        public StaggeredDemoAdapter(int layout) {
-            super(layout);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            DemoViewHolder demoViewHolder = (DemoViewHolder) holder;
-
-            if(demoViewHolder.mTextView != null)
-            {
-                demoViewHolder.mTextView.setText(String.valueOf(mTagList[position]));
-            }
-
-        }
-    }
 }
