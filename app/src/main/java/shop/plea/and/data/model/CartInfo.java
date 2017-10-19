@@ -30,7 +30,7 @@ public class CartInfo {
     private String shopUrl;
     @SerializedName("userId")
     @Expose
-    private UserInfo userId;
+    private UserInfoData userId;
     @SerializedName("__v")
     @Expose
     private Integer v;
@@ -101,11 +101,11 @@ public class CartInfo {
         this.shopUrl = shopUrl;
     }
 
-    public UserInfo getUserId() {
+    public UserInfoData getUserId() {
         return userId;
     }
 
-    public void setUserId(UserInfo userId) {
+    public void setUserId(UserInfoData userId) {
         this.userId = userId;
     }
 

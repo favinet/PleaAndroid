@@ -20,7 +20,7 @@ public class CartViewResponse {
     private List<Comment> commentList = null;
     @SerializedName("commentUserList")
     @Expose
-    private List<UserInfo> commentUserList = null;
+    private List<UserInfoData> commentUserList = null;
     @SerializedName("paging")
     @Expose
     private Paging paging;
@@ -49,11 +49,11 @@ public class CartViewResponse {
         this.commentList = commentList;
     }
 
-    public List<UserInfo> getCommentUserList() {
+    public List<UserInfoData> getCommentUserList() {
         return commentUserList;
     }
 
-    public void setCommentUserList(List<UserInfo> commentUserList) {
+    public void setCommentUserList(List<UserInfoData> commentUserList) {
         this.commentUserList = commentUserList;
     }
 

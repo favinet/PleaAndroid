@@ -22,10 +22,19 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 import shop.plea.and.data.model.CartViewResponse;
+import shop.plea.and.data.model.UserInfoResultData;
 
 public interface HttpService {
 
     @GET("/cart/api/cartView/{id}?dev=1")
     Call<CartViewResponse> callCartView(@Path("id") String cartid);
+
+    @FormUrlEncoded
+    @POST("/join/api/userReg")
+    Call<UserInfoResultData> callUserRegist(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("/api/login")
+    Call<UserInfoResultData> callUserLogin(@FieldMap Map<String, String> params);
 
 }

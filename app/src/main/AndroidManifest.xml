@@ -28,11 +28,32 @@
         <activity android:name="shop.plea.and.ui.activity.ListSampleActivity"
             android:theme="@style/LoadingTheme"></activity>
 
+        <activity android:name="shop.plea.and.ui.activity.SignUpActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/FullScrennTheme"></activity>
+
+        <!-- 페이스북 로그인 엑티비티 -->
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="787993b5b56c8505371654f27ef8ae7fae0a8639" />
 
+        <!-- sns configration start -->
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1710595838960405"
+            android:exported="true" />
+
+        <!-- sns configration end -->
     </application>
 
 </manifest>

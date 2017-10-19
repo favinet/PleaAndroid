@@ -7,7 +7,8 @@ import shop.plea.and.common.activity.BaseActivity;
  * Created by shimtaewoo on 2017-10-02.
  */
 
-public class PleaActivity extends BaseActivity {
+public class PleaActivity extends BaseActivity{
+
 
     @Override
     public void setContentView(int layoutResID) {

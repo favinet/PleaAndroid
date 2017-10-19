@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- language select -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <com.beardedhen.androidbootstrap.BootstrapLabel
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/local_EN"
+            android:text="English"
+            app:bootstrapBrand="regular"
+            android:padding="5dp"
+            android:layout_marginRight="10dp"/>
+
+        <com.beardedhen.androidbootstrap.BootstrapLabel
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/local_KR"
+            android:text="Korean"
+            app:bootstrapBrand="regular"
+            android:padding="5dp"/>
+
+    </LinearLayout>
+    <!-- language select //-->
+
+    <!-- content area -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                app:hasBorder="false"
+                android:src="@drawable/author_small"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="회원가입"
+                android:textSize="20sp"
+                android:textColor="#000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/facebook_login_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:id="@+id/login_facebook"
+                    android:layout_marginRight="10dp"
+                    app:bootstrapBrand="primary"
+                    app:buttonMode="regular"
+                    app:showOutline="false"
+                    app:roundedCorners="true"
+                    app:bootstrapSize="lg"
+                    app:bootstrapText="FACEBOOK"/>
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:id="@+id/login_google"
+                    app:bootstrapBrand="danger"
+                    app:buttonMode="regular"
+                    app:showOutline="false"
+                    app:roundedCorners="true"
+                    app:bootstrapSize="lg"
+                    app:bootstrapText="GOOGLE"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="또는"
+                android:textSize="20sp"
+                android:textColor="#000000"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ed_email"
+                android:hint="이메일"
+                app:bootstrapBrand="regular"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ed_password"
+                android:hint="비밀번호"
+                app:bootstrapBrand="regular"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:bootstrapText="다음"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:text="이미 회원이신가요?"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_login"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:text="로그인하기"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+    <!-- content area //-->
+</RelativeLayout>

@@ -25,6 +25,14 @@
         <item name="android:windowBackground">@drawable/main_02</item>
     </style>
 
+    <style name="FullScrennTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/colorPrimarySub</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSub</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/bootstrap_gray_lightest</item>
+    </style>
+
     <style name="Theme.CustomProgressDialog" parent="android:Theme.NoTitleBar">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>

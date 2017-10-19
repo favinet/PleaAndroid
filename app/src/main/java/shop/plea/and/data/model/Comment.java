@@ -17,7 +17,7 @@ public class Comment {
     private String content;
     @SerializedName("userId")
     @Expose
-    private UserInfo userId;
+    private UserInfoData userId;
     @SerializedName("contentId")
     @Expose
     private String contentId;
@@ -47,11 +47,11 @@ public class Comment {
         this.content = content;
     }
 
-    public UserInfo getUserId() {
+    public UserInfoData getUserId() {
         return userId;
     }
 
-    public void setUserId(UserInfo userId) {
+    public void setUserId(UserInfoData userId) {
         this.userId = userId;
     }
 

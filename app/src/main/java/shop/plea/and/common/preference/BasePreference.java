@@ -11,14 +11,31 @@ import java.lang.reflect.Type;
 
 
 public class BasePreference {
-    private final String PREF_NAME = "com.lh.pref";
+
+    private static BasePreference instance;
+    private final String PREF_NAME = "plea.shop.pref";
+    public static final String ID = "id";
+    public static final String AUTH_ID = "AUTH_ID";
+    public static final String JOIN_TYPE = "JOIN_TYPE";
+    public static final String USERINFO_DATA = "USERINFO_DATA";
+    public static final String FACEBOOK_TOKEN = "FACEBOOK_TOKEN";
 
     static Context mContext;
     private Gson mson;
 
-    public BasePreference(Context c) {
-        mContext = c;
+    public BasePreference(Context context)
+    {
+        mContext = context;
         mson = new Gson();
+    }
+
+    public static BasePreference getInstance(Context context) {
+
+        if(instance == null)
+        {
+            instance = new BasePreference(context.getApplicationContext());
+        }
+        return instance;
     }
 
     public void put(String key, String value) {

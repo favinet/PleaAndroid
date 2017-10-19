@@ -11,9 +11,10 @@ import shop.plea.and.data.config.Constants;
 
 public class IntentData implements Parcelable {
     public int aniType;
+    public String authId;
+    public String joinType;
     /*public String station_cd;
-    public String sns_id;
-    public String sns;
+
     public int isPopup;
     public String link;
     public String params;
@@ -33,12 +34,8 @@ public class IntentData implements Parcelable {
 
     public IntentData(){
         aniType = Constants.VIEW_ANIMATION.ANI_NONE;
-        /*adroute = "A";
-        needTitle = true;
-        needBack = true;
-        isFromGift = false;
-        sns_id = "";
-        sns = "";*/
+        authId = "";
+        joinType = "";
     }
 
     protected IntentData(Parcel in) {
@@ -48,30 +45,15 @@ public class IntentData implements Parcelable {
     private void readFromParcel(Parcel in)
     {
         aniType = in.readInt();
-        /*station_cd = in.readString();
-        sns_id = in.readString();
-        sns = in.readString();
-        isPopup = in.readInt();
-        link = in.readString();
-        params = in.readString();
-        totalSaving = in.readString();
-        adroute = in.readString();
-        cobjid = in.readString();
-        isCard = in.readByte() != 0;
-        checkCardno = in.readString();
-        needTitle = in.readByte() != 0;
-        isModify = in.readByte() != 0;
-        signStep = in.readInt();
-        needBack = in.readByte() != 0;
-        event_url = in.readString();
-        deepLinkUri = in.readString();
-        isFromGift = in.readByte() != 0;
-        title = in.readString();*/
+        authId = in.readString();
+        joinType = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(aniType);
+        dest.writeString(authId);
+        dest.writeString(joinType);
         /*dest.writeString(station_cd);
         dest.writeString(sns_id);
         dest.writeString(sns);

@@ -15,6 +15,7 @@ public class Constants {
 
     public static final String LOG_TAG = "PLEA";
 
+
     public static final String INTENT_DATA_KEY = "INTENT_DATA_KEY";
 
     public static final String API_SUCCESS = "success";
@@ -37,4 +38,7 @@ public class Constants {
         public static final String EVENT_SAVING = "EVENT_SAVING";
     }
 
+    public final class FRAGMENT_MENUID {
+        public static final int SINGUP = 0;
+    }
 }

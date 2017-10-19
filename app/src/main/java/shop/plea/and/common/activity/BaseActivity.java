@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -17,12 +21,14 @@ import shop.plea.and.R;
 import shop.plea.and.common.dialog.ProgressDialog;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.ui.fragment.SignUpFragment;
+import shop.plea.and.ui.listener.UpdateListener;
 
 /**
  * Created by shimtaewoo on 2017-10-02.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements UpdateListener{
 
     //private Dialog materialDg;
     //private ProgressWheel progressWheel;
@@ -32,6 +38,7 @@ public class BaseActivity extends AppCompatActivity {
     protected Activity context;
 
     public IntentData inData = new IntentData();
+    protected Fragment curFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,19 @@ public class BaseActivity extends AppCompatActivity {
         progressDlg.setContentView(R.layout.progress_dialog_material);
 
         startTransition();
+   }
+
+    public boolean backPressed()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        if(count > 0)
+        {
+            fragmentManager.popBackStack();
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
@@ -186,5 +206,31 @@ public class BaseActivity extends AppCompatActivity {
             }
             return cache.get(assetPath);
         }
+    }
+
+    @Override
+    public void addFragment(int menuId) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if(menuId == Constants.FRAGMENT_MENUID.SINGUP)
+        {
+            curFragment = SignUpFragment.newInstance(menuId);
+            fragmentTransaction.replace(R.id.content, curFragment, String.valueOf(Constants.FRAGMENT_MENUID.SINGUP));
+        }
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void fragmentBackPressed() {
+        backPressed();
+    }
+
+    @Override
+    public void addFragment(Fragment fragment) {
+
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+
     }
 }
