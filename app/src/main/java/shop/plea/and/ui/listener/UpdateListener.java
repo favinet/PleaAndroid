@@ -12,7 +12,7 @@ public interface UpdateListener {
 
     void fragmentBackPressed();
 
-    void addFragment(Fragment fragment);
+    void addFragment(Fragment fragment, int menuId);
 
     void notifyDataSetChanged();
 

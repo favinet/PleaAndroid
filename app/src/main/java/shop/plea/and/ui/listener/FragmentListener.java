@@ -8,8 +8,4 @@ public interface FragmentListener {
 
     boolean onBackPressed();
 
-    void savingRefresh();
-
-    void rewardRefresh();
-
 }

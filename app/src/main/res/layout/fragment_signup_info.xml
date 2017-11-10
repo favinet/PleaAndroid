@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <include android:id="@+id/toolbar_header"
+        layout="@layout/custom_toolbar"/>
+
+    <!-- content area -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/layoutpadding"
+        android:paddingRight="@dimen/layoutpadding"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="Add a profile photo(optional)\n \u0026 nickname so your friends know it's you."
+                android:textSize="14.4sp"
+                android:textColor="#000000"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_width="84.5dp"
+                android:layout_height="84.5dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/img_profile"
+                app:hasBorder="false"
+                android:src="@drawable/image_photo_default"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/button_photo"
+                    android:id="@+id/upload_profile"
+                    android:layout_alignBottom="@id/img_profile"
+                    android:layout_alignRight="@id/img_profile"/>
+
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="34.4dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/ed_nickname"
+                android:hint="Please enter your Nickname"
+                android:textSize="14.4sp"
+                android:drawableLeft="@drawable/icon_email_black"
+                android:background="@drawable/custom_editview"
+                android:drawablePadding="5dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.3dp"
+                android:background="#1A000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ed_nickname_alert"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24.3dp"
+                android:visibility="gone"
+                android:textColor="#d92222"
+                android:textSize="12.5sp"
+                android:text="The nickname you entered is already being used by \nanother user. Please enter a different one."/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_logins_height"
+                android:layout_marginTop="34dp"
+                android:id="@+id/btn_regist_end"
+                android:text="Create Account"
+                android:textColor="#4c3994"
+                android:background="@drawable/btn_stroke_ripple"
+                android:textSize="14.4sp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="95.8dp"
+        android:id="@+id/txt_agree_info"
+        android:background="#edebf4"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_alignParentBottom="true"
+        android:textSize="13.4sp"
+        android:textColor="#999999"
+        android:text="By signing up,\nyou agree to our Terms \u0026 Privacy Policy."
+        android:bufferType="spannable"/>
+    <!-- content area //-->
+</RelativeLayout>

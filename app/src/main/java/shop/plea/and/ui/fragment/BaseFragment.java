@@ -3,12 +3,16 @@ package shop.plea.and.ui.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,12 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import shop.plea.and.R;
+import shop.plea.and.common.tool.Utils;
 import shop.plea.and.common.view.ProgressWheel;
+import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.ResponseData;
+import shop.plea.and.data.tool.DataInterface;
+import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.listener.UpdateListener;
 
 /**
@@ -34,6 +43,8 @@ public class BaseFragment extends Fragment {
     protected Unbinder mUnbinder;
     protected Dialog materiaDg;
     protected ProgressWheel mProgressWheel;
+    protected boolean mChecked = false;
+
 
     public void init(ViewGroup viewGroup)
     {
@@ -47,6 +58,7 @@ public class BaseFragment extends Fragment {
         materiaDg.setContentView(R.layout.progress_dialog_material);
         mProgressWheel = (ProgressWheel) materiaDg.findViewById(R.id.progress_wheel);
 
+      //  mToolbar = (Toolbar)
     }
 
     public void setCurrentPosition(int position)
@@ -137,11 +149,12 @@ public class BaseFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if(mUnbinder != null ) mUnbinder.unbind();
-
 
     }
 }

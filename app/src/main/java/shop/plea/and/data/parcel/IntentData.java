@@ -13,29 +13,15 @@ public class IntentData implements Parcelable {
     public int aniType;
     public String authId;
     public String joinType;
-    /*public String station_cd;
-
-    public int isPopup;
+    public boolean isRegist;
     public String link;
-    public String params;
-    public String totalSaving;
-    public String adroute;
-    public String cobjid;
-    public boolean isCard;
-    public String checkCardno;
-    public boolean needTitle;
-    public boolean isModify;
-    public int signStep;
-    public boolean needBack;
-    public String event_url;
-    public String deepLinkUri;
-    public boolean isFromGift;
-    public String title;*/
 
     public IntentData(){
         aniType = Constants.VIEW_ANIMATION.ANI_NONE;
         authId = "";
         joinType = "";
+        isRegist = false;
+        link = "";
     }
 
     protected IntentData(Parcel in) {
@@ -47,6 +33,8 @@ public class IntentData implements Parcelable {
         aniType = in.readInt();
         authId = in.readString();
         joinType = in.readString();
+        isRegist = in.readByte() != 0;
+        link = in.readString();
     }
 
     @Override
@@ -54,25 +42,8 @@ public class IntentData implements Parcelable {
         dest.writeInt(aniType);
         dest.writeString(authId);
         dest.writeString(joinType);
-        /*dest.writeString(station_cd);
-        dest.writeString(sns_id);
-        dest.writeString(sns);
-        dest.writeInt(isPopup);
+        dest.writeByte((byte) (isRegist ? 1 : 0));
         dest.writeString(link);
-        dest.writeString(params);
-        dest.writeString(totalSaving);
-        dest.writeString(adroute);
-        dest.writeString(cobjid);
-        dest.writeByte((byte) (isCard ? 1 : 0));
-        dest.writeString(checkCardno);
-        dest.writeByte((byte) (needTitle ? 1 : 0));
-        dest.writeByte((byte) (isModify ? 1 : 0));
-        dest.writeInt(signStep);
-        dest.writeByte((byte) (needBack ? 1 : 0));
-        dest.writeString(event_url);
-        dest.writeString(deepLinkUri);
-        dest.writeByte((byte) (isFromGift ? 1 : 0));
-        dest.writeString(title);*/
     }
 
     @Override

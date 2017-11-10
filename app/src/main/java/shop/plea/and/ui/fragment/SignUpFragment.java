@@ -1,25 +1,25 @@
 package shop.plea.and.ui.fragment;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
+import android.text.Spannable;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.beardedhen.androidbootstrap.BootstrapButton;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
+import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.ui.sns.SNSHelper;
 
@@ -31,11 +31,14 @@ public class SignUpFragment extends BaseFragment{
 
     public static final String ARG_PAGE_NUM = "ARG_PAGE_NUM";
     private Listner mListner;
-    private BootstrapButton btn_facebook;
     @BindView(R.id.facebook_login_btn) com.facebook.login.widget.LoginButton facebook;
-    private BootstrapButton btn_google;
-    private SNSHelper helper;
+    @BindView(R.id.login_facebook) Button btn_facebook;
+    @BindView(R.id.login_google) Button btn_google;
+    @BindView(R.id.login_email) Button btn__email;
+    @BindView(R.id.txt_login)TextView txt_login;
 
+
+    private SNSHelper helper;
 
     public static SignUpFragment newInstance(int page)
     {
@@ -57,6 +60,7 @@ public class SignUpFragment extends BaseFragment{
             mView = inflater.inflate(R.layout.fragment_signup, container, false);
             init(container);
             initScreen();
+            setTextSpan();
         }
 
         return mView;
@@ -64,14 +68,36 @@ public class SignUpFragment extends BaseFragment{
 
     public void initScreen()
     {
-        btn_facebook = (BootstrapButton) mView.findViewById(R.id.login_facebook);
-        btn_google = (BootstrapButton) mView.findViewById(R.id.login_google);
 
         btn_facebook.setOnClickListener(mListner);
         btn_google.setOnClickListener(mListner);
+        btn__email.setOnClickListener(mListner);
 
         helper = new SNSHelper((BaseActivity) getActivity(), facebook);
     }
+
+    private void setTextSpan()
+    {
+        Spannable spannable = (Spannable) txt_login.getText();
+        String text = spannable.toString();
+
+        int start = text.indexOf(txt_login.getText().toString());
+        int end = start + txt_login.getText().toString().length();
+
+        spannable.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+            }
+
+        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        txt_login.setText(spannable);
+        txt_login.setTextColor(Color.WHITE);
+        txt_login.setMovementMethod(new LinkMovementMethod());
+    }
+
 
     private class Listner implements View.OnClickListener{
 
@@ -87,9 +113,18 @@ public class SignUpFragment extends BaseFragment{
                     UserInfo.getInstance().clearParams();
                     helper.googleLogin();
                     break;
+                case R.id.login_email :
+                    UserInfo.getInstance().clearParams();
+
+                    EmailSignUpFragment emailSignUpFragment = new EmailSignUpFragment().newInstance(Constants.FRAGMENT_MENUID.SIGN_EMAIL);
+                    mUpdateListenerCallBack.addFragment(emailSignUpFragment, Constants.FRAGMENT_MENUID.SIGN_EMAIL);
+
+                    break;
+
             }
         }
     }
+
 
     @Override
     public void onDestroy() {

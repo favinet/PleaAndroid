@@ -1,10 +1,16 @@
 package shop.plea.and.data.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.HashMap;
 
+import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.preference.BasePreference;
+import shop.plea.and.common.tool.Utils;
+import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.tool.DataInterface;
+import shop.plea.and.data.tool.DataManager;
 
 /**
  * Created by kwon7575 on 2017-10-17.
@@ -69,4 +75,5 @@ public class UserInfo {
     {
         loginParams.clear();
     }
+
 }

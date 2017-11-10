@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shadow_background"
+    android:weightSum="10"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/intro_logo"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <!-- content area -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="26.3dp"
+        android:paddingRight="26.3dp"
+        android:layout_weight="7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="34.4dp"
+                android:inputType="textEmailAddress"
+                android:id="@+id/ed_email"
+                android:hint="Please enter your email"
+                android:text="monster7575@naver.com"
+                android:textSize="14.4sp"
+                android:drawableLeft="@drawable/icon_email"
+                android:background="@drawable/custom_editview"
+                android:drawablePadding="5dp"
+                android:textColor="#4cffffff"/>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.3dp"
+                android:background="#7968B5"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapAlert
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ed_email_alert"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                app:messageText="중복된 이메일입니다. 다른 이메일을 사용해주세요.">
+            </com.beardedhen.androidbootstrap.BootstrapAlert>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="34.4dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ed_password"
+                android:text="rudfks79"
+                android:textSize="14.4sp"
+                android:hint="Please enter your password"
+                android:inputType="textPassword"
+                android:drawableLeft="@drawable/icon_password"
+                android:background="@drawable/custom_editview"
+                android:drawablePadding="5dp"
+                android:textColor="#4cffffff"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.3dp"
+                android:background="#7968B5"/>
+            <com.beardedhen.androidbootstrap.BootstrapAlert
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ed_password_alert"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                app:messageText="비밀번호는 최소 8자리 이상, 대, 소문자와 숫자를 포함해야합니다.">
+            </com.beardedhen.androidbootstrap.BootstrapAlert>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_logins_height"
+                android:layout_marginTop="29dp"
+                android:id="@+id/btn_login"
+                android:text="Log in"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_ripple"
+                android:textSize="14.4sp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAllCaps="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="33dp"
+                android:weightSum="10">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1.3dp"
+                    android:background="#8171B8"
+                    android:layout_weight="4.5"
+                    android:layout_gravity="center_vertical">
+
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#FFFFFF"
+                    android:text="or"
+                    android:gravity="center_horizontal"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1.3dp"
+                    android:background="#8171B8"
+                    android:layout_weight="4.5"
+                    android:layout_gravity="center_vertical">
+
+                </View>
+
+            </LinearLayout>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_logins_height"
+                android:layout_marginTop="30.3dp"
+                android:id="@+id/login_facebook"
+                android:text = "facebook"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_ripple"
+                android:textSize="14.4sp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_logins_height"
+                android:layout_marginTop="9.5dp"
+                android:id="@+id/login_google"
+                android:text="Google"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_ripple"
+                android:textSize="14.4sp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAllCaps="false"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="28.5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:bufferType="spannable"
+                    android:text="Sign up"
+                    android:id="@+id/txt_regist"
+                    android:textSize="14.4sp"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="ㅣ"
+                    android:textSize="14.4sp"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_find_password"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:bufferType="spannable"
+                    android:text="Forgotten password?"
+                    android:textSize="14.4sp"
+                    android:textColor="#FFFFFF"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+    <!-- content area //-->
+</LinearLayout>

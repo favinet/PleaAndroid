@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.Hashtable;
@@ -19,9 +23,14 @@ import java.util.List;
 
 import shop.plea.and.R;
 import shop.plea.and.common.dialog.ProgressDialog;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.ui.fragment.FindPasswordFragment;
+import shop.plea.and.ui.fragment.LoginFragment;
+import shop.plea.and.ui.fragment.ResetPasswordFragment;
 import shop.plea.and.ui.fragment.SignUpFragment;
+import shop.plea.and.ui.fragment.SignUpInfoFragment;
 import shop.plea.and.ui.listener.UpdateListener;
 
 /**
@@ -30,15 +39,13 @@ import shop.plea.and.ui.listener.UpdateListener;
 
 public class BaseActivity extends AppCompatActivity implements UpdateListener{
 
-    //private Dialog materialDg;
-    //private ProgressWheel progressWheel;
+    private static volatile Activity mCurrentActivity = null;
     private ProgressDialog progressDlg;
     private long backKeyPressedTime;
-
     protected Activity context;
-
     public IntentData inData = new IntentData();
     protected Fragment curFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         Intent intent = getIntent();
         if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.INTENT_DATA_KEY)) {
             inData = intent.getParcelableExtra(Constants.INTENT_DATA_KEY);
-            //Logger.log(Logger.LogState.D, intent.getParcelableExtra(Constants.intentTitle).toString());
+            Logger.log(Logger.LogState.D, intent.getParcelableExtra(Constants.INTENT_DATA_KEY).toString());
         }
 
         progressDlg = new ProgressDialog(this, R.style.Theme_CustomProgressDialog);
@@ -114,6 +121,14 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         {
             progressDlg.dismiss();
         }
+    }
+
+    public static Activity getCurrentActivity() {
+        return mCurrentActivity;
+    }
+
+    public static void setCurrentActivity(Activity currentActivity) {
+        mCurrentActivity = currentActivity;
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -208,14 +223,35 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         }
     }
 
+    public void openDrawer()
+    {
+
+    }
+
+    public void closeDrawer()
+    {
+
+    }
+
     @Override
     public void addFragment(int menuId) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if(menuId == Constants.FRAGMENT_MENUID.SINGUP)
         {
             curFragment = SignUpFragment.newInstance(menuId);
-            fragmentTransaction.replace(R.id.content, curFragment, String.valueOf(Constants.FRAGMENT_MENUID.SINGUP));
+            fragmentTransaction.replace(R.id.content, curFragment, String.valueOf(menuId));
         }
+        else if(menuId == Constants.FRAGMENT_MENUID.LOGIN)
+        {
+            curFragment = LoginFragment.newInstance(menuId);
+            fragmentTransaction.replace(R.id.content, curFragment, String.valueOf(menuId));
+        }
+        else if(menuId == Constants.FRAGMENT_MENUID.RESET_PASSWORD)
+        {
+            curFragment = ResetPasswordFragment.newInstance(menuId);
+            fragmentTransaction.replace(R.id.content, curFragment, String.valueOf(menuId));
+        }
+
         fragmentTransaction.commitAllowingStateLoss();
     }
 
@@ -225,12 +261,31 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
     }
 
     @Override
-    public void addFragment(Fragment fragment) {
+    public void addFragment(Fragment fragment, int menuid) {
+        curFragment = fragment;
 
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        //fragmentTransaction.setCustomAnimations()
+        fragmentTransaction.add(R.id.content, fragment, String.valueOf(menuid));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
     public void notifyDataSetChanged() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences() {
+        Activity currActivity = getCurrentActivity();
+        if (currActivity != null && currActivity.equals(this)) {
+            setCurrentActivity(null);
+        }
     }
 }

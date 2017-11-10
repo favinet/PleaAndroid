@@ -2,6 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="shop.plea.and">
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="false"
+        android:xlargeScreens="false" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,9 +55,13 @@
         <activity android:name="shop.plea.and.ui.activity.ListSampleActivity"
             android:theme="@style/LoadingTheme"></activity>
 
-        <activity android:name="shop.plea.and.ui.activity.SignUpActivity"
+        <activity android:name="shop.plea.and.ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/FullScrennTheme"></activity>
+            android:theme="@style/ToolbarTheme"></activity>
+
+        <activity android:name="shop.plea.and.ui.activity.MainPleaListActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/ToolbarTheme"></activity>
 
         <!-- 페이스북 로그인 엑티비티 -->
         <activity android:name="com.facebook.FacebookActivity"

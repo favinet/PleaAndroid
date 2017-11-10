@@ -29,8 +29,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.preference.BasePreference;
@@ -41,8 +45,11 @@ import shop.plea.and.data.model.RequestData;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.model.UserInfoResultData;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.ui.activity.MainPleaListActivity;
+import shop.plea.and.ui.fragment.SignUpInfoFragment;
 
 /**
  * Created by kwon7575 on 2017-10-17.
@@ -110,15 +117,17 @@ public class SNSHelper {
                 .requestIdToken(base.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         mGoogleApiClient = new GoogleApiClient.Builder(base)
                 .enableAutoManage((FragmentActivity) base, mGoogleConnectionListener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
     }
 
     private void updateFbProfile() {
         final Profile profile = Profile.getCurrentProfile();
-
+        UserInfo.getInstance().clearParams();
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -132,34 +141,31 @@ public class SNSHelper {
                         req.authId = profile.getId();
                         req.joinType = "facebook";
 
-                        Toast.makeText(base, "페이스북 로그인 성공!!" + profile.getId(), Toast.LENGTH_LONG).show();
-
                         Uri profileImg = profile.getProfilePictureUri(100, 100);
 
-                        UserInfo.getInstance().setParams("authId", req.authId);
-                        UserInfo.getInstance().setParams("joinType", req.joinType);
-                        if(profileImg != null)
-                            UserInfo.getInstance().setParams("profileImg", profileImg.toString());
-                        //UserInfo.getInstance().setParams(BasePreference.FACEBOOK_TOKEN, AccessToken.getCurrentAccessToken().getToken());
+                        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
+                        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
 
-                        try {
+                        if(profileImg != null)
+                            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImg.toString());
+
+                        try
+                        {
                             if(object.has("email"))
                             {
                                 if(Utils.checkEmail(object.getString("email")))
                                 {
-                                    UserInfo.getInstance().setParams("snsEmail", object.getString("email"));
+                                    UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.SNS_EMAIL, object.getString("email"));
                                 }
                             }
-                            if(object.has("name")) UserInfo.getInstance().setParams("nickname", object.getString("name"));
-//							if(object.has("gender")) req.gender = object.getString("gender").equals("male") ? "M" : "F";
-//							if(object.has("birthday")) req.birthday = object.getString("birthday");
 
-                            userRegist(UserInfo.getInstance().getLoginParams());
                         }
                         catch (Exception ex)
                         {
                             ex.printStackTrace();
                         }
+
+                        userCheck(UserInfo.getInstance().getLoginParams());
                     }
                 });
         Bundle parameters = new Bundle();
@@ -168,40 +174,69 @@ public class SNSHelper {
         request.executeAsync();
     }
 
-    private void userRegist(HashMap<String, String> params)
+    private void userCheck(HashMap<String, String> params)
     {
-        Logger.log(Logger.LogState.W, "userRegist : " + Utils.getStringByObject(params));
+        UserInfoData userInfoData = BasePreference.getInstance(base).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        if(userInfoData == null)
+        {
+            nextScreen(params);
+        }
+        else
+        {
+            userLogin(userInfoData);
+        }
+    }
+
+    private void userLogin(UserInfoData userInfoData)
+    {
         base.startIndicator("");
-        DataManager.getInstance(base).api.userRegist(base, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
+        UserInfo.getInstance().clearParams();
+        String joinType = userInfoData.getJoinType();
+
+        Logger.log(Logger.LogState.E, "userLogin userInfoData= " + Utils.getStringByObject(userInfoData));
+
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, userInfoData.getAuthId());
+
+        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+
+        DataManager.getInstance(base).api.userLogin(base, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
             public void onSuccess(UserInfoResultData response) {
-                Log.e("userRegist onSuccess : ", ""+Utils.getStringByObject(response));
+                base.stopIndicator();
+                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
 
-                if(response.getResult().equals(Constants.API_FAIL))
+                String result = response.getResult();
+                if(result.equals(Constants.API_FAIL))
                 {
-                    Toast.makeText(base, "회원가입 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
-                    UserInfoData userInfoData = BasePreference.getInstance(base).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-                    Log.e("userRegist userInfoData : ", ""+Utils.getStringByObject(userInfoData));
-                    if(userInfoData != null)
-                        userLogin(userInfoData);
-
+                    Toast.makeText(base, "로그인 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(base, "회원가입 성공!!" + response.getResult(), Toast.LENGTH_LONG).show();
                     UserInfoData userInfoData = response.userData;
-                    userLogin(userInfoData);
-                }
+                    UserInfo.getInstance().setCurrentUserInfoData(base, userInfoData);
+                    BasePreference.getInstance(base).put(BasePreference.ID, userInfoData.getId());
+                    BasePreference.getInstance(base).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
+                    BasePreference.getInstance(base).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                    BasePreference.getInstance(base).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                base.stopIndicator();
+                    IntentData indata = new IntentData();
+                    indata.isRegist = false;
+                    Intent intent = new Intent(base, MainPleaListActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                    base.startActivity(intent);
+                    base.finish();
+                }
             }
 
             @Override
             public void onError() {
-                Log.e("userRegist onError : ", "");
+                Toast.makeText(base, "로그인 실패!!", Toast.LENGTH_LONG).show();
                 base.stopIndicator();
             }
         });
+
     }
 
     public void googleLogin()
@@ -227,10 +262,26 @@ public class SNSHelper {
         {
             FBprofileTracker.stopTracking();
         }
+        if(mGoogleApiClient != null)
+        {
+            mGoogleApiClient.stopAutoManage(base);
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private void nextScreen(HashMap<String, String> params)
+    {
+        SignUpInfoFragment signUpInfoFragment = new SignUpInfoFragment().newInstance(
+                Constants.FRAGMENT_MENUID.SIGN_INFO,
+                params
+        );
+        base.addFragment(signUpInfoFragment, Constants.FRAGMENT_MENUID.SIGN_INFO);
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        UserInfo.getInstance().clearParams();
         if (facebookCallBackManager != null) {
             if (facebookCallBackManager.onActivityResult(requestCode, resultCode, data)) {
                 return;
@@ -246,21 +297,19 @@ public class SNSHelper {
                 req.authId = account.getId();
                 req.joinType = "google";
 
-                Toast.makeText(base, "구글 로그인 성공!!" + account.getId(), Toast.LENGTH_LONG).show();
-
                 Uri profileImg = account.getPhotoUrl();
 
-                UserInfo.getInstance().setParams("authId", req.authId);
-                UserInfo.getInstance().setParams("joinType", req.joinType);
-                UserInfo.getInstance().setParams("snsEmail", account.getEmail());
-                UserInfo.getInstance().setParams("nickname", account.getDisplayName());
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.SNS_EMAIL, account.getEmail());
+
                 if(profileImg != null)
-                    UserInfo.getInstance().setParams("profileImg", account.getPhotoUrl().toString());
+                    UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, account.getPhotoUrl().toString());
 
                 GoogleTokenTask task = new GoogleTokenTask(base, account);
                 task.execute("oauth2:https://www.googleapis.com/auth/userinfo.profile");
 
-                userRegist(UserInfo.getInstance().getLoginParams());
+                userCheck(UserInfo.getInstance().getLoginParams());
             }
             else {
 
@@ -269,49 +318,6 @@ public class SNSHelper {
         }
     }
 
-    public void userLogin(UserInfoData userInfoData)
-    {
-        base.startIndicator("");
-
-        String joinType = userInfoData.getJoinType();
-
-        UserInfo.getInstance().clearParams();
-        if(joinType.equals("email"))
-        {
-            UserInfo.getInstance().setParams("email", userInfoData.getEmail());
-        }
-        else
-            UserInfo.getInstance().setParams("authId", userInfoData.getAuthId());
-        UserInfo.getInstance().setParams("joinType", joinType);
-        DataManager.getInstance(base).api.userLogin(base, UserInfo.getInstance().getLoginParams(), new DataInterface.ResponseCallback<UserInfoResultData>() {
-            @Override
-            public void onSuccess(UserInfoResultData response) {
-                Log.e("userLogin onSuccess : ", ""+Utils.getStringByObject(response));
-                if(response.getResult().equals(Constants.API_FAIL))
-                {
-                    Toast.makeText(base, "회원로그인 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Toast.makeText(base, "회원로그인 성공!!" + response.getResult(), Toast.LENGTH_LONG).show();
-                    UserInfoData userInfoData = response.userData;
-                    UserInfo.getInstance().setCurrentUserInfoData(base, userInfoData);
-                    BasePreference.getInstance(base).put(BasePreference.ID, userInfoData.getAuthId());
-                    BasePreference.getInstance(base).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
-                    BasePreference.getInstance(base).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
-                    BasePreference.getInstance(base).putObject(BasePreference.USERINFO_DATA, userInfoData);
-                }
-
-                base.stopIndicator();
-            }
-
-            @Override
-            public void onError() {
-                Log.e("userLogin onError : ", "");
-                base.stopIndicator();
-            }
-        });
-    }
 
     private class GoogleConnectionListener implements GoogleApiClient.OnConnectionFailedListener {
 

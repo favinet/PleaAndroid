@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <shop.plea.and.ui.view.DrawerLayoutHorizontalSupport
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include android:id="@+id/toolbar_header"
+                layout="@layout/custom_toolbar"/>
+
+            <FrameLayout
+                android:id="@+id/webview_frame"
+                android:layout_below="@id/toolbar_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </WebView>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/content"
+                android:layout_below="@id/toolbar_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/drawer_content"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:clickable="true"
+            android:background="#ffffff"
+            android:importantForAccessibility="no"
+            android:fitsSystemWindows="true">
+        </FrameLayout>
+
+    </shop.plea.and.ui.view.DrawerLayoutHorizontalSupport>
+
+
+
+    <!-- regist success box -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shadow_background"
+        android:id="@+id/hellow_area"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_width="122.9dp"
+                android:layout_height="122.9dp"
+                app:hasBorder="false"
+                android:src="@drawable/image_photo_default"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_nickname"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32.4dp"
+                android:text="lollela,\nCongratulations! :D"
+                android:textSize="14.4sp"
+                android:gravity="center_horizontal"
+                android:textColor="#FFFFFF"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- regist success box //-->
+</RelativeLayout>

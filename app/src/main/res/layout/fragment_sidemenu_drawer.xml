@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="312dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33.8dp"
+        android:layout_marginLeft="22.5dp"
+        android:layout_marginRight="22.5dp"
+        android:layout_marginBottom="33.8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_width="38.8dp"
+                android:layout_height="31dp"
+                android:id="@+id/img_profile"
+                app:hasBorder="false"
+                android:src="@drawable/image_photo_default"
+                android:layout_marginRight="9dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="yukimi_annand"
+                android:layout_gravity="center_vertical"
+                android:textSize="13.4sp"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="62.8dp"
+            android:layout_height="25.3dp"
+            android:id="@+id/side_btn_profile"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="Profile"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_profile"
+            android:textSize="14.4sp"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.3dp"
+        android:background="#1A000000"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="22.5dp"
+        android:layout_marginTop="33.3dp"
+        android:scrollbarSize="0dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/side_btn_myplea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Plea"
+                android:textColor="@color/colorSideMenu"
+                android:textSize="@dimen/side_menu_font" />
+
+            <TextView
+                android:id="@+id/side_btn_follower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:text="Follower's Feed"
+                android:textColor="@color/colorSideMenu"
+                android:textSize="@dimen/side_menu_font" />
+
+            <TextView
+                android:id="@+id/side_btn_foryou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:text="For You"
+                android:textColor="@color/colorSideMenu"
+                android:textSize="@dimen/side_menu_font" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/side_btn_push"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:text="Push"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/side_menu_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/menu_question" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/side_btn_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:text="E-mail"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/side_menu_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/menu_question" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/side_btn_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="Notice"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/side_menu_font" />
+
+                <Button
+                    android:layout_width="20.3dp"
+                    android:layout_height="13.8dp"
+                    android:id="@+id/side_btn_notice_badge"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="3"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/btn_notice_cnt"
+                    android:textSize="8.1sp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/side_btn_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:text="Terms \u0026 Conditions"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/side_menu_font" />
+
+            <TextView
+                android:id="@+id/side_btn_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:text="Privacy Policy"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/side_menu_font" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap">
+
+                <TextView
+                    android:id="@+id/side_btn_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="Version 1.0.0"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/side_menu_font" />
+
+                <Button
+                    android:layout_width="62.8dp"
+                    android:layout_height="25.3dp"
+                    android:id="@+id/side_btn_update"
+                    android:text="Update"
+                    android:textColor="#666666"
+                    android:background="@drawable/btn_update_stroke"
+                    android:textSize="12.5sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="25.3dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textAllCaps="false"/>
+
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/side_btn_api"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:text="API"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/side_menu_font" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="43dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/side_btn_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10.5dp"
+                    android:text="Support"
+                    android:textColor="#666666"
+                    android:textSize="13.4sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10.5dp"
+                    android:background="#999999" />
+
+                <TextView
+                    android:id="@+id/side_btn_reset_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Reset Your Password"
+                    android:textColor="#666666"
+                    android:textSize="13.4sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24.3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/side_btn_signout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10.5dp"
+                    android:text="Sign Out"
+                    android:textColor="#666666"
+                    android:textSize="13.4sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10.5dp"
+                    android:background="#999999" />
+
+                <TextView
+                    android:id="@+id/side_btn_delete_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Delete Account"
+                    android:textColor="#666666"
+                    android:textSize="13.4sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -13,6 +13,10 @@ public class ResponseData {
     @Expose
     public String result = "";
 
+    @SerializedName("flag")
+    @Expose
+    public boolean flag = false;
+
     @SerializedName("message")
     @Expose
     public String message = "";
@@ -33,4 +37,11 @@ public class ResponseData {
         this.message = message;
     }
 
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 }

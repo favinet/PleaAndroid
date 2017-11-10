@@ -136,8 +136,8 @@ public class TransFormerActivity extends PleaActivity implements ActionBar.OnNav
     {
         private static final String EXTRA_POSITION = "EXTRA_POSITION";
         private static final int[] IMGS = new int[] {R.drawable.main_01, R.drawable.follower_list_,
-        R.drawable.follower_list_03comment, R.drawable.follower_list_view, R.drawable.follower_list_05more, R.drawable.myplea_list,
-        R.drawable.newpass, R.drawable.recommend_list, R.drawable.resetpass_, R.drawable.signup_};
+                R.drawable.follower_list_03comment, R.drawable.follower_list_view, R.drawable.follower_list_05more, R.drawable.myplea_list,
+                R.drawable.newpass, R.drawable.recommend_list, R.drawable.resetpass_, R.drawable.signup_};
 
         @Nullable
         @Override
