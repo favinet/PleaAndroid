@@ -18,14 +18,10 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import shop.plea.and.data.model.CartViewResponse;
 import shop.plea.and.data.model.ResponseData;
 import shop.plea.and.data.model.UserInfoResultData;
 
 public interface HttpService {
-
-    @GET("/cart/api/cartView/{id}?dev=1")
-    Call<CartViewResponse> callCartView(@Path("id") String cartid);
 
     @Multipart
     @POST("/join/api/userReg")

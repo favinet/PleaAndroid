@@ -75,8 +75,7 @@ public class IntroActivity extends PleaActivity {
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            PermissionHelper.getInstance().setPermissionAndActivity(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, (Activity) context);
+            PermissionHelper.getInstance().setPermissionAndActivity(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, (Activity) context);
 
             if(!PermissionHelper.getInstance().checkPermission()) {
                 PermissionHelper.getInstance().requestPermission(0, new PermissionHelper.PermissionCallback() {
