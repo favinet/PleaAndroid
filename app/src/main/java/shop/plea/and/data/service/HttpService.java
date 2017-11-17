@@ -9,6 +9,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -36,5 +37,16 @@ public interface HttpService {
 
     @GET("/join/api/checkNickname")
     Call<ResponseData> callUserNickNameCheck(@Query("nickname") String nickname);
+
+    @FormUrlEncoded
+    @POST("/join/api/password/sendMail")
+    Call<ResponseData> callSendPasswordMail(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("/member/api/modify/{id}")
+    Call<UserInfoResultData> callUserUpdate(@Path("id") String id, @FieldMap Map<String, String> params);
+
+    @GET("/notice/api/noticeCnt/{id}")
+    Call<ResponseData> callGetNoticeCnt(@Path("id") String id);
 
 }

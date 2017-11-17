@@ -73,7 +73,7 @@ public class SignUpFragment extends BaseFragment{
         btn_google.setOnClickListener(mListner);
         btn__email.setOnClickListener(mListner);
 
-        helper = new SNSHelper((BaseActivity) getActivity(), facebook);
+        helper = new SNSHelper((BaseActivity) getActivity(), facebook, false);
     }
 
     private void setTextSpan()

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +52,10 @@ public class LoginFragment extends BaseFragment{
     private LoginFragment.Listner mListner;
     @BindView(R.id.facebook_login_btn) com.facebook.login.widget.LoginButton facebook;
     @BindView(R.id.btn_login) Button btn_login;
-    @BindView(R.id.login_facebook) Button btn_facebook;
-    @BindView(R.id.login_google) Button btn_google;
+    @BindView(R.id.login_facebook) ImageButton btn_facebook;
+    @BindView(R.id.login_google) ImageButton btn_google;
     @BindView(R.id.ed_email) EditText ed_email;
     @BindView(R.id.ed_password) EditText ed_password;
-    @BindView(R.id.ed_email_alert) BootstrapAlert ed_email_alert;
-    @BindView(R.id.ed_password_alert) BootstrapAlert ed_password_alert;
     @BindView(R.id.txt_find_password) TextView txt_find_password;
     @BindView(R.id.txt_regist) TextView txt_regist;
 
@@ -93,7 +93,7 @@ public class LoginFragment extends BaseFragment{
         btn_facebook.setOnClickListener(mListner);
         btn_google.setOnClickListener(mListner);
         btn_login.setOnClickListener(mListner);
-        helper = new SNSHelper((BaseActivity) getActivity(), facebook);
+        helper = new SNSHelper((BaseActivity) getActivity(), facebook, true);
     }
 
     private void setTextSpan()

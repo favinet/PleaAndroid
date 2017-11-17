@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Add a profile photo(optional) \n \u0026 nickname so your friends know it's you."
+                android:text="@string/user_profile_img"
                 android:textSize="14.4sp"
                 android:textColor="#000000"/>
 
@@ -57,7 +57,7 @@
                 android:visibility="gone"
                 android:textColor="#d92222"
                 android:textSize="12.5sp"
-                android:text="The e-mail you entered is already being used by \nanother user. Please enter a different one.">
+                android:text="@string/user_email_check">
             </TextView>
 
             <EditText
@@ -88,7 +88,7 @@
                 android:visibility="gone"
                 android:textColor="#d92222"
                 android:textSize="12.5sp"
-                android:text="The password must contain a minimum of 8 \ncharacters including a lower-case letter, an upper-\ncase letter and a number.">
+                android:text="@string/user_password_check">
             </TextView>
 
             <Button
@@ -96,7 +96,7 @@
                 android:layout_height="@dimen/btn_logins_height"
                 android:layout_marginTop="34dp"
                 android:id="@+id/btn_regist_next"
-                android:text="Next"
+                android:text="@string/user_next"
                 android:textColor="#4c3994"
                 android:background="@drawable/btn_stroke_ripple"
                 android:textSize="14.4sp"

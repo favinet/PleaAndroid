@@ -107,6 +107,10 @@ public class IntroActivity extends PleaActivity {
                 start();
             }
         }
+        else
+        {
+            start();
+        }
     }
 
     private void start()

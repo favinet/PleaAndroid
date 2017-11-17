@@ -28,7 +28,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="yukimi_annand"
+                android:id="@+id/side_nickname"
+                android:text=""
                 android:layout_gravity="center_vertical"
                 android:textSize="13.4sp"
                 android:textColor="@android:color/black"/>
@@ -118,7 +119,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/menu_question" />
+                        android:src="@drawable/menu_question"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -149,10 +151,41 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/menu_question" />
+                        android:src="@drawable/menu_question"
+                        android:visibility="gone" />
                 </LinearLayout>
 
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_menu_gap">
+
+                <TextView
+                    android:id="@+id/side_menu_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="Language"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/side_menu_font" />
+
+                <Button
+                    android:id="@+id/side_btn_language"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="62.8dp"
+                    android:layout_height="25.3dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="25.3dp"
+                    android:background="@android:color/transparent"
+                    android:text="English"
+                    android:textAllCaps="false"
+                    android:textColor="#666666"
+                    android:textSize="12.5sp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -171,17 +204,17 @@
                     android:textSize="@dimen/side_menu_font" />
 
                 <Button
+                    android:id="@+id/side_btn_notice_badge"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="20.3dp"
                     android:layout_height="13.8dp"
-                    android:id="@+id/side_btn_notice_badge"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_vertical"
-                    android:text="3"
-                    android:textColor="#FFFFFF"
                     android:background="@drawable/btn_notice_cnt"
-                    android:textSize="8.1sp"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:textAllCaps="false"/>
+                    android:text="3"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="8.1sp" />
 
             </LinearLayout>
 
@@ -219,21 +252,18 @@
                     android:textSize="@dimen/side_menu_font" />
 
                 <Button
+                    android:id="@+id/side_btn_update"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="62.8dp"
                     android:layout_height="25.3dp"
-                    android:id="@+id/side_btn_update"
-                    android:text="Update"
-                    android:textColor="#666666"
-                    android:background="@drawable/btn_update_stroke"
-                    android:textSize="12.5sp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25.3dp"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:textAllCaps="false"/>
-
-
-
+                    android:background="@drawable/btn_update_stroke"
+                    android:text="Update"
+                    android:textAllCaps="false"
+                    android:textColor="#666666"
+                    android:textSize="12.5sp" />
             </RelativeLayout>
 
             <TextView

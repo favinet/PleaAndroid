@@ -156,6 +156,40 @@ public class DataInterface extends BaseDataInterface{
         }
     }
 
+    public void userSendPasswordMail(Context context, String email, final ResponseCallback callback)
+    {
+        try {
+            Call<ResponseData> call = service.callSendPasswordMail(email);
+
+            call.enqueue(new RetryableCallback<ResponseData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<ResponseData> call, retrofit2.Response<ResponseData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error userSendPasswordMail = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<ResponseData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
+
     public void userNickNameCheck(Context context, String nickname, final ResponseCallback callback)
     {
         try {
@@ -170,6 +204,74 @@ public class DataInterface extends BaseDataInterface{
                         callback.onSuccess(response.body());
                     } else {
                         Logger.log(Logger.LogState.E, "error userNickNameCheck = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<ResponseData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
+
+    public void userUpdate(Context context, String id, HashMap<String, String> params, final ResponseCallback callback)
+    {
+        try {
+            Call<UserInfoResultData> call = service.callUserUpdate(id, params);
+
+            call.enqueue(new RetryableCallback<UserInfoResultData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<UserInfoResultData> call, retrofit2.Response<UserInfoResultData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error userNickNameCheck = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<UserInfoResultData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
+
+    public void getNoticeCnt(Context context, String id, final ResponseCallback callback)
+    {
+        try {
+            Call<ResponseData> call = service.callGetNoticeCnt(id);
+
+            call.enqueue(new RetryableCallback<ResponseData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<ResponseData> call, retrofit2.Response<ResponseData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error userNoticeCnt = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }

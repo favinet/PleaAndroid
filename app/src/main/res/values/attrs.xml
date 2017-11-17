@@ -12,4 +12,19 @@
         <attr name="matProg_barWidth" format="dimension" />
         <attr name="matProg_linearProgress" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CustomFontTextView">
+        <attr name="customFont" format="string"/>
+        <attr name="isStroke" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFontEditView">
+        <attr name="customFontEdit" format="string"/>
+        <attr name="isStrokeEdit" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFontBtn">
+        <attr name="customFontBtn" format="string"/>
+        <attr name="isStrokeBtn" format="boolean"/>
+    </declare-styleable>
 </resources>

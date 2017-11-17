@@ -37,7 +37,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
-            <EditText
+            <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
                 android:inputType="textEmailAddress"
@@ -48,52 +48,38 @@
                 android:drawableLeft="@drawable/icon_email"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
-                android:textColor="#4cffffff"/>
+                android:textColor="#4cffffff"
+                android:textColorHint="#4cffffff"
+                app:customFont="NotoSans-Regular.ttf"/>
             
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1.3dp"
                 android:background="#7968B5"/>
 
-            <com.beardedhen.androidbootstrap.BootstrapAlert
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ed_email_alert"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                app:messageText="중복된 이메일입니다. 다른 이메일을 사용해주세요.">
-            </com.beardedhen.androidbootstrap.BootstrapAlert>
-
-            <EditText
+            <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/ed_password"
-                android:text="rudfks79"
+                android:text="Arudfks79@@"
                 android:textSize="14.4sp"
                 android:hint="Please enter your password"
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/icon_password"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
-                android:textColor="#4cffffff"/>
+                android:textColor="#4cffffff"
+                android:textColorHint="#4cffffff"
+                app:customFontEdit="NotoSans-Regular.ttf"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1.3dp"
                 android:background="#7968B5"/>
-            <com.beardedhen.androidbootstrap.BootstrapAlert
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ed_password_alert"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                app:messageText="비밀번호는 최소 8자리 이상, 대, 소문자와 숫자를 포함해야합니다.">
-            </com.beardedhen.androidbootstrap.BootstrapAlert>
 
 
-            <Button
+            <shop.plea.and.ui.view.CustomFontBtn
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
                 android:layout_marginTop="29dp"
@@ -103,6 +89,7 @@
                 android:background="@drawable/btn_ripple"
                 android:textSize="14.4sp"
                 style="?android:attr/borderlessButtonStyle"
+                app:customFontBtn="NotoSans-Bold.ttf"
                 android:textAllCaps="false"/>
 
             <LinearLayout
@@ -121,13 +108,15 @@
 
                 </View>
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#FFFFFF"
                     android:text="or"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    app:customFont="NotoSans-Bold.ttf"/>
+
 
                 <View
                     android:layout_width="0dp"
@@ -148,29 +137,33 @@
                 android:visibility="gone"
                 />
 
-            <Button
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
-                android:layout_marginTop="30.3dp"
-                android:id="@+id/login_facebook"
-                android:text = "facebook"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
-                android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"/>
+                android:layout_marginTop="30.3dp">
 
-            <Button
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_facebook"
+                    android:src="@drawable/button_facebook"
+                    android:background="@drawable/btn_ripple"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
-                android:layout_marginTop="9.5dp"
-                android:id="@+id/login_google"
-                android:text="Google"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
-                android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"/>
+                android:layout_marginTop="9.5dp" >
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_google"
+                    android:src="@drawable/button_google"
+                    android:background="@drawable/btn_ripple"/>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -179,7 +172,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="28.5dp">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -187,9 +180,10 @@
                     android:text="Sign up"
                     android:id="@+id/txt_regist"
                     android:textSize="14.4sp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    app:customFont=""/>
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

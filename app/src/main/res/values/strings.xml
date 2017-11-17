@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">플리</string>
+    <string name="app_name">Plea</string>
     <string name="facebook_app_id">1710595838960405</string>
+    <string name="user_resist_finish">%1$s,\nCongratulations! :D</string>
+    <string name="user_profile_img">Add a profile photo(optional) \n \u0026 nickname so your friends know it\'s you.</string>
+    <string name="user_email_check">The e-mail you entered is already being used by \nanother user. Please enter a different one.</string>
+    <string name="user_password_check">The password must contain a minimum of 8 \ncharacters including a lower-case letter, an upper-\ncase letter and a number.</string>
+    <string name="user_next">Next</string>
+
+
 </resources>

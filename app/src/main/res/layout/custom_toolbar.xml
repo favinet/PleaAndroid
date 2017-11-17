@@ -30,7 +30,7 @@
             android:visibility="gone"
             android:layout_centerVertical="true" />
 
-        <TextView
+        <shop.plea.and.ui.view.CustomFontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar_title"
@@ -39,7 +39,9 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textColor="@color/colorBackground"/>
+            app:customFont="NotoSans-Regular.ttf"
+            android:textColor="@color/colorBackground"
+            android:textAllCaps="true"/>
 
         <ImageButton
             android:id="@+id/btn_toolbar_img"

@@ -55,6 +55,9 @@ public class UserInfoData {
     @SerializedName("follow")
     @Expose
     private List<String> follow = null;
+    @SerializedName("locale")
+    @Expose
+    private String locale = null;
 
     public String getId() {
         return id;
@@ -176,4 +179,11 @@ public class UserInfoData {
         this.follow = follow;
     }
 
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 }

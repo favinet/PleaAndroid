@@ -65,8 +65,10 @@ public class SNSHelper {
     private GoogleApiClient mGoogleApiClient;
     private GoogleConnectionListener mGoogleConnectionListener = new GoogleConnectionListener();
     private static final int RC_GOOGLE_SIGN_IN = 9001;
+    private boolean isLogin = false;
 
-    public SNSHelper(BaseActivity activity, LoginButton facebook){
+    public SNSHelper(BaseActivity activity, LoginButton facebook, boolean login){
+        this.isLogin = login;
         this.base = activity;
         setButton(facebook);
         snsInit();
@@ -177,28 +179,20 @@ public class SNSHelper {
     private void userCheck(HashMap<String, String> params)
     {
         UserInfoData userInfoData = BasePreference.getInstance(base).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-        if(userInfoData == null)
+        Logger.log(Logger.LogState.E, "userCheck = " + Utils.getStringByObject(params));
+        if(isLogin)
         {
-            nextScreen(params);
+            userLogin(params);
         }
         else
         {
-            userLogin(userInfoData);
+            nextScreen(params);
         }
     }
 
-    private void userLogin(UserInfoData userInfoData)
+    private void userLogin(HashMap<String, String> params)
     {
         base.startIndicator("");
-        UserInfo.getInstance().clearParams();
-        String joinType = userInfoData.getJoinType();
-
-        Logger.log(Logger.LogState.E, "userLogin userInfoData= " + Utils.getStringByObject(userInfoData));
-
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, userInfoData.getAuthId());
-
-        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
         DataManager.getInstance(base).api.userLogin(base, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
@@ -222,6 +216,7 @@ public class SNSHelper {
 
                     IntentData indata = new IntentData();
                     indata.isRegist = false;
+                    indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
                     Intent intent = new Intent(base, MainPleaListActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);

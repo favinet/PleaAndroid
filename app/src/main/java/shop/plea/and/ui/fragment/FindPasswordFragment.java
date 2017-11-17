@@ -1,9 +1,13 @@
 package shop.plea.and.ui.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,8 @@ import com.beardedhen.androidbootstrap.BootstrapAlert;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.beardedhen.androidbootstrap.BootstrapLabel;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import shop.plea.and.R;
@@ -83,39 +89,38 @@ public class FindPasswordFragment extends BaseFragment {
         btn_send_password_set_mail.setOnClickListener(mListner);
     }
 
-    private void userEmailCheck(String email)
+    private void sendPasswordMail(String email)
     {
         if(Utils.checkEmail(email) && email.length() > 0)
         {
             startIndicator("");
-            DataManager.getInstance(getActivity()).api.userEmailCheck(getActivity(), email, new DataInterface.ResponseCallback<ResponseData>() {
+            DataManager.getInstance(getActivity()).api.userSendPasswordMail(getActivity(), email, new DataInterface.ResponseCallback<ResponseData>() {
                 @Override
                 public void onSuccess(ResponseData response) {
                     if(response.getResult().equals(Constants.API_FAIL))
                     {
-                        Toast.makeText(getActivity(), "이메일체크 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "메일 전송 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        boolean flag = response.isFlag();
-                        if(flag)
+                        String result = response.getResult();
+                        if(result.equals(Constants.API_SUCCESS))
                         {
-                            ed_email.setTextColor(Color.parseColor("#000000"));
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "이메일체크 사용 불가능!!" + flag, Toast.LENGTH_LONG).show();
-                            ed_email.setTextColor(Color.parseColor("#E83636"));
-
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                            dialog.setTitle(R.string.app_name).setMessage("입력하신 메일을 통해 비밀번호 변경을 진행해주세요.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+                                }
+                            }).create().show();
                         }
                     }
-
                     stopIndicator();
                 }
 
                 @Override
                 public void onError() {
-                    Toast.makeText(getActivity(), "이메일 체크 실패!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "메일 전송 실패!!", Toast.LENGTH_LONG).show();
                     stopIndicator();
                 }
             });
@@ -138,8 +143,7 @@ public class FindPasswordFragment extends BaseFragment {
                     break;
                 case R.id.btn_send_password_set_mail :
                     String email = ed_email.getText().toString();
-                    userEmailCheck(email);
-
+                    sendPasswordMail(email);
                     break;
             }
         }

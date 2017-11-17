@@ -54,6 +54,8 @@ public class Constants {
         public static final String FILE = "file";
         public static final String PROFILE_IMG = "profileImg";
         public static final String SNS_EMAIL = "snsEmail";
+        public static final String ID = "id";
+        public static final String LOCALE = "locale";
     }
 
     public final class LOGIN_TYPE {

@@ -87,7 +87,7 @@
                 android:id="@+id/txt_nickname"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="32.4dp"
-                android:text="lollela,\nCongratulations! :D"
+                android:text="@string/user_resist_finish"
                 android:textSize="14.4sp"
                 android:gravity="center_horizontal"
                 android:textColor="#FFFFFF"/>

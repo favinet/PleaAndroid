@@ -17,6 +17,10 @@ public class ResponseData {
     @Expose
     public boolean flag = false;
 
+    @SerializedName("count")
+    @Expose
+    public int count = 0;
+
     @SerializedName("message")
     @Expose
     public String message = "";
@@ -43,5 +47,13 @@ public class ResponseData {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
