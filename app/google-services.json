@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "345769889312",
+    "firebase_url": "https://plea-e3d04.firebaseio.com",
+    "project_id": "plea-e3d04",
+    "storage_bucket": "plea-e3d04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345769889312:android:936aeee9d0bbdd4e",
+        "android_client_info": {
+          "package_name": "shop.plea.and"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345769889312-osjfnqi1us2ddm331jge5ouqnb2o75on.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "shop.plea.and",
+            "certificate_hash": "36baad55bf8fa9d5123905b96ce80e3b6940484e"
+          }
+        },
+        {
+          "client_id": "345769889312-hrr0l9j5eoiec8lpghehfeshb62g5b9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl9XMZxDPzCQj4-rMDF9_WrIOu8lW6m9I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345769889312-hrr0l9j5eoiec8lpghehfeshb62g5b9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

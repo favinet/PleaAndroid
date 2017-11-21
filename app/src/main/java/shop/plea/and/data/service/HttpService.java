@@ -49,4 +49,8 @@ public interface HttpService {
     @GET("/notice/api/noticeCnt/{id}")
     Call<ResponseData> callGetNoticeCnt(@Path("id") String id);
 
+    @FormUrlEncoded
+    @POST("/member/api/delete/{id}")
+    Call<ResponseData> callUserDelete(@Path("id") String id);
+
 }

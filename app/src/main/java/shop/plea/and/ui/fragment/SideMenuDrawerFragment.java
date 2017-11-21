@@ -225,9 +225,38 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         Configuration config = new Configuration();
         config.locale = locale;
 
+
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
+    }
 
+    private void signOut()
+    {
+        BasePreference.getInstance(getActivity()).removeAll();
+        mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+    }
+
+    private void deleteUser()
+    {
+        startIndicator("");
+        final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
+        String id = userInfoData.getId();
+
+        DataManager.getInstance(getActivity()).api.userDelete(getActivity(), id, new DataInterface.ResponseCallback<ResponseData>() {
+            @Override
+            public void onSuccess(ResponseData response) {
+                stopIndicator();
+                Logger.log(Logger.LogState.E, "deleteUser = " + Utils.getStringByObject(response));
+                BasePreference.getInstance(getActivity()).removeAll();
+                mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(getActivity(), "setNoticeCnt 실패!!", Toast.LENGTH_LONG).show();
+                stopIndicator();
+            }
+        });
     }
 
     private void selectLanguageDialog()
@@ -311,10 +340,10 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.side_btn_signout :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    signOut();
                     break;
                 case R.id.side_btn_delete_user :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    deleteUser();
                     break;
                 case R.id.side_btn_language :
                     selectLanguageDialog();

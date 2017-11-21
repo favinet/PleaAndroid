@@ -237,13 +237,47 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userNickNameCheck = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.E, "error userUpdate = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
 
                 @Override
                 public void onFinalFailure(Call<UserInfoResultData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
+
+    public void userDelete(Context context, String id, final ResponseCallback callback)
+    {
+        try {
+            Call<ResponseData> call = service.callUserDelete(id);
+
+            call.enqueue(new RetryableCallback<ResponseData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<ResponseData> call, retrofit2.Response<ResponseData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error userDelete = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<ResponseData> call, Throwable t) {
                     if (callback == null)
                         return;
                     t.printStackTrace();

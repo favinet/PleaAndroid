@@ -53,7 +53,6 @@
                 android:textColor="#FFFFFF"
                 android:background="@drawable/btn_ripple"
                 android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
                 android:textAllCaps="false"/>
 
             <Button
