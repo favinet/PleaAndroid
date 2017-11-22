@@ -93,7 +93,7 @@
                 android:id="@+id/btn_regist_end"
                 android:text="Create Account"
                 android:textColor="#4c3994"
-                android:background="@drawable/btn_stroke_ripple"
+                android:background="@drawable/round_stroke_corner"
                 android:textSize="14.4sp"
                 style="?android:attr/borderlessButtonStyle"
                 android:textAllCaps="false"/>

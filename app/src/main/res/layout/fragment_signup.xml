@@ -51,33 +51,38 @@
                 android:id="@+id/login_email"
                 android:text="E-mail"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
+                android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
                 android:textAllCaps="false"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_logins_height"
-                android:layout_marginTop="9.5dp"
-                android:id="@+id/login_facebook"
-                android:text = "facebook"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
-                android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"/>
 
-            <Button
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
-                android:layout_marginTop="9.5dp"
-                android:id="@+id/login_google"
-                android:text="Google"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
-                android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"/>
+                android:layout_marginTop="9.5dp">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_facebook"
+                    android:src="@drawable/button_facebook"
+                    android:background="@drawable/round_corner"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_logins_height"
+                android:layout_marginTop="9.5dp" >
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_google"
+                    android:src="@drawable/button_google"
+                    android:background="@drawable/round_corner"/>
+
+            </RelativeLayout>
 
 
             <LinearLayout

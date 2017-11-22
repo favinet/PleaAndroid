@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -32,8 +33,8 @@ public class SignUpFragment extends BaseFragment{
     public static final String ARG_PAGE_NUM = "ARG_PAGE_NUM";
     private Listner mListner;
     @BindView(R.id.facebook_login_btn) com.facebook.login.widget.LoginButton facebook;
-    @BindView(R.id.login_facebook) Button btn_facebook;
-    @BindView(R.id.login_google) Button btn_google;
+    @BindView(R.id.login_facebook) ImageButton btn_facebook;
+    @BindView(R.id.login_google) ImageButton btn_google;
     @BindView(R.id.login_email) Button btn__email;
     @BindView(R.id.txt_login)TextView txt_login;
 

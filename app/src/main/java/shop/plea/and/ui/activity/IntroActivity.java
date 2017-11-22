@@ -34,6 +34,9 @@ public class IntroActivity extends PleaActivity {
         @Override
         public void run() {
             stopIndicator();
+
+
+
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
             indata.link = Constants.BASE_URL;

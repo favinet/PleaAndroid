@@ -29,6 +29,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.ResponseData;
@@ -103,16 +104,20 @@ public class FindPasswordFragment extends BaseFragment {
                     }
                     else
                     {
+                        Logger.log(Logger.LogState.E, "response : " + Utils.getStringByObject(response));
                         String result = response.getResult();
-                        if(result.equals(Constants.API_SUCCESS))
-                        {
-                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                            dialog.setTitle(R.string.app_name).setMessage("입력하신 메일을 통해 비밀번호 변경을 진행해주세요.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
-                                }
-                            }).create().show();
+                        if(result.equals(Constants.API_SUCCESS)) {
+                            if (response.isFlag())
+                            {
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                                dialog.setTitle(R.string.app_name).setMessage("입력하신 메일을 통해 비밀번호 변경을 진행해주세요.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+                                    }
+                                }).create().show();
+                            }
+
                         }
                     }
                     stopIndicator();

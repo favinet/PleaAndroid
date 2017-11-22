@@ -86,7 +86,7 @@
                 android:id="@+id/btn_login"
                 android:text="Log in"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/btn_ripple"
+                android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
                 style="?android:attr/borderlessButtonStyle"
                 app:customFontBtn="NotoSans-Bold.ttf"
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/login_facebook"
                     android:src="@drawable/button_facebook"
-                    android:background="@drawable/btn_ripple"/>
+                    android:background="@drawable/round_corner"/>
 
             </RelativeLayout>
 
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/login_google"
                     android:src="@drawable/button_google"
-                    android:background="@drawable/btn_ripple"/>
+                    android:background="@drawable/round_corner"/>
 
             </RelativeLayout>
 
