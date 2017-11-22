@@ -11,7 +11,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beardedhen.androidbootstrap.BootstrapAlert;
-import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
-import com.beardedhen.androidbootstrap.BootstrapEditText;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,6 +70,8 @@ public class SignUpInfoFragment extends BaseFragment{
 
     @BindView(R.id.ed_nickname) EditText ed_nickname;
     @BindView(R.id.ed_nickname_alert) TextView ed_nickname_alert;
+    @BindView(R.id.ed_email) EditText ed_email;
+
     @BindView(R.id.upload_profile) ImageView upload_profile;
     @BindView(R.id.btn_regist_end) Button btn_regist_end;
     @BindView(R.id.txt_agree_info) TextView txt_agree_info;
@@ -149,6 +147,8 @@ public class SignUpInfoFragment extends BaseFragment{
         upload_profile.setOnClickListener(mListner);
         btn_regist_end.setOnClickListener(mListner);
         img_profile.setOnClickListener(mListner);
+
+        ed_email.setText(getEmail());
     }
 
     private String getEmail()
