@@ -18,6 +18,7 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.PermissionHelper;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -34,9 +35,6 @@ public class IntroActivity extends PleaActivity {
         @Override
         public void run() {
             stopIndicator();
-
-
-
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
             indata.link = Constants.BASE_URL;
@@ -56,6 +54,8 @@ public class IntroActivity extends PleaActivity {
         setContentView(R.layout.activity_intro);
 
         this.context = this;
+
+        Logger.log(Logger.LogState.E, "::::" + Utils.getStringByObject(Utils.queryToMap("plea://plea.shop/webview?url=url111&target=inapp")));
 
         // 네트워크 상태체크
         int networkStatus = Utils.getNetWorkType(context);

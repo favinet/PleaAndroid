@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -168,4 +170,21 @@ public class Utils {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.setStatusBarColor(ContextCompat.getColor(activity, color));
     }
+
+    public static Map<String, String> queryToMap(String url)
+    {
+        Map<String, String> result = new HashMap<String, String>();
+        String[] queryArray = url.split("\\?");
+        String query = (queryArray.length > 1) ? queryArray[1] : "";
+        for (String param : query.split("&")) {
+            String pair[] = param.split("=");
+            if (pair.length>1) {
+                result.put(pair[0], pair[1]);
+            }else{
+                result.put(pair[0], "");
+            }
+        }
+        return result;
+    }
+
 }
