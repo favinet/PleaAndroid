@@ -26,14 +26,15 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:text="Add a profile photo(optional)\n \u0026 nickname so your friends know it's you."
                 android:textSize="14.4sp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                app:customFont="NotoSansKR-Light.otf"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
 
             </RelativeLayout>
 
-            <EditText
+            <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
                 android:layout_marginTop="30dp"
@@ -70,14 +71,16 @@
                 android:drawableLeft="@drawable/icon_email_black"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:enabled="false"
+                app:customFontEdit="NotoSansKR-Light.otf"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1.3dp"
                 android:background="#1A000000"/>
 
-            <EditText
+            <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
                 android:layout_marginTop="21.3dp"
@@ -87,14 +90,15 @@
                 android:drawableLeft="@drawable/icon_email_black"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                app:customFontEdit="NotoSansKR-Light.otf"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1.3dp"
                 android:background="#1A000000"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ed_nickname_alert"
@@ -103,9 +107,10 @@
                 android:visibility="gone"
                 android:textColor="#d92222"
                 android:textSize="12.5sp"
-                android:text="The nickname you entered is already being used by \nanother user. Please enter a different one."/>
+                android:text="The nickname you entered is already being used by \nanother user. Please enter a different one."
+                app:customFont="NotoSansKR-Light.otf"/>
 
-            <Button
+            <shop.plea.and.ui.view.CustomFontBtn
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
                 android:layout_marginTop="34dp"
@@ -115,12 +120,13 @@
                 android:background="@drawable/round_stroke_corner"
                 android:textSize="14.4sp"
                 style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                app:customFontBtn="NotoSansKR-Medium.otf"/>
 
         </LinearLayout>
 
     </RelativeLayout>
-    <TextView
+    <shop.plea.and.ui.view.CustomFontTextView
         android:layout_width="match_parent"
         android:layout_height="95.8dp"
         android:id="@+id/txt_agree_info"
@@ -130,6 +136,7 @@
         android:textSize="13.4sp"
         android:textColor="#999999"
         android:text="By signing up,\nyou agree to our Terms \u0026 Privacy Policy."
-        android:bufferType="spannable"/>
+        android:bufferType="spannable"
+        app:customFont="NotoSansKR-Light.otf"/>
     <!-- content area //-->
 </RelativeLayout>

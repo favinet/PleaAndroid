@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shadow_background"
     android:weightSum="10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!-- content area -->
@@ -45,7 +46,7 @@
                 android:visibility="gone"
                 />
 
-            <Button
+            <shop.plea.and.ui.view.CustomFontBtn
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
                 android:id="@+id/login_email"
@@ -53,7 +54,8 @@
                 android:textColor="#FFFFFF"
                 android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                app:customFontBtn="NotoSansKR-Medium.otf"/>
 
 
             <RelativeLayout
@@ -93,15 +95,16 @@
                 android:layout_marginTop="28.5dp"
                 android:layout_marginBottom="25.5dp">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Already have an account?   "
                     android:textSize="14.4sp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_login"
@@ -109,7 +112,8 @@
                     android:layout_gravity="center_horizontal"
                     android:text="Log In."
                     android:textSize="14.4sp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
             </LinearLayout>
 

@@ -35,7 +35,7 @@
                 android:textColor="@android:color/black"/>
         </LinearLayout>
 
-        <Button
+        <shop.plea.and.ui.view.CustomFontBtn
             android:layout_width="62.8dp"
             android:layout_height="25.3dp"
             android:id="@+id/side_btn_profile"
@@ -46,7 +46,8 @@
             android:background="@drawable/btn_profile_round"
             android:textSize="14.4sp"
             style="?android:attr/borderlessButtonStyle"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            app:customFontBtn="NotoSansKR-Regular.otf"/>
 
     </RelativeLayout>
 
@@ -69,31 +70,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_myplea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Plea"
                 android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_follower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:text="Follower's Feed"
                 android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_foryou"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:text="For You"
                 android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -105,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <shop.plea.and.ui.view.CustomFontTextView
                         android:id="@+id/side_btn_push"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -113,7 +117,8 @@
                         android:layout_marginRight="10dp"
                         android:text="Push"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/side_menu_font" />
+                        android:textSize="@dimen/side_menu_font"
+                        app:customFont="NotoSansKR-Light.otf"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -137,7 +142,7 @@
                     android:layout_alignParentTop="true"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <shop.plea.and.ui.view.CustomFontTextView
                         android:id="@+id/side_btn_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -145,7 +150,8 @@
                         android:layout_marginRight="10dp"
                         android:text="E-mail"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/side_menu_font" />
+                        android:textSize="@dimen/side_menu_font"
+                        app:customFont="NotoSansKR-Light.otf"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -163,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_menu_language"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -171,9 +177,10 @@
                     android:layout_gravity="center_vertical"
                     android:text="Language"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/side_menu_font" />
+                    android:textSize="@dimen/side_menu_font"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
-                <Button
+                <shop.plea.and.ui.view.CustomFontBtn
                     android:id="@+id/side_btn_language"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="62.8dp"
@@ -185,7 +192,8 @@
                     android:text="English"
                     android:textAllCaps="false"
                     android:textColor="#666666"
-                    android:textSize="12.5sp" />
+                    android:textSize="12.5sp"
+                    app:customFontBtn="NotoSansKR-Light.otf"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -194,16 +202,17 @@
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:orientation="horizontal">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_notice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="Notice"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/side_menu_font" />
+                    android:textSize="@dimen/side_menu_font"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
-                <Button
+                <shop.plea.and.ui.view.CustomFontBtn
                     android:id="@+id/side_btn_notice_badge"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="20.3dp"
@@ -214,34 +223,37 @@
                     android:text="3"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
-                    android:textSize="8.1sp" />
+                    android:textSize="8.1sp"
+                    app:customFontBtn="NotoSansKR-Regular.otf"/>
 
             </LinearLayout>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_terms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:text="Terms \u0026 Conditions"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:text="Privacy Policy"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -249,9 +261,10 @@
                     android:layout_gravity="center_vertical"
                     android:text="Version 1.0.0"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/side_menu_font" />
+                    android:textSize="@dimen/side_menu_font"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
-                <Button
+                <shop.plea.and.ui.view.CustomFontBtn
                     android:id="@+id/side_btn_update"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="62.8dp"
@@ -263,10 +276,11 @@
                     android:text="Update"
                     android:textAllCaps="false"
                     android:textColor="#666666"
-                    android:textSize="12.5sp" />
+                    android:textSize="12.5sp"
+                    app:customFontBtn="NotoSansKR-Regular.otf"/>
             </RelativeLayout>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:id="@+id/side_btn_api"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -274,7 +288,8 @@
                 android:layout_marginTop="@dimen/side_menu_gap"
                 android:text="API"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/side_menu_font" />
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -282,7 +297,7 @@
                 android:layout_marginTop="43dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_support"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -290,7 +305,8 @@
                     android:layout_marginRight="10.5dp"
                     android:text="Support"
                     android:textColor="#666666"
-                    android:textSize="13.4sp" />
+                    android:textSize="13.4sp"
+                    app:customFont="NotoSansKR-Regular.otf"/>
 
                 <View
                     android:layout_width="1dp"
@@ -299,14 +315,15 @@
                     android:layout_marginRight="10.5dp"
                     android:background="#999999" />
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_reset_pwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Reset Your Password"
                     android:textColor="#666666"
-                    android:textSize="13.4sp" />
+                    android:textSize="13.4sp"
+                    app:customFont="NotoSansKR-Regular.otf"/>
 
             </LinearLayout>
 
@@ -316,7 +333,7 @@
                 android:layout_marginTop="24.3dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_signout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -324,7 +341,8 @@
                     android:layout_marginRight="10.5dp"
                     android:text="Sign Out"
                     android:textColor="#666666"
-                    android:textSize="13.4sp" />
+                    android:textSize="13.4sp"
+                    app:customFont="NotoSansKR-Regular.otf"/>
 
                 <View
                     android:layout_width="1dp"
@@ -333,14 +351,15 @@
                     android:layout_marginRight="10.5dp"
                     android:background="#999999" />
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_delete_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Delete Account"
                     android:textColor="#666666"
-                    android:textSize="13.4sp" />
+                    android:textSize="13.4sp"
+                    app:customFont="NotoSansKR-Regular.otf"/>
 
             </LinearLayout>
 

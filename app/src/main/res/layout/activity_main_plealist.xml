@@ -81,7 +81,7 @@
                 android:src="@drawable/image_photo_default"
                 android:layout_gravity="center_horizontal"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_nickname"
@@ -90,7 +90,8 @@
                 android:text="@string/user_resist_finish"
                 android:textSize="14.4sp"
                 android:gravity="center_horizontal"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                app:customFont="NotoSansKR-Light.otf"/>
 
 
         </LinearLayout>

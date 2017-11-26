@@ -50,7 +50,7 @@
                 android:drawablePadding="5dp"
                 android:textColor="#4cffffff"
                 android:textColorHint="#4cffffff"
-                app:customFont="NotoSans-Regular.ttf"/>
+                app:customFont="NotoSansKR-Regular.otf"/>
             
             <View
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:drawablePadding="5dp"
                 android:textColor="#4cffffff"
                 android:textColorHint="#4cffffff"
-                app:customFontEdit="NotoSans-Regular.ttf"/>
+                app:customFontEdit="NotoSansKR-Regular.otf"/>
 
             <View
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
                 style="?android:attr/borderlessButtonStyle"
-                app:customFontBtn="NotoSans-Bold.ttf"
+                app:customFontBtn="NotoSansKR-Medium.otf"
                 android:textAllCaps="false"/>
 
             <LinearLayout
@@ -115,7 +115,7 @@
                     android:textColor="#FFFFFF"
                     android:text="or"
                     android:gravity="center_horizontal"
-                    app:customFont="NotoSans-Bold.ttf"/>
+                    app:customFont="NotoSansKR-Bold.otf"/>
 
 
                 <View
@@ -181,7 +181,7 @@
                     android:id="@+id/txt_regist"
                     android:textSize="14.4sp"
                     android:textColor="#FFFFFF"
-                    app:customFont=""/>
+                    app:customFont="NotoSansKR-Light.otf"/>
 
                 <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
@@ -189,9 +189,10 @@
                     android:layout_gravity="center_horizontal"
                     android:text="ㅣ"
                     android:textSize="14.4sp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
-                <TextView
+                <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_find_password"
@@ -200,7 +201,8 @@
                     android:bufferType="spannable"
                     android:text="Forgotten password?"
                     android:textSize="14.4sp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    app:customFont="NotoSansKR-Light.otf"/>
 
 
             </LinearLayout>

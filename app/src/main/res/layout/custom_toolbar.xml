@@ -39,7 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:text=""
-            app:customFont="NotoSans-Regular.ttf"
+            app:customFont="NotoSansKR-Regular.otf"
             android:textColor="@color/colorBackground"
             android:textAllCaps="true"/>
 

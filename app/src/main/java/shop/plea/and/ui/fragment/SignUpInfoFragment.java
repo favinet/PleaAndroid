@@ -45,6 +45,9 @@ import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.activity.MainPleaListActivity;
+import shop.plea.and.ui.view.CustomFontBtn;
+import shop.plea.and.ui.view.CustomFontEditView;
+import shop.plea.and.ui.view.CustomFontTextView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -68,13 +71,13 @@ public class SignUpInfoFragment extends BaseFragment{
 
     private SignUpInfoFragment.Listner mListner;
 
-    @BindView(R.id.ed_nickname) EditText ed_nickname;
-    @BindView(R.id.ed_nickname_alert) TextView ed_nickname_alert;
-    @BindView(R.id.ed_email) EditText ed_email;
+    @BindView(R.id.ed_nickname) CustomFontEditView ed_nickname;
+    @BindView(R.id.ed_nickname_alert) CustomFontTextView ed_nickname_alert;
+    @BindView(R.id.ed_email) CustomFontEditView ed_email;
 
     @BindView(R.id.upload_profile) ImageView upload_profile;
-    @BindView(R.id.btn_regist_end) Button btn_regist_end;
-    @BindView(R.id.txt_agree_info) TextView txt_agree_info;
+    @BindView(R.id.btn_regist_end) CustomFontBtn btn_regist_end;
+    @BindView(R.id.txt_agree_info) CustomFontEditView txt_agree_info;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
 
@@ -147,7 +150,7 @@ public class SignUpInfoFragment extends BaseFragment{
         upload_profile.setOnClickListener(mListner);
         btn_regist_end.setOnClickListener(mListner);
         img_profile.setOnClickListener(mListner);
-
+        toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         ed_email.setText(getEmail());
     }
 
@@ -366,6 +369,9 @@ public class SignUpInfoFragment extends BaseFragment{
             {
                 case R.id.upload_profile :
                     callGallery();
+                    break;
+                case R.id.toolbar_back :
+                    mUpdateListenerCallBack.fragmentBackPressed();
                     break;
                 case R.id.btn_regist_end :
 
