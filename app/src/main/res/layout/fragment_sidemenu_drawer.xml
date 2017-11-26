@@ -25,23 +25,24 @@
                 android:src="@drawable/image_photo_default"
                 android:layout_marginRight="9dp"/>
 
-            <TextView
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/side_nickname"
                 android:text=""
                 android:layout_gravity="center_vertical"
                 android:textSize="13.4sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                app:customFont="NotoSansKR-Light.otf"/>
         </LinearLayout>
 
         <shop.plea.and.ui.view.CustomFontBtn
-            android:layout_width="62.8dp"
+            android:layout_width="wrap_content"
             android:layout_height="25.3dp"
             android:id="@+id/side_btn_profile"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:text="Profile"
+            android:text="@string/side_profile"
             android:textColor="#FFFFFF"
             android:background="@drawable/btn_profile_round"
             android:textSize="14.4sp"
@@ -74,7 +75,7 @@
                 android:id="@+id/side_btn_myplea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Plea"
+                android:text="@string/menu_myplea"
                 android:textColor="@color/colorSideMenu"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -84,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="Follower's Feed"
+                android:text="@string/menu_follower"
                 android:textColor="@color/colorSideMenu"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -94,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="For You"
+                android:text="@string/menu_foryou"
                 android:textColor="@color/colorSideMenu"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -115,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:text="Push"
+                        android:text="@string/menu_push"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/side_menu_font"
                         app:customFont="NotoSansKR-Light.otf"/>
@@ -148,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:text="E-mail"
+                        android:text="@string/menu_email"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/side_menu_font"
                         app:customFont="NotoSansKR-Light.otf"/>
@@ -175,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:text="Language"
+                    android:text="@string/menu_language"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/side_menu_font"
                     app:customFont="NotoSansKR-Light.otf"/>
@@ -189,7 +190,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25.3dp"
                     android:background="@android:color/transparent"
-                    android:text="English"
+                    android:text="@string/menu_language_eng"
                     android:textAllCaps="false"
                     android:textColor="#666666"
                     android:textSize="12.5sp"
@@ -207,7 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="Notice"
+                    android:text="@string/menu_notice"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/side_menu_font"
                     app:customFont="NotoSansKR-Light.otf"/>
@@ -233,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="Terms \u0026 Conditions"
+                android:text="@string/menu_term"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -243,7 +244,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="Privacy Policy"
+                android:text="@string/menu_privacy"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -259,7 +260,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:text="Version 1.0.0"
+                    android:text="@string/menu_version"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/side_menu_font"
                     app:customFont="NotoSansKR-Light.otf"/>
@@ -273,7 +274,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25.3dp"
                     android:background="@drawable/btn_update_round"
-                    android:text="Update"
+                    android:text="@string/menu_update"
                     android:textAllCaps="false"
                     android:textColor="#666666"
                     android:textSize="12.5sp"
@@ -286,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="API"
+                android:text="@string/menu_api"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/side_menu_font"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -303,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10.5dp"
-                    android:text="Support"
+                    android:text="@string/menu_support"
                     android:textColor="#666666"
                     android:textSize="13.4sp"
                     app:customFont="NotoSansKR-Regular.otf"/>
@@ -320,7 +321,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Reset Your Password"
+                    android:text="@string/menu_reset_password"
                     android:textColor="#666666"
                     android:textSize="13.4sp"
                     app:customFont="NotoSansKR-Regular.otf"/>
@@ -339,7 +340,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10.5dp"
-                    android:text="Sign Out"
+                    android:text="@string/menu_signout"
                     android:textColor="#666666"
                     android:textSize="13.4sp"
                     app:customFont="NotoSansKR-Regular.otf"/>
@@ -356,7 +357,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Delete Account"
+                    android:text="@string/menu_delete_account"
                     android:textColor="#666666"
                     android:textSize="13.4sp"
                     app:customFont="NotoSansKR-Regular.otf"/>

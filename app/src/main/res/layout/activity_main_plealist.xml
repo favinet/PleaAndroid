@@ -79,7 +79,8 @@
                 android:layout_height="122.9dp"
                 app:hasBorder="false"
                 android:src="@drawable/image_photo_default"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/main_profile"/>
 
             <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="wrap_content"

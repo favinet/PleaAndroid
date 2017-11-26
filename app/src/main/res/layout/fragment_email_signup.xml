@@ -70,7 +70,7 @@
                 android:inputType="textPassword"
                 android:id="@+id/ed_password"
                 android:hint="Please enter your password"
-                android:text="rudfks79"
+                android:text="Arudfks79@@"
                 android:textSize="14.4sp"
                 android:drawableLeft="@drawable/icon_password_black"
                 android:background="@drawable/custom_editview"

@@ -77,7 +77,7 @@ public class SignUpInfoFragment extends BaseFragment{
 
     @BindView(R.id.upload_profile) ImageView upload_profile;
     @BindView(R.id.btn_regist_end) CustomFontBtn btn_regist_end;
-    @BindView(R.id.txt_agree_info) CustomFontEditView txt_agree_info;
+    @BindView(R.id.txt_agree_info) CustomFontTextView txt_agree_info;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
 

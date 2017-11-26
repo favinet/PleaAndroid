@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,12 +17,16 @@ import android.support.v7.app.AlertDialog;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.util.Locale;
+
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.PermissionHelper;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.UserInfo;
+import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.parcel.IntentData;
 
 /**
@@ -118,6 +123,21 @@ public class IntroActivity extends PleaActivity {
 
     private void start()
     {
+        UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
+        Configuration config = new Configuration();
+        if(userInfoData.getLocale().equals("en"))
+        {
+            Locale.setDefault(Locale.ENGLISH);
+            config.locale = Locale.ENGLISH;
+        }
+        else
+        {
+            Locale.setDefault(Locale.KOREA);
+            config.locale = Locale.KOREA;
+        }
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
         handler.postDelayed(runMain, 3000);
         startIndicator("");
     }

@@ -1,41 +1,28 @@
 package shop.plea.and.ui.fragment;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.HashMap;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
-import shop.plea.and.common.view.ProgressWheel;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.ResponseData;
 import shop.plea.and.data.model.UserInfo;
@@ -44,9 +31,10 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
-import shop.plea.and.ui.activity.MainPleaListActivity;
+import shop.plea.and.ui.activity.LoginActivity;
 import shop.plea.and.ui.listener.FragmentListener;
-import shop.plea.and.ui.listener.UpdateListener;
+import shop.plea.and.ui.view.CustomFontBtn;
+import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.DrawerLayoutHorizontalSupport;
 
 /**
@@ -59,26 +47,26 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     private DrawerLayoutHorizontalSupport drawerLayout;
     private BaseActivity base;
     private UserInfoData userInfoData;
-    @BindView(R.id.side_nickname) TextView side_nickname;
+    @BindView(R.id.side_nickname) CustomFontTextView side_nickname;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
-    @BindView(R.id.side_btn_profile) Button side_btn_profile;
-    @BindView(R.id.side_btn_myplea) TextView side_btn_myplea;
-    @BindView(R.id.side_btn_follower) TextView side_btn_follower;
-    @BindView(R.id.side_btn_foryou) TextView side_btn_foryou;
-    @BindView(R.id.side_btn_push) TextView side_btn_push;
-    @BindView(R.id.side_btn_email) TextView side_btn_email;
-    @BindView(R.id.side_btn_notice) TextView side_btn_notice;
-    @BindView(R.id.side_btn_notice_badge) Button side_btn_notice_badge;
-    @BindView(R.id.side_btn_terms) TextView side_btn_terms;
-    @BindView(R.id.side_btn_privacy) TextView side_btn_privacy;
-    @BindView(R.id.side_btn_version) TextView side_btn_version;
-    @BindView(R.id.side_btn_update) Button side_btn_update;
-    @BindView(R.id.side_btn_api) TextView side_btn_api;
-    @BindView(R.id.side_btn_support) TextView side_btn_support;
-    @BindView(R.id.side_btn_reset_pwd) TextView side_btn_reset_pwd;
-    @BindView(R.id.side_btn_signout) TextView side_btn_signout;
-    @BindView(R.id.side_btn_delete_user) TextView side_btn_delete_user;
-    @BindView(R.id.side_btn_language) Button side_btn_language;
+    @BindView(R.id.side_btn_profile) CustomFontBtn side_btn_profile;
+    @BindView(R.id.side_btn_myplea) CustomFontTextView side_btn_myplea;
+    @BindView(R.id.side_btn_follower) CustomFontTextView side_btn_follower;
+    @BindView(R.id.side_btn_foryou) CustomFontTextView side_btn_foryou;
+    @BindView(R.id.side_btn_push) CustomFontTextView side_btn_push;
+    @BindView(R.id.side_btn_email) CustomFontTextView side_btn_email;
+    @BindView(R.id.side_btn_notice) CustomFontTextView side_btn_notice;
+    @BindView(R.id.side_btn_notice_badge) CustomFontBtn side_btn_notice_badge;
+    @BindView(R.id.side_btn_terms) CustomFontTextView side_btn_terms;
+    @BindView(R.id.side_btn_privacy) CustomFontTextView side_btn_privacy;
+    @BindView(R.id.side_btn_version) CustomFontTextView side_btn_version;
+    @BindView(R.id.side_btn_update) CustomFontBtn side_btn_update;
+    @BindView(R.id.side_btn_api) CustomFontTextView side_btn_api;
+    @BindView(R.id.side_btn_support) CustomFontTextView side_btn_support;
+    @BindView(R.id.side_btn_reset_pwd) CustomFontTextView side_btn_reset_pwd;
+    @BindView(R.id.side_btn_signout) CustomFontTextView side_btn_signout;
+    @BindView(R.id.side_btn_delete_user) CustomFontTextView side_btn_delete_user;
+    @BindView(R.id.side_btn_language) CustomFontBtn side_btn_language;
 
 
     public static SideMenuDrawerFragment newInstance() {
@@ -213,7 +201,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "setNoticeCnt 실패!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "updateUser 실패!!", Toast.LENGTH_LONG).show();
                 stopIndicator();
             }
         });
@@ -228,12 +216,26 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+        dialog.setTitle(getString(R.string.app_name)).setMessage(R.string.reset_language).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                base.finish();
+            }
+        }).setNegativeButton(R.string.cancel, null).create().show();
     }
 
     private void signOut()
     {
         BasePreference.getInstance(getActivity()).removeAll();
-        mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+        Logger.log(Logger.LogState.E, "signOut!!!");
+        IntentData indata = new IntentData();
+        indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 
     private void deleteUser()
@@ -241,19 +243,28 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         startIndicator("");
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
         String id = userInfoData.getId();
+        Logger.log(Logger.LogState.E, "deleteUser  id= " + id);
 
-        DataManager.getInstance(getActivity()).api.userDelete(getActivity(), id, new DataInterface.ResponseCallback<ResponseData>() {
+        UserInfo.getInstance().clearParams();
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.ID, id);
+        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+
+        DataManager.getInstance(getActivity()).api.userDelete(getActivity(), id, params, new DataInterface.ResponseCallback<ResponseData>() {
             @Override
             public void onSuccess(ResponseData response) {
                 stopIndicator();
                 Logger.log(Logger.LogState.E, "deleteUser = " + Utils.getStringByObject(response));
                 BasePreference.getInstance(getActivity()).removeAll();
-                mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+                IntentData indata = new IntentData();
+                indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
             }
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "setNoticeCnt 실패!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "deleteUser 실패!!", Toast.LENGTH_LONG).show();
                 stopIndicator();
             }
         });

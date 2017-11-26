@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomFontTextView">
+        <attr name="customFont" format="string"/>
+        <attr name="isStroke" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFontEditView">
+        <attr name="customFontEdit" format="string"/>
+        <attr name="isStrokeEdit" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFontBtn">
+        <attr name="customFontBtn" format="string"/>
+        <attr name="isStrokeBtn" format="boolean"/>
+    </declare-styleable>
+</resources>

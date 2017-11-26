@@ -11,13 +11,19 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
+import shop.plea.and.data.model.UserInfo;
+import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
 import shop.plea.and.ui.listener.FragmentListener;
+import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.CustomWebView;
 import shop.plea.and.ui.view.DrawerLayoutHorizontalSupport;
 
@@ -30,6 +36,9 @@ public class MainPleaListActivity extends PleaActivity{
     @BindView(R.id.hellow_area) RelativeLayout hellow_area;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
     @BindView(R.id.drawerLayout) DrawerLayoutHorizontalSupport mDrawerLayout;
+    @BindView(R.id.txt_nickname) CustomFontTextView txt_nickname;
+    @BindView(R.id.main_profile) BootstrapCircleThumbnail main_profile;
+
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
     private Fragment drawer_Fragment;
@@ -88,6 +97,14 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.btn_menu).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_search).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_alert).setOnClickListener(mListener);
+
+        UserInfoData userInfo = UserInfo.getInstance().getCurrentUserInfoData(this);
+        txt_nickname.setText(String.format(getString(R.string.user_resist_finish), userInfo.getNickname()));
+
+        Glide.with(this)
+                .load(userInfo.getProfileImg())
+                .into(main_profile);
+
     }
 
     private void init()

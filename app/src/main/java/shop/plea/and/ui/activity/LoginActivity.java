@@ -6,9 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import java.util.prefs.Preferences;
+
 import shop.plea.and.R;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.UserInfoData;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.fragment.LoginFragment;
 import shop.plea.and.ui.fragment.SignUpFragment;
 import shop.plea.and.ui.fragment.SignUpInfoFragment;
@@ -52,7 +57,23 @@ public class LoginActivity extends PleaActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        addFragment(Constants.FRAGMENT_MENUID.SINGUP);
+
+
+        UserInfoData userInfoData = (UserInfoData) BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        if(userInfoData == null)
+            addFragment(Constants.FRAGMENT_MENUID.SINGUP);
+        else
+        {
+            IntentData indata = new IntentData();
+            indata.isRegist = false;
+            indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
+            Intent intent = new Intent(this, MainPleaListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
 

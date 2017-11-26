@@ -43,7 +43,7 @@
                 android:inputType="textEmailAddress"
                 android:id="@+id/ed_email"
                 android:hint="Please enter your email"
-                android:text="monster7575@naver.com"
+                android:text="monster0000@naver.com"
                 android:textSize="14.4sp"
                 android:drawableLeft="@drawable/icon_email"
                 android:background="@drawable/custom_editview"

@@ -258,10 +258,10 @@ public class DataInterface extends BaseDataInterface{
         }
     }
 
-    public void userDelete(Context context, String id, final ResponseCallback callback)
+    public void userDelete(Context context, String id, HashMap<String, String> params, final ResponseCallback callback)
     {
         try {
-            Call<ResponseData> call = service.callUserDelete(id);
+            Call<ResponseData> call = service.callUserDelete(id, params);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
                 @Override
