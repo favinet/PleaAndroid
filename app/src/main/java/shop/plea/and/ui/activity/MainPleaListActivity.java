@@ -110,7 +110,8 @@ public class MainPleaListActivity extends PleaActivity{
     private void init()
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
-        customWebView.initContentView(inData.link);
+        //customWebView.initContentView(inData.link);
+        customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
     }
 
     @Override

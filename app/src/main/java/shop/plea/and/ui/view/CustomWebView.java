@@ -24,7 +24,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -125,6 +129,18 @@ public class CustomWebView {
                     e.printStackTrace();
                     return false;
                 }
+            }
+
+           // String action = Utils.queryToMap(url).get("name");
+            if(url.contains("webview"))
+            {
+
+                    String target = Utils.queryToMap(url).get("target");
+                    Logger.log(Logger.LogState.D, "webviewview target : " + Utils.getStringByObject(target));
+                    url = Utils.queryToMap(url).get("url");
+                    Logger.log(Logger.LogState.D, "webviewview url : " + Utils.getStringByObject(url));
+                    initContentView(url);
+
             }
 
             curUrl = url;

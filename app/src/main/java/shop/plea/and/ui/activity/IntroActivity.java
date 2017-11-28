@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -60,7 +61,19 @@ public class IntroActivity extends PleaActivity {
 
         this.context = this;
 
-        Logger.log(Logger.LogState.E, "::::" + Utils.getStringByObject(Utils.queryToMap("plea://plea.shop/webview?url=url111&target=inapp")));
+        if(getIntent() != null)
+        {
+            Uri uri = getIntent().getData();
+            if(uri != null)
+            {
+                String action = uri.toString();
+                if(action.contains("reset_password"))
+                {
+                    Logger.log(Logger.LogState.E, "::::" + Utils.getStringByObject(uri));
+                    Toast.makeText(this, "비밀번호 변경 페이지 호출", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
 
         // 네트워크 상태체크
         int networkStatus = Utils.getNetWorkType(context);
@@ -121,23 +134,25 @@ public class IntroActivity extends PleaActivity {
         }
     }
 
-    private void start()
-    {
+    private void start() {
         UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
         Configuration config = new Configuration();
-        if(userInfoData.getLocale().equals("en"))
-        {
-            Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(Locale.ENGLISH);
+        if (userInfoData.getLocale() == null)
             config.locale = Locale.ENGLISH;
-        }
         else
         {
-            Locale.setDefault(Locale.KOREA);
-            config.locale = Locale.KOREA;
+            if(userInfoData.getLocale().equals("en"))
+                config.locale = Locale.ENGLISH;
+            else
+            {
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
+            }
         }
+
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
-
         handler.postDelayed(runMain, 3000);
         startIndicator("");
     }
