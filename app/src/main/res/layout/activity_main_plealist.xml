@@ -24,7 +24,7 @@
                 android:id="@+id/webview_frame"
                 android:layout_below="@id/toolbar_header"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <WebView
                     android:id="@+id/webview"
@@ -98,4 +98,6 @@
         </LinearLayout>
     </RelativeLayout>
     <!-- regist success box //-->
+
+
 </RelativeLayout>

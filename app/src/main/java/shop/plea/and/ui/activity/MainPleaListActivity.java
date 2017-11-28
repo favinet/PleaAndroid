@@ -14,6 +14,13 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
@@ -42,9 +49,39 @@ public class MainPleaListActivity extends PleaActivity{
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
     private Fragment drawer_Fragment;
+    private headerJsonCallback mHeaderJsonCallback = new headerJsonCallback() {
+        @Override
+        public void onReceive(JSONObject jsonObject) {
 
-    public interface titleCallback{
-        void onReceive(String title);
+            Logger.log(Logger.LogState.E, "header Receiver!" + Utils.getStringByObject(jsonObject));
+            try
+            {
+                JSONArray tickers = jsonObject.getJSONArray("tickers");
+                Logger.log(Logger.LogState.E, "header tickers!" + Utils.getStringByObject(tickers));
+                if(tickers.length() > 0)
+                {
+                    JSONObject target = tickers.getJSONObject(0);
+                    Logger.log(Logger.LogState.E, "header target!" + Utils.getStringByObject(target));
+                    String targetUrl = target.getString("target");
+                    String str = URLDecoder.decode(targetUrl , "EUC-KR" );
+
+
+                    Logger.log(Logger.LogState.E, "header str!" + str);
+                    customWebView.initContentView(str);
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        }
+    };
+
+    public interface headerJsonCallback{
+        void onReceive(JSONObject jsonObject);
     }
 
     Handler handler = new Handler();
@@ -110,8 +147,9 @@ public class MainPleaListActivity extends PleaActivity{
     private void init()
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
-        //customWebView.initContentView(inData.link);
-        customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
+        customWebView.setWebHeaderCallback(mHeaderJsonCallback);
+        customWebView.initContentView(inData.link);
+        //customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
     }
 
     @Override
@@ -168,7 +206,6 @@ public class MainPleaListActivity extends PleaActivity{
 
         return super.onKeyDown(keyCode, event);
     }
-
 
     private class Listener implements View.OnClickListener {
 

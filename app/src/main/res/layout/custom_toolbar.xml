@@ -1,90 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_alignParentTop="true"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/transparent"
     android:id="@+id/toolbar"
-    app:contentInsetStart="0dp">
+    app:contentInsetStart="0dp"
+    android:layout_centerVertical="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/toolbar_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/top_arrow_left"
-            android:background="@android:color/transparent"
-            android:layout_centerVertical="true"
-            android:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/btn_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/top_icon_menu"
-            android:background="@android:color/transparent"
-            android:visibility="gone"
-            android:layout_centerVertical="true" />
-
-        <shop.plea.and.ui.view.CustomFontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar_title"
-            android:visibility="gone"
-            android:textSize="16.3sp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:text=""
-            app:customFont="NotoSansKR-Regular.otf"
-            android:textColor="@color/colorBackground"
-            android:textAllCaps="true"/>
-
-        <ImageButton
-            android:id="@+id/btn_toolbar_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/top_icon_logo"
-            android:background="@android:color/transparent"
-            android:visibility="gone"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar_right_btns"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/colorPrimary">
 
             <ImageButton
-                android:id="@+id/btn_toolbar_search"
+                android:id="@+id/toolbar_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/top_icon_search"
+                android:src="@drawable/top_arrow_left"
                 android:background="@android:color/transparent"
-                android:visibility="gone"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
 
             <ImageButton
-                android:id="@+id/btn_toolbar_alert"
+                android:id="@+id/btn_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/top_icon_notice"
+                android:src="@drawable/top_icon_menu"
                 android:background="@android:color/transparent"
                 android:visibility="gone"
                 android:layout_centerVertical="true" />
 
+            <shop.plea.and.ui.view.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar_title"
+                android:visibility="gone"
+                android:textSize="16.3sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text=""
+                app:customFont="NotoSansKR-Regular.otf"
+                android:textColor="@color/colorBackground"
+                android:textAllCaps="true"/>
+
+            <ImageButton
+                android:id="@+id/btn_toolbar_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_icon_logo"
+                android:background="@android:color/transparent"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar_right_btns"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageButton
+                    android:id="@+id/btn_toolbar_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_search"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:layout_centerVertical="true"/>
+
+                <ImageButton
+                    android:id="@+id/btn_toolbar_alert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_notice"
+                    android:background="@android:color/transparent"
+                    android:visibility="visible"
+                    android:layout_centerVertical="true" />
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/top_ticker"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:background="#281c59"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_icon_notice_on_01"/>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="21dp"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_icon_notice_on_02"/>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="21dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_icon_notice_on_03"/>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="3dp"/>
+
         </LinearLayout>
 
-
     </RelativeLayout>
+
+
 
 
 </android.support.v7.widget.Toolbar>

@@ -53,7 +53,7 @@ public class CustomWebView {
     public String curUrl;
     public FrameLayout mContainer;
     public Map<String, String> titleArr = new HashMap<>();
-    private MainPleaListActivity.titleCallback callback;
+    private MainPleaListActivity.headerJsonCallback callback;
     private int mPosition = 0;
 
     public CustomWebView(BaseActivity baseActivity, View v, int postion) {
@@ -131,18 +131,26 @@ public class CustomWebView {
                 }
             }
 
-           // String action = Utils.queryToMap(url).get("name");
-            if(url.contains("webview"))
+             String action = Utils.queryToMap(url).get("name");
+            if(action != null)
             {
+                if(action.equals("setTopMenu"))
+                {
+                    String json = Utils.queryToMap(url).get("params");
+                    try
+                    {
+                        JSONObject jsonObject = new JSONObject(json);
+                        setWebViewHeaderJson(jsonObject);
+                        return true;
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        return false;
+                    }
 
-                    String target = Utils.queryToMap(url).get("target");
-                    Logger.log(Logger.LogState.D, "webviewview target : " + Utils.getStringByObject(target));
-                    url = Utils.queryToMap(url).get("url");
-                    Logger.log(Logger.LogState.D, "webviewview url : " + Utils.getStringByObject(url));
-                    initContentView(url);
-
+                }
             }
-
             curUrl = url;
             return false;
         }
@@ -156,7 +164,7 @@ public class CustomWebView {
         public void onPageFinished(WebView view, String url) {
             CookieSyncManager.getInstance().sync();
 
-
+            Logger.log(Logger.LogState.E, "onPageFinished!" + url);
 
             super.onPageFinished(view, url);
         }
@@ -265,11 +273,11 @@ public class CustomWebView {
         }
     }
 
-    private void setWebViewTitle(String title) {
-        if(callback != null) callback.onReceive(title);
+    private void setWebViewHeaderJson(JSONObject jsonObject) {
+        if(callback != null) callback.onReceive(jsonObject);
     }
 
-    public void setWebTitleCallback(MainPleaListActivity.titleCallback listener)
+    public void setWebHeaderCallback(MainPleaListActivity.headerJsonCallback listener)
     {
         callback = listener;
     }
