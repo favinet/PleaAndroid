@@ -99,5 +99,7 @@
     </RelativeLayout>
     <!-- regist success box //-->
 
-
+    <include android:id="@+id/ticker_header"
+        layout="@layout/ticker"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top_ticker"
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal"
+    android:background="@drawable/ticker_round"
+    android:layout_marginTop="50dp"
+    android:visibility="visible"
+    android:layout_marginRight="10dp"
+    android:paddingLeft="14.5dp"
+    android:paddingRight="14.5dp">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ticker_notice">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_notice_on_01"/>
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="11.5sp"
+                    android:id="@+id/noticeCnt"
+                    app:customFont="NotoSansKR-Regular.otf"/>
+
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="1.3dp"
+            android:layout_height="10.8dp"
+            android:layout_gravity="center_vertical"
+            android:background="#453775"
+            android:layout_marginRight="10.3dp"
+            android:layout_marginLeft="10.3dp"></View>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ticker_like">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_notice_on_02"/>
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="11.5sp"
+                    android:id="@+id/likeCnt"
+                    app:customFont="NotoSansKR-Regular.otf"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1.3dp"
+            android:layout_height="10.8dp"
+            android:layout_gravity="center_vertical"
+            android:background="#453775"
+            android:layout_marginRight="10.3dp"
+            android:layout_marginLeft="10.3dp"></View>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ticker_follow">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_notice_on_03"/>
+
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="11.5sp"
+                    android:id="@+id/followCnt"
+                    app:customFont="NotoSansKR-Regular.otf"/>
+
+        </LinearLayout>
+
+</LinearLayout>

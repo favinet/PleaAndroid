@@ -15,6 +15,7 @@ public class IntentData implements Parcelable {
     public String joinType;
     public boolean isRegist;
     public String link;
+    public String title;
 
     public IntentData(){
         aniType = Constants.VIEW_ANIMATION.ANI_NONE;
@@ -22,6 +23,7 @@ public class IntentData implements Parcelable {
         joinType = "";
         isRegist = false;
         link = "";
+        title = "";
     }
 
     protected IntentData(Parcel in) {
@@ -35,6 +37,7 @@ public class IntentData implements Parcelable {
         joinType = in.readString();
         isRegist = in.readByte() != 0;
         link = in.readString();
+        title = in.readString();
     }
 
     @Override
@@ -44,6 +47,7 @@ public class IntentData implements Parcelable {
         dest.writeString(joinType);
         dest.writeByte((byte) (isRegist ? 1 : 0));
         dest.writeString(link);
+        dest.writeString(title);
     }
 
     @Override

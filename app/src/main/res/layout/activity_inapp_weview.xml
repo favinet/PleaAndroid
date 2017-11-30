@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inapp_top"
+        android:background="#515151">
+
+        <shop.plea.and.ui.view.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:customFont="NotoSansKR-Regular.otf"
+            android:textSize="16.3dp"
+            android:id="@+id/inapp_title"
+            android:text="ZARA"
+            android:textColor="#FFFFFF"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close"
+            android:layout_alignParentRight="true"
+            android:id="@+id/inapp_close"/>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4c3994"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/inapp_footer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_back"
+                android:id="@+id/inapp_footer_back"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_next"
+                android:id="@+id/inapp_footer_next"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_re"
+                android:id="@+id/inapp_footer_refresh"/>
+
+        </LinearLayout>
+
+        <shop.plea.and.ui.view.CustomFontBtn
+            android:layout_width="wrap_content"
+            android:layout_height="32.8dp"
+            android:id="@+id/inapp_footer_plea"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/app_name"
+            android:textColor="#4c3994"
+            android:background="@drawable/round_stroke_corner"
+            android:textSize="14.4sp"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAllCaps="false"
+            app:customFontBtn="NotoSansKR-Regular.otf"
+            android:layout_marginRight="9.5dp"/>
+
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/webview_frame"
+        android:layout_below="@id/inapp_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/inapp_footer">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </WebView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_below="@id/inapp_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/inapp_footer">
+
+    </FrameLayout>
+</RelativeLayout>

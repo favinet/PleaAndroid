@@ -30,7 +30,9 @@ import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,9 @@ import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
+import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.ui.activity.InAppWebView;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 
 /**
@@ -131,7 +136,8 @@ public class CustomWebView {
                 }
             }
 
-             String action = Utils.queryToMap(url).get("name");
+            String action = Utils.queryToMap(url).get("name");
+            Logger.log(Logger.LogState.E, "action!" + action);
             if(action != null)
             {
                 if(action.equals("setTopMenu"))
@@ -151,6 +157,39 @@ public class CustomWebView {
 
                 }
             }
+
+
+            if(url.contains("webview"))
+            {
+                String decodeUrl = Utils.decode(url, "UTF-8");
+                String urlParam = Utils.queryToMap(decodeUrl).get("url");
+                String titleParam = Utils.queryToMap(decodeUrl).get("title");
+                String targetParam = Utils.queryToMap(decodeUrl).get("target");
+
+                if(targetParam.equals("popup"))     //리스트 터치시 상세화면 popup
+                {
+                    IntentData indata = new IntentData();
+                    indata.link = String.format(urlParam);
+                    indata.title = titleParam;
+                    indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
+                    Intent intent = new Intent(base, InAppWebView.class);
+                    intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                    base.startActivity(intent);
+                    return true;
+                }
+                else                                //쇼핑몰 터치시 활성화
+                {
+                    IntentData indata = new IntentData();
+                    indata.link = String.format(urlParam);
+                    indata.title = titleParam;
+                    indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
+                    Intent intent = new Intent(base, InAppWebView.class);
+                    intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                    base.startActivity(intent);
+                    return true;
+                }
+            }
+
             curUrl = url;
             return false;
         }
@@ -288,4 +327,20 @@ public class CustomWebView {
         mView.loadUrl(link);
     }
 
+    public void goBack()
+    {
+        if(mView.canGoBack())
+            mView.goBack();
+    }
+
+    public void goNext()
+    {
+        if(mView.canGoForward())
+            mView.goForward();
+    }
+
+    public void refresh()
+    {
+        mView.reload();
+    }
 }

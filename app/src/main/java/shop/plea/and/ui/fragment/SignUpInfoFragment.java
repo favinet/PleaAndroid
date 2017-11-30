@@ -61,7 +61,7 @@ public class SignUpInfoFragment extends BaseFragment{
     public static final String ARG_EMAIL = "ARG_EMAIL";
     public static final String ARG_SNS_EMAIL = "ARG_SNS_EMAIL";
     public static final String ARG_PASSWORD = "ARG_PASSWORD";
-    public static final String ARG_LOGIN_TYP = "ARG_LOGIN_TYP";
+    public static final String ARG_JOIN_TYP = "ARG_JOIN_TYP";
     public static final String ARG_AUTHID = "ARG_AUTHID";
     public static final String ARG_PROFILE_IMG = "ARG_PROFILE_IMG";
 
@@ -109,7 +109,7 @@ public class SignUpInfoFragment extends BaseFragment{
         bundle.putString(ARG_EMAIL, params.get(Constants.API_PARAMS_KEYS.EMAIL));
         bundle.putString(ARG_SNS_EMAIL, params.get(Constants.API_PARAMS_KEYS.SNS_EMAIL));
         bundle.putString(ARG_PASSWORD, params.get(Constants.API_PARAMS_KEYS.PASSWORD));
-        bundle.putString(ARG_LOGIN_TYP, params.get(Constants.API_PARAMS_KEYS.JOIN_TYPE));
+        bundle.putString(ARG_JOIN_TYP, params.get(Constants.API_PARAMS_KEYS.JOIN_TYPE));
         bundle.putString(ARG_AUTHID, params.get(Constants.API_PARAMS_KEYS.AUTHID));
         bundle.putString(ARG_PROFILE_IMG, params.get(Constants.API_PARAMS_KEYS.PROFILE_IMG));
         signUpInfoFragment.setArguments(bundle);
@@ -130,7 +130,7 @@ public class SignUpInfoFragment extends BaseFragment{
 
             Logger.log(Logger.LogState.E, "CHK : " + getEmail());
             Logger.log(Logger.LogState.E, "CHK : " + getPassword());
-            Logger.log(Logger.LogState.E, "CHK : " + getLoginType());
+            Logger.log(Logger.LogState.E, "CHK : " + getJoinType());
         }
 
         return mView;
@@ -151,7 +151,8 @@ public class SignUpInfoFragment extends BaseFragment{
         btn_regist_end.setOnClickListener(mListner);
         img_profile.setOnClickListener(mListner);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
-        ed_email.setText(getEmail());
+        String email = (getJoinType().equals("email")) ? getEmail() : getSnsEmail();
+        ed_email.setText(email);
     }
 
     private String getEmail()
@@ -166,9 +167,9 @@ public class SignUpInfoFragment extends BaseFragment{
     {
         return getArguments().getString(ARG_PASSWORD);
     }
-    private String getLoginType()
+    private String getJoinType()
     {
-        return getArguments().getString(ARG_LOGIN_TYP);
+        return getArguments().getString(ARG_JOIN_TYP);
     }
     private String getAuthId()
     {
@@ -240,15 +241,15 @@ public class SignUpInfoFragment extends BaseFragment{
         startIndicator("");
         Map<String, RequestBody> params = new HashMap<>();
 
-        String loginTyp = getLoginType();
+        String joinType = getJoinType();
         File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
-        RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), loginTyp);
+        RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
         RequestBody nickNameBody = RequestBody.create(MediaType.parse(MULTI_PART), ed_nickname.getText().toString());
         if(loginTypBody != null) params.put(Constants.API_PARAMS_KEYS.JOIN_TYPE, loginTypBody);
         if(nickNameBody != null) params.put(Constants.API_PARAMS_KEYS.NICKNAME, nickNameBody);
 
-        if(loginTyp.equals(Constants.LOGIN_TYPE.EMAIL))
+        if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
         {
             RequestBody pwdBody = RequestBody.create(MediaType.parse(MULTI_PART), getPassword());
             RequestBody emailBody = RequestBody.create(MediaType.parse(MULTI_PART), getEmail());

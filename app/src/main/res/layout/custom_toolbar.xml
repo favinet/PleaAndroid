@@ -7,7 +7,8 @@
     android:layout_centerVertical="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize">
+    android:minHeight="?attr/actionBarSize"
+    android:layout_alignParentTop="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorSubHeader">
 
             <ImageButton
                 android:id="@+id/toolbar_back"
@@ -75,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/top_icon_search"
                     android:background="@android:color/transparent"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_centerVertical="true"/>
 
                 <ImageButton
@@ -84,8 +85,9 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/top_icon_notice"
                     android:background="@android:color/transparent"
-                    android:visibility="visible"
-                    android:layout_centerVertical="true" />
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:tag="off"/>
 
 
 
@@ -94,80 +96,7 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/top_ticker"
-            android:layout_alignParentRight="true"
-            android:orientation="horizontal"
-            android:background="#281c59"
-            android:layout_marginTop="50dp"
-            android:visibility="visible"
-            android:layout_marginRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/top_icon_notice_on_01"/>
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="4dp"
-                android:layout_gravity="center_vertical"
-                android:background="#ffffff"></View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:layout_gravity="center_vertical"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="21dp"/>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/top_icon_notice_on_02"/>
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="4dp"
-                android:layout_gravity="center_vertical"
-                android:background="#ffffff"></View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:layout_gravity="center_vertical"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="21dp"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/top_icon_notice_on_03"/>
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="4dp"
-                android:layout_gravity="center_vertical"
-                android:background="#ffffff"></View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:layout_gravity="center_vertical"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="3dp"/>
-
-        </LinearLayout>
 
     </RelativeLayout>
 

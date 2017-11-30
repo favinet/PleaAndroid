@@ -178,7 +178,6 @@ public class SNSHelper {
 
     private void userCheck(HashMap<String, String> params)
     {
-        UserInfoData userInfoData = BasePreference.getInstance(base).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         Logger.log(Logger.LogState.E, "userCheck = " + Utils.getStringByObject(params));
         if(isLogin)
         {

@@ -14,6 +14,9 @@ import android.view.WindowManager;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -187,4 +190,29 @@ public class Utils {
         return result;
     }
 
+    public static String decode(String value, String typ)
+    {
+        String result = "";
+        try
+        {
+            result = URLDecoder.decode(value, typ);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static String encode(String value)
+    {
+        String result = "";
+        try
+        {
+            result = URLEncoder.encode(value, "EUC-KR");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }
