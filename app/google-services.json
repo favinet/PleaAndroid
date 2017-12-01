@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "345769889312-rve7b725r9t2hed7c45jhvq4bmcn4qkl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "shop.plea.and",
+            "certificate_hash": "4cd3b1878921f126cdaaf9a413f3da07ded3cf50"
+          }
+        },
+        {
           "client_id": "345769889312-osjfnqi1us2ddm331jge5ouqnb2o75on.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

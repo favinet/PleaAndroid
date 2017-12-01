@@ -2,6 +2,7 @@ package shop.plea.and.ui.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +32,7 @@ import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
+import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
@@ -75,8 +77,21 @@ public class MainPleaListActivity extends PleaActivity{
         }
     };
 
+    private sideMenuCallback mSideMenuCallback = new sideMenuCallback() {
+        @Override
+        public void onReceive(String url) {
+            Logger.log(Logger.LogState.E, "mSideMenuCallback : " + url);
+            closeDrawer();
+            customWebView.initContentView(url);
+        }
+    };
+
     public interface headerJsonCallback{
         void onReceive(JSONObject jsonObject);
+    }
+
+    public interface sideMenuCallback{
+        void onReceive(String url);
     }
 
     Handler handler = new Handler();
@@ -105,7 +120,7 @@ public class MainPleaListActivity extends PleaActivity{
         ft.commitAllowingStateLoss();
 
         ((SideMenuDrawerFragment)drawer_Fragment).setDrawerLayout(mDrawerLayout);
-
+        ((SideMenuDrawerFragment)drawer_Fragment).setMenuCallback(mSideMenuCallback);
 
         initScreen();
         init();
@@ -120,7 +135,6 @@ public class MainPleaListActivity extends PleaActivity{
             String alertBt = (jsonObject.has("alertBt")) ? jsonObject.getString("alertBt") : "N";
             String preBt = (jsonObject.has("preBt")) ? jsonObject.getString("preBt") : "N";
             String title = (jsonObject.has("title")) ? jsonObject.getString("title") : "N";
-
 
             if(alertBt.equals("Y"))
             {
@@ -185,6 +199,19 @@ public class MainPleaListActivity extends PleaActivity{
             else
                 toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
 
+            if(menuBt.equals("Y") && preBt.equals("Y"))
+            {
+                toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.VISIBLE);
+                toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.VISIBLE);
+                toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
+                toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.GONE);
+            }
+            else
+            {
+                toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.GONE);
+                toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.GONE);
+            }
+
             toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
             Utils.changeStatusColor(this, R.color.colorSubHeader);
         }
@@ -199,9 +226,11 @@ public class MainPleaListActivity extends PleaActivity{
     {
         setSupportActionBar(toolbar_header);
         toolbar_header.findViewById(R.id.btn_menu).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_menu_profile).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_search).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_alert).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.toolbar_back_profile).setOnClickListener(mListener);
 
         ticker_notice.setOnClickListener(mListener);
         ticker_like.setOnClickListener(mListener);
@@ -220,7 +249,16 @@ public class MainPleaListActivity extends PleaActivity{
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
         customWebView.setWebHeaderCallback(mHeaderJsonCallback);
-        customWebView.initContentView(inData.link);
+
+        UserInfoData userInfo = UserInfo.getInstance().getCurrentUserInfoData(this);
+
+        String status = userInfo.getStatus();
+        String uid = userInfo.getId();
+
+        if(status.equals("T"))
+            customWebView.initContentView(String.format(Constants.MENU_LINKS.BLOCK, uid));
+        else
+            customWebView.initContentView(inData.link);
         //customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
     }
 
@@ -340,6 +378,7 @@ public class MainPleaListActivity extends PleaActivity{
             switch (v.getId())
             {
                 case R.id.btn_menu :
+                case R.id.btn_menu_profile :
                     openDrawer();
                     break;
 
@@ -383,6 +422,7 @@ public class MainPleaListActivity extends PleaActivity{
                     break;
 
                 case R.id.toolbar_back :
+                case R.id.toolbar_back_profile :
                     backAction();
                     break;
             }

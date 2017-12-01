@@ -19,6 +19,21 @@ public class Constants {
     public static final String API_SUCCESS = "success";
     public static final String API_FAIL = "fail";
 
+    public final class MENU_LINKS{
+        public static final String PROFILE = "http://" + Constants.DOING_DOMAIN + "/member/memberView/%s?uid=%s";
+        public static final String MY_PLEA = "http://" + Constants.DOING_DOMAIN + "/main/MY?uid=%s";
+        public static final String FREIEND_NEWS = "http://" + Constants.DOING_DOMAIN + "/main/FOLLOWING?uid=%s";
+        public static final String RECOMMEND_PLEA = "http://" + Constants.DOING_DOMAIN + "/main/RECOMMEND?uid=%s";
+        public static final String NOTICE = "http://" + Constants.DOING_DOMAIN + "/notice?uid=%s";
+        public static final String TERMS = "http://" + Constants.DOING_DOMAIN + "/join/terms?locale=%s";
+        public static final String POLICY = "http://" + Constants.DOING_DOMAIN + "/join/policy?locale=%s";
+        public static final String RESET_PASSWORD = "http://" + Constants.DOING_DOMAIN + "/member/password/passwordReset?uid=%s";
+        public static final String BLOCK = "http://" + Constants.DOING_DOMAIN + "/block/%s";
+        public static final String SEARCH_MAIN = "http://" + Constants.DOING_DOMAIN + "/search?uid=%s";
+        public static final String SEARCH_RESULT = "http://" + Constants.DOING_DOMAIN + "/search?uid=%s";
+    }
+
+
     public final class VIEW_ANIMATION {
         public static final int ANI_NONE = 10;
         public static final int ANI_FADE = 11;

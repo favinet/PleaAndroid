@@ -82,7 +82,7 @@ public class LoginFragment extends BaseFragment{
             init(container);
             initScreen();
             setTextSpan();
-            userLogin();
+           // userLogin();
         }
 
         return mView;

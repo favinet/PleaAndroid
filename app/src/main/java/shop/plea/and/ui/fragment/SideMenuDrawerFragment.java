@@ -32,6 +32,7 @@ import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.activity.LoginActivity;
+import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -47,6 +48,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     private DrawerLayoutHorizontalSupport drawerLayout;
     private BaseActivity base;
     private UserInfoData userInfoData;
+    private MainPleaListActivity.sideMenuCallback menuCallback;
+
     @BindView(R.id.side_nickname) CustomFontTextView side_nickname;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
     @BindView(R.id.side_btn_profile) CustomFontBtn side_btn_profile;
@@ -299,23 +302,37 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         alert.show();
     }
 
+    public void setMenuCallback(MainPleaListActivity.sideMenuCallback listener)
+    {
+        menuCallback = listener;
+    }
+
     private class Listener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
+
+            String uid = userInfoData.getId();
+            String url;
+            String locale = userInfoData.getLocale();
+
             switch (v.getId())
             {
                 case R.id.side_btn_profile :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.PROFILE, uid, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_myplea :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.MY_PLEA, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_follower :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.FREIEND_NEWS, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_foryou :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.RECOMMEND_PLEA, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_push :
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
@@ -324,16 +341,17 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.side_btn_notice :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
-                    break;
                 case R.id.side_btn_notice_badge :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.NOTICE, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_terms :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.TERMS, locale);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_privacy :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.POLICY, locale);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_version :
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
@@ -348,7 +366,9 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.side_btn_reset_pwd :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.RESET_PASSWORD, uid);
+                    menuCallback.onReceive(url);
+
                     break;
                 case R.id.side_btn_signout :
                     signOut();
