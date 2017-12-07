@@ -1,6 +1,9 @@
 package shop.plea.and.common.tool;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -8,6 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,12 +22,14 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 
 /**
@@ -214,5 +221,25 @@ public class Utils {
         }
 
         return result;
+    }
+
+    public static String getKeyHash(BaseActivity base)
+    {
+        String keyHash = "";
+        try {
+            PackageInfo info = base.getPackageManager().getPackageInfo(base.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                keyHash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return keyHash;
     }
 }

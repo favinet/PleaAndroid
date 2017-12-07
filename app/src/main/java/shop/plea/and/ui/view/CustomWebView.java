@@ -157,7 +157,11 @@ public class CustomWebView {
 
                 }
             }
-
+            else
+            {
+                setWebViewHeaderJson(null);
+                return true;
+            }
 
             if(url.contains("webview"))
             {
@@ -337,6 +341,11 @@ public class CustomWebView {
     {
         if(mView.canGoForward())
             mView.goForward();
+    }
+
+    public boolean canBack()
+    {
+        return mView.canGoBack();
     }
 
     public void refresh()

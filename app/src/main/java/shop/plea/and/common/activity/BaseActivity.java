@@ -132,6 +132,7 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Logger.log(Logger.LogState.E, "BASE onKeyDown!");
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             ActivityManager actM = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             List<ActivityManager.RunningTaskInfo> listm = actM.getRunningTasks(1);

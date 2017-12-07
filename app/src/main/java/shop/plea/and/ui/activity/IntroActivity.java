@@ -17,11 +17,13 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.PermissionHelper;
 import shop.plea.and.common.tool.Utils;
@@ -135,6 +137,11 @@ public class IntroActivity extends PleaActivity {
     }
 
     private void start() {
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Logger.log(Logger.LogState.E, "start token: " + token);
+        BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
+
         UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
         Configuration config = new Configuration();
         Locale.setDefault(Locale.ENGLISH);

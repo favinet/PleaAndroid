@@ -30,6 +30,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -107,7 +108,9 @@ public class MainPleaListActivity extends PleaActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plealist);
 
-        Logger.log(Logger.LogState.E, "MainPleaListActivity : " + inData.isRegist);
+        Utils.getKeyHash(this);
+
+        Logger.log(Logger.LogState.E, "MainPleaListActivity : " + Utils.getKeyHash(this));
         if(inData.isRegist)
         {
             hellow_area.setVisibility(View.VISIBLE);
@@ -170,7 +173,13 @@ public class MainPleaListActivity extends PleaActivity{
                 }
             }
             else
+            {
+                ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
+                ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setTag("off");
+                ticker_header.setVisibility(View.GONE);
                 toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.GONE);
+            }
+
 
             if(menuBt.equals("Y"))
                 toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.VISIBLE);
@@ -231,6 +240,7 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.btn_toolbar_alert).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.toolbar_back_profile).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_toolbar_img).setOnClickListener(mListener);
 
         ticker_notice.setOnClickListener(mListener);
         ticker_like.setOnClickListener(mListener);
@@ -289,6 +299,7 @@ public class MainPleaListActivity extends PleaActivity{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Logger.log(Logger.LogState.E, "MAIN onKeyDown!");
         if(keyCode == KeyEvent.KEYCODE_BACK)
         {
             if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
@@ -296,6 +307,15 @@ public class MainPleaListActivity extends PleaActivity{
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 return true;
             }
+
+
+            if(customWebView.canBack())
+            {
+                customWebView.goBack();
+                return true;
+            }
+
+
             try {
                 FragmentListener fragmentListener = (FragmentListener) curFragment;
                 if(fragmentListener != null)
@@ -310,8 +330,9 @@ public class MainPleaListActivity extends PleaActivity{
 
             }
 
-            boolean check = backPressed();
-            if(check) return check;
+
+           // boolean check = backPressed();
+           // if(check) return check;
         }
 
         return super.onKeyDown(keyCode, event);
@@ -424,6 +445,11 @@ public class MainPleaListActivity extends PleaActivity{
                 case R.id.toolbar_back :
                 case R.id.toolbar_back_profile :
                     backAction();
+                    break;
+
+                case R.id.btn_toolbar_img :
+                    String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
+                    customWebView.initContentView(String.format(Constants.MAIN_URL, id));
                     break;
             }
         }

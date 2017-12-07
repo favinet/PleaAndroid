@@ -71,6 +71,9 @@ public class Constants {
         public static final String SNS_EMAIL = "snsEmail";
         public static final String ID = "id";
         public static final String LOCALE = "locale";
+        public static final String GCM_TOKEN = "deviceToken";
+
+
     }
 
     public final class LOGIN_TYPE {

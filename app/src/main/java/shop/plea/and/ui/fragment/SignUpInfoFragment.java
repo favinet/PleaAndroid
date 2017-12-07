@@ -266,6 +266,10 @@ public class SignUpInfoFragment extends BaseFragment{
             if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
         }
 
+        String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
+        RequestBody tokenBody = RequestBody.create(MediaType.parse(MULTI_PART), gcmToken);
+        params.put(Constants.API_PARAMS_KEYS.GCM_TOKEN, tokenBody);
+
         DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
             public void onSuccess(UserInfoResultData response) {
@@ -311,6 +315,9 @@ public class SignUpInfoFragment extends BaseFragment{
         {
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, userInfoData.getAuthId());
         }
+
+        String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 

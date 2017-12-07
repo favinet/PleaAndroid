@@ -110,7 +110,7 @@ public class SNSHelper {
 
             @Override
             public void onError(FacebookException error) {
-
+                    Toast.makeText(base, "페이스북 에러 ! " + Utils.getStringByObject(error), Toast.LENGTH_LONG).show();
             }
         });
 
