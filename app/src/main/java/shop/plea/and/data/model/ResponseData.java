@@ -3,6 +3,8 @@ package shop.plea.and.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 /**
  * Created by kwon7575 on 2017-10-17.
  */
@@ -24,6 +26,10 @@ public class ResponseData {
     @SerializedName("message")
     @Expose
     public String message = "";
+
+    @SerializedName("data")
+    @Expose
+    public JSONObject data = new JSONObject();
 
     public String getResult() {
         return result;
@@ -55,5 +61,13 @@ public class ResponseData {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public JSONObject getData() {
+        return data;
+    }
+
+    public void setData(JSONObject data) {
+        this.data = data;
     }
 }

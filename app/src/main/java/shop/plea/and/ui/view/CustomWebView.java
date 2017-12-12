@@ -59,6 +59,7 @@ public class CustomWebView {
     public FrameLayout mContainer;
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
+    private InAppWebView.titleCallback callbackTitle;
     private int mPosition = 0;
 
     public CustomWebView(BaseActivity baseActivity, View v, int postion) {
@@ -143,6 +144,7 @@ public class CustomWebView {
                 if(action.equals("setTopMenu"))
                 {
                     String json = Utils.queryToMap(url).get("params");
+                    Logger.log(Logger.LogState.E, "setTopMenu!" + json);
                     try
                     {
                         JSONObject jsonObject = new JSONObject(json);
@@ -156,11 +158,11 @@ public class CustomWebView {
                     }
 
                 }
-            }
-            else
-            {
-                setWebViewHeaderJson(null);
-                return true;
+                else if(action.equals("removeTopMenu"))
+                {
+                    setWebViewHeaderJson(null);
+                    return true;
+                }
             }
 
             if(url.contains("webview"))
@@ -169,6 +171,10 @@ public class CustomWebView {
                 String urlParam = Utils.queryToMap(decodeUrl).get("url");
                 String titleParam = Utils.queryToMap(decodeUrl).get("title");
                 String targetParam = Utils.queryToMap(decodeUrl).get("target");
+
+                urlParam = (urlParam == null) ? "" : urlParam;
+                titleParam = (titleParam == null) ? "" : titleParam;
+                targetParam = (targetParam == null) ? "" : targetParam;
 
                 if(targetParam.equals("popup"))     //리스트 터치시 상세화면 popup
                 {
@@ -185,7 +191,6 @@ public class CustomWebView {
                 {
                     IntentData indata = new IntentData();
                     indata.link = String.format(urlParam);
-                    indata.title = titleParam;
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
                     Intent intent = new Intent(base, InAppWebView.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
@@ -200,6 +205,8 @@ public class CustomWebView {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            Logger.log(Logger.LogState.E, "onPageStarted load : " + url);
+
             super.onPageStarted(view, url, favicon);
         }
 
@@ -209,8 +216,22 @@ public class CustomWebView {
 
             Logger.log(Logger.LogState.E, "onPageFinished!" + url);
 
+            if(titleArr.get(url) != null && !titleArr.get(url).equals(""))
+            {
+                setWebViewTitle(titleArr.get(url));
+            }
+
             super.onPageFinished(view, url);
         }
+    }
+
+    private void setWebViewTitle(String title) {
+        if(callbackTitle != null) callbackTitle.onReceive(title);
+    }
+
+    public void setWebTitleCallback(InAppWebView.titleCallback listener)
+    {
+        callbackTitle = listener;
     }
 
     private class MyCustomWebChromeClient extends WebChromeClient {

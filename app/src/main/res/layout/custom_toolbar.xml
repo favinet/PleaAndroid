@@ -87,6 +87,24 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
+            <shop.plea.and.ui.view.CustomFontEditView
+                android:layout_width="274dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="41dp"
+                android:id="@+id/btn_toolbar_searchbox"
+                android:hint="@string/searchbox_tag"
+                android:text=""
+                android:textSize="13.4sp"
+                android:drawableLeft="@drawable/icon_search"
+                android:background="@drawable/custom_editview_white"
+                android:drawablePadding="5dp"
+                android:paddingLeft="10dp"
+                android:textColor="#aaaaaa"
+                app:customFontEdit="NotoSansKR-Light.otf"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -116,6 +134,24 @@
                     android:layout_centerVertical="true"
                     android:tag="off"/>
 
+                <ImageButton
+                    android:id="@+id/btn_toolbar_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_modify"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"/>
+
+                <ImageButton
+                    android:id="@+id/btn_toolbar_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_follow"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:tag="off"/>
 
 
             </LinearLayout>

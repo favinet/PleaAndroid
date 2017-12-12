@@ -30,7 +30,10 @@ public class Constants {
         public static final String RESET_PASSWORD = "http://" + Constants.DOING_DOMAIN + "/member/password/passwordReset?uid=%s";
         public static final String BLOCK = "http://" + Constants.DOING_DOMAIN + "/block/%s";
         public static final String SEARCH_MAIN = "http://" + Constants.DOING_DOMAIN + "/search?uid=%s";
-        public static final String SEARCH_RESULT = "http://" + Constants.DOING_DOMAIN + "/search?uid=%s";
+        public static final String SEARCH_RESULT = "http://" + Constants.DOING_DOMAIN + "/search/tag/%s?uid=%s";
+        public static final String PUSH = "http://" + Constants.DOING_DOMAIN + "/member/pushSetting?uid=%s";
+        public static final String EMAIL_RECEIVE = "http://" + Constants.DOING_DOMAIN + "/member/mailSetting?uid=%s";
+
     }
 
 

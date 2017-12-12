@@ -1,45 +1,17 @@
 package shop.plea.and.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
-import com.bumptech.glide.Glide;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import shop.plea.and.R;
-import shop.plea.and.common.activity.BaseActivity;
-import shop.plea.and.common.tool.Logger;
-import shop.plea.and.common.tool.Utils;
-import shop.plea.and.data.model.UserInfo;
-import shop.plea.and.data.model.UserInfoData;
-import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.CustomWebView;
-import shop.plea.and.ui.view.DrawerLayoutHorizontalSupport;
 
 /**
  * Created by kwon7575 on 2017-10-27.
@@ -54,11 +26,15 @@ public class InAppWebView extends PleaActivity{
     @BindView(R.id.inapp_footer_plea) CustomFontBtn inapp_footer_plea;
     @BindView(R.id.inapp_close) ImageView inapp_close;
 
-
-
-
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
+
+    private titleCallback mTitleCallback = new titleCallback() {
+        @Override
+        public void onReceive(String title) {
+            inapp_title.setText(title);
+        }
+    };
 
 
     @Override
@@ -70,11 +46,13 @@ public class InAppWebView extends PleaActivity{
         init();
     }
 
-
+    public interface titleCallback{
+        void onReceive(String title);
+    }
 
     public void initScreen()
     {
-        inapp_title.setText(inData.title);
+        inapp_title.setSelected(true);
         inapp_footer_back.setOnClickListener(mListener);
         inapp_footer_next.setOnClickListener(mListener);
         inapp_footer_refresh.setOnClickListener(mListener);
@@ -86,6 +64,7 @@ public class InAppWebView extends PleaActivity{
     private void init()
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
+        customWebView.setWebTitleCallback(mTitleCallback);
         customWebView.initContentView(inData.link);
     }
 

@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import shop.plea.and.common.activity.BaseActivity;
+import shop.plea.and.common.tool.Logger;
 
 public abstract class RetryableCallback<T> implements Callback<T> {
 
@@ -77,6 +78,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
         }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Logger.log(Logger.LogState.E, "BaseActivity ?? " +  (context instanceof BaseActivity));
                 if(context instanceof BaseActivity)
                 {
                     ((BaseActivity)context).stopIndicator();

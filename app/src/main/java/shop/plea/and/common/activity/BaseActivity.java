@@ -117,6 +117,10 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
     }
 
     public void stopIndicator() {
+        Logger.log(Logger.LogState.E, "BASE stopIndicator!");
+        Logger.log(Logger.LogState.E, "BASE stopIndicator! isFinishing + " + isFinishing());
+        Logger.log(Logger.LogState.E, "BASE stopIndicator! progressDlg + " + progressDlg);
+        Logger.log(Logger.LogState.E, "BASE stopIndicator! progressDlg + " + progressDlg.isShowing());
         if(!isFinishing() && progressDlg != null && progressDlg.isShowing())
         {
             progressDlg.dismiss();

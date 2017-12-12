@@ -38,6 +38,7 @@ import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
 import shop.plea.and.ui.listener.FragmentListener;
+import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.CustomWebView;
 import shop.plea.and.ui.view.DrawerLayoutHorizontalSupport;
@@ -91,6 +92,7 @@ public class MainPleaListActivity extends PleaActivity{
         void onReceive(JSONObject jsonObject);
     }
 
+
     public interface sideMenuCallback{
         void onReceive(String url);
     }
@@ -108,9 +110,9 @@ public class MainPleaListActivity extends PleaActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plealist);
 
-        Utils.getKeyHash(this);
+        Toast.makeText(this, "KEYHASH =>" + Utils.getKeyHash(this), Toast.LENGTH_LONG).show(); ;
 
-        Logger.log(Logger.LogState.E, "MainPleaListActivity : " + Utils.getKeyHash(this));
+
         if(inData.isRegist)
         {
             hellow_area.setVisibility(View.VISIBLE);
@@ -133,96 +135,140 @@ public class MainPleaListActivity extends PleaActivity{
     {
         try
         {
-            String menuBt = (jsonObject.has("menuBt")) ? jsonObject.getString("menuBt") : "N";
-            String searchBt = (jsonObject.has("searchBt")) ? jsonObject.getString("searchBt") : "N";
-            String alertBt = (jsonObject.has("alertBt")) ? jsonObject.getString("alertBt") : "N";
-            String preBt = (jsonObject.has("preBt")) ? jsonObject.getString("preBt") : "N";
-            String title = (jsonObject.has("title")) ? jsonObject.getString("title") : "N";
-
-            if(alertBt.equals("Y"))
+            if(jsonObject == null)
             {
-                JSONArray tickers = (jsonObject.has("tickers")) ? jsonObject.getJSONArray("tickers") : null;
-                Logger.log(Logger.LogState.E, "header tickers!" + Utils.getStringByObject(tickers));
-                if(tickers != null)
+                toolbar_header.setVisibility(View.GONE);
+            }
+            else
+            {
+                toolbar_header.setVisibility(View.VISIBLE);
+                String menuBt = (jsonObject.has("menuBt")) ? jsonObject.getString("menuBt") : "N";
+                String searchBt = (jsonObject.has("searchBt")) ? jsonObject.getString("searchBt") : "N";
+                String alertBt = (jsonObject.has("alertBt")) ? jsonObject.getString("alertBt") : "N";
+                String preBt = (jsonObject.has("preBt")) ? jsonObject.getString("preBt") : "N";
+                String title = (jsonObject.has("title")) ? jsonObject.getString("title") : "N";
+                String modifyBt = (jsonObject.has("modifyBt")) ? jsonObject.getString("modifyBt") : "N";
+                String likeBt = (jsonObject.has("likeBt")) ? jsonObject.getString("likeBt") : "N";
+                String likeyn = (jsonObject.has("likeyn")) ? jsonObject.getString("likeyn") : "N";
+                String searchBox = (jsonObject.has("searchBox")) ? jsonObject.getString("searchBox") : "N";
+
+                if(alertBt.equals("Y"))
                 {
-                    for(int i = 0; i < tickers.length(); i++)
+                    JSONArray tickers = (jsonObject.has("tickers")) ? jsonObject.getJSONArray("tickers") : null;
+                    Logger.log(Logger.LogState.E, "header tickers!" + Utils.getStringByObject(tickers));
+                    if(tickers != null)
                     {
-                        JSONObject ticker = tickers.getJSONObject(i);
-                        Logger.log(Logger.LogState.E, "header ticker!" + Utils.getStringByObject(ticker));
-                        String name = ticker.getString("name");
-                        String cnt = ticker.getString("cnt");
-                        if(name.equals("noti"))
-                            noticeCnt.setText(String.valueOf(cnt));
-                        if(name.equals("like"))
-                            likeCnt.setText(String.valueOf(cnt));
-                        if(name.equals("follow"))
-                            followCnt.setText(String.valueOf(cnt));
+                        for(int i = 0; i < tickers.length(); i++)
+                        {
+                            JSONObject ticker = tickers.getJSONObject(i);
+                            Logger.log(Logger.LogState.E, "header ticker!" + Utils.getStringByObject(ticker));
+                            String name = ticker.getString("name");
+                            String cnt = ticker.getString("cnt");
+                            if(name.equals("noti"))
+                                noticeCnt.setText(String.valueOf(cnt));
+                            if(name.equals("like"))
+                                likeCnt.setText(String.valueOf(cnt));
+                            if(name.equals("follow"))
+                                followCnt.setText(String.valueOf(cnt));
 
-                        tickerMap.put(name, ticker);
+                            tickerMap.put(name, ticker);
 
+                        }
                     }
-                }
 
-                if(tickers.length() > 0)
-                {
-                    toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.VISIBLE);
+                    if(tickers.length() > 0)
+                    {
+                        toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.GONE);
+                    }
                 }
                 else
                 {
+                    ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
+                    ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setTag("off");
+                    ticker_header.setVisibility(View.GONE);
                     toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.GONE);
                 }
+
+
+                if(menuBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.GONE);
+
+                if(title.equals("N"))
+                {
+                    toolbar_title.setVisibility(View.GONE);
+                    toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    toolbar_title.setVisibility(View.VISIBLE);
+                    toolbar_title.setText(Utils.decode(title, "UTF-8"));
+                    toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
+                }
+
+                if(searchBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.btn_toolbar_search).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.btn_toolbar_search).setVisibility(View.GONE);
+
+                if(preBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
+
+                if(menuBt.equals("Y") && preBt.equals("Y"))
+                {
+                    toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.VISIBLE);
+                    toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.VISIBLE);
+                    toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
+                    toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.GONE);
+                }
+                else
+                {
+                    toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.GONE);
+                    toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.GONE);
+                }
+
+                if(modifyBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.btn_toolbar_modify).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.btn_toolbar_modify).setVisibility(View.GONE);
+
+                if(likeBt.equals("Y"))
+                {
+                    toolbar_header.findViewById(R.id.btn_toolbar_like).setVisibility(View.VISIBLE);
+
+                    if(likeyn.equals("Y"))
+                        ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_like)).setImageResource(R.drawable.top_icon_follow_on);
+                    else
+                        ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_like)).setImageResource(R.drawable.top_icon_follow);
+                }
+                else
+                {
+                    toolbar_header.findViewById(R.id.btn_toolbar_like).setVisibility(View.GONE);
+                    ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_like)).setImageResource(R.drawable.top_icon_follow);
+                }
+
+                if(searchBox.equals("Y"))
+                {
+                    toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
+                    ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setVisibility(View.GONE);
+                    ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setText("");
+                }
+
+                toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
+                Utils.changeStatusColor(this, R.color.colorSubHeader);
             }
-            else
-            {
-                ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
-                ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setTag("off");
-                ticker_header.setVisibility(View.GONE);
-                toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.GONE);
-            }
 
-
-            if(menuBt.equals("Y"))
-                toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.VISIBLE);
-            else
-                toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.GONE);
-
-            if(title.equals("N"))
-            {
-                toolbar_title.setVisibility(View.GONE);
-                toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                toolbar_title.setVisibility(View.VISIBLE);
-                toolbar_title.setText(Utils.decode(title, "UTF-8"));
-                toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
-            }
-
-            if(searchBt.equals("Y"))
-                toolbar_header.findViewById(R.id.btn_toolbar_search).setVisibility(View.VISIBLE);
-            else
-                toolbar_header.findViewById(R.id.btn_toolbar_search).setVisibility(View.GONE);
-
-            if(preBt.equals("Y"))
-                toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.VISIBLE);
-            else
-                toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
-
-            if(menuBt.equals("Y") && preBt.equals("Y"))
-            {
-                toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.VISIBLE);
-                toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.VISIBLE);
-                toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.GONE);
-                toolbar_header.findViewById(R.id.btn_menu).setVisibility(View.GONE);
-            }
-            else
-            {
-                toolbar_header.findViewById(R.id.btn_menu_profile).setVisibility(View.GONE);
-                toolbar_header.findViewById(R.id.toolbar_back_profile).setVisibility(View.GONE);
-            }
-
-            toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
-            Utils.changeStatusColor(this, R.color.colorSubHeader);
         }
         catch (JSONException e)
         {
@@ -241,6 +287,9 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.toolbar_back_profile).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_img).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_toolbar_modify).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_toolbar_like).setOnClickListener(mListener);
+
 
         ticker_notice.setOnClickListener(mListener);
         ticker_like.setOnClickListener(mListener);
@@ -269,7 +318,8 @@ public class MainPleaListActivity extends PleaActivity{
             customWebView.initContentView(String.format(Constants.MENU_LINKS.BLOCK, uid));
         else
             customWebView.initContentView(inData.link);
-        //customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
+
+        //customWebView.initContentView("http://plea.shop/block/"+uid);
     }
 
     @Override
@@ -396,6 +446,7 @@ public class MainPleaListActivity extends PleaActivity{
 
         @Override
         public void onClick(View v) {
+            String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
             switch (v.getId())
             {
                 case R.id.btn_menu :
@@ -404,7 +455,21 @@ public class MainPleaListActivity extends PleaActivity{
                     break;
 
                 case R.id.btn_toolbar_search :
-                    Toast.makeText(MainPleaListActivity.this, "어떤 검색 동작을 할까요?", Toast.LENGTH_SHORT).show();
+
+                    CustomFontEditView searchBox = (CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox);
+
+                    boolean isViewSearchBox = (searchBox.getVisibility() == View.VISIBLE) ? true : false;
+
+                    if(isViewSearchBox)
+                    {
+                        String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
+                        customWebView.initContentView(String.format(Constants.MENU_LINKS.SEARCH_RESULT, keyword, id));
+                    }
+                    else
+                    {
+                        customWebView.initContentView(String.format(Constants.MENU_LINKS.SEARCH_MAIN, id));
+                    }
+
                     break;
 
                 case R.id.btn_toolbar_alert :
@@ -448,8 +513,19 @@ public class MainPleaListActivity extends PleaActivity{
                     break;
 
                 case R.id.btn_toolbar_img :
-                    String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
                     customWebView.initContentView(String.format(Constants.MAIN_URL, id));
+                    break;
+
+                case R.id.btn_toolbar_modify :
+                    Toast.makeText(MainPleaListActivity.this, "memberUpdate 함수 호출 되는지 확인!", Toast.LENGTH_LONG).show();
+                    String memberUpdate = "javascript:memberUpdate();";
+                    customWebView.mView.loadUrl(memberUpdate);
+                    break;
+
+                case R.id.btn_toolbar_like :
+                   // Toast.makeText(MainPleaListActivity.this, "followAction 함수 호출 되는지 확인!", Toast.LENGTH_LONG).show();
+                    String followAction = "javascript:followAction();";
+                    customWebView.mView.loadUrl(followAction);
                     break;
             }
         }

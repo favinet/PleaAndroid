@@ -53,4 +53,6 @@ public interface HttpService {
     @POST("/member/api/delete/{id}")
     Call<ResponseData> callUserDelete(@Path("id") String id, @FieldMap Map<String, String> params);
 
+    @GET("/common/api/appVersion")
+    Call<ResponseData> callGetVersion();
 }

@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -119,6 +122,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         side_btn_delete_user.setOnClickListener(mListener);
         side_btn_language.setOnClickListener(mListener);
 
+        side_btn_version.setText(String.format(getString(R.string.menu_version), "1.0.0"));
+
         side_btn_language.setText((userInfoData.getLocale().equals("en") ? "English" : "Korean"));
 
         setNoticeCnt();
@@ -154,8 +159,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
     private void setNoticeCnt()
     {
-
-
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
         String id = userInfoData.getId();
 
@@ -167,6 +170,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 if(response.getResult().equals(Constants.API_SUCCESS))
                 {
                     side_btn_notice_badge.setText(String.valueOf(response.count));
+
+                    setVersion();
                 }
                 else
                 {
@@ -177,6 +182,32 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onError() {
                 Toast.makeText(getActivity(), "updateUser 실패!!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setVersion()
+    {
+        startIndicator("");
+        DataManager.getInstance(getActivity()).api.getVersion(getActivity(), new DataInterface.ResponseCallback<ResponseData>() {
+            @Override
+            public void onSuccess(ResponseData response) {
+                stopIndicator();
+                Logger.log(Logger.LogState.E, "setVersion = " + Utils.getStringByObject(response));
+                try
+                {
+                    String androidVersion = (response.getData().has("androidVersion")) ? response.getData().getString("androidVersion") : "1.0.0";
+                    side_btn_version.setText(String.format(getString(R.string.menu_version), androidVersion));
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(getActivity(), "updateUser 실패!!", Toast.LENGTH_LONG).show();
+                stopIndicator();
             }
         });
     }
@@ -197,6 +228,9 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             public void onSuccess(UserInfoResultData response) {
                 stopIndicator();
                 Logger.log(Logger.LogState.E, "updateUser = " + Utils.getStringByObject(response));
+                UserInfoData userInfoData = response.userData;
+                UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
+                BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
                 side_btn_language.setText((updateLocale.equals("en") ? "English" : "Korean"));
                 userInfoData.setLocale(updateLocale);
                 setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN));
@@ -335,10 +369,12 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_push :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    url = String.format(Constants.MENU_LINKS.PUSH, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_email :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                     url = String.format(Constants.MENU_LINKS.EMAIL_RECEIVE, uid);
+                    menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_notice :
                 case R.id.side_btn_notice_badge :
@@ -353,11 +389,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     url = String.format(Constants.MENU_LINKS.POLICY, locale);
                     menuCallback.onReceive(url);
                     break;
-                case R.id.side_btn_version :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
-                    break;
                 case R.id.side_btn_update :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+                    setVersion();
                     break;
                 case R.id.side_btn_api :
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();

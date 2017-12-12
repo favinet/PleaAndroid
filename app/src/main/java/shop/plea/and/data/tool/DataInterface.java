@@ -325,4 +325,38 @@ public class DataInterface extends BaseDataInterface{
             callback.onError();
         }
     }
+
+    public void getVersion(Context context, final ResponseCallback callback)
+    {
+        try {
+            Call<ResponseData> call = service.callGetVersion();
+
+            call.enqueue(new RetryableCallback<ResponseData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<ResponseData> call, retrofit2.Response<ResponseData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error getVersion = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<ResponseData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
 }

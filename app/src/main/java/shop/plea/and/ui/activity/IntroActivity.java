@@ -142,24 +142,25 @@ public class IntroActivity extends PleaActivity {
         Logger.log(Logger.LogState.E, "start token: " + token);
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
-        UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
+        UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+
         Configuration config = new Configuration();
         Locale.setDefault(Locale.ENGLISH);
-        if (userInfoData.getLocale() == null)
-            config.locale = Locale.ENGLISH;
-        else
+        config.locale = Locale.ENGLISH;
+
+        Logger.log(Logger.LogState.E, "locale : " + locale);
+
+        if(locale.equals("ko"))
         {
-            if(userInfoData.getLocale().equals("en"))
-                config.locale = Locale.ENGLISH;
-            else
-            {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
-            }
+            Locale.setDefault(Locale.KOREA);
+            config.locale = Locale.KOREA;
         }
+
 
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
+
         handler.postDelayed(runMain, 3000);
         startIndicator("");
     }

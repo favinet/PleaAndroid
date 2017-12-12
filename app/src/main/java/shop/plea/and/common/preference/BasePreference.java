@@ -21,6 +21,7 @@ public class BasePreference {
     public static final String FACEBOOK_TOKEN = "FACEBOOK_TOKEN";
     public static final String GCM_TOKEN = "GCM_TOKEN";
 
+
     static Context mContext;
     private Gson mson;
 
