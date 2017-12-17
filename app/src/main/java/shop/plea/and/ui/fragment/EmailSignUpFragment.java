@@ -3,6 +3,9 @@ package shop.plea.and.ui.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,8 @@ public class EmailSignUpFragment extends BaseFragment{
     @BindView(R.id.ed_password_alert) TextView ed_password_alert;
     @BindView(R.id.btn_regist_next) Button btn_regist_next;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
+    private int emailLength = 0;
+    private int passwordLength = 0;
 
     public static EmailSignUpFragment newInstance(int page)
     {
@@ -65,7 +70,7 @@ public class EmailSignUpFragment extends BaseFragment{
         toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.VISIBLE);
         toolbar_header.findViewById(R.id.toolbar_title).setVisibility(View.VISIBLE);
         toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
-        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText("SIGN UP");
+        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText(getString(R.string.SIGNUP));
 
         Utils.changeStatusColor((BaseActivity) getActivity(), R.color.colorSubHeader);
     }
@@ -75,6 +80,82 @@ public class EmailSignUpFragment extends BaseFragment{
         btn_regist_next.setOnClickListener(mListner);
         ((BaseActivity)mContext).setSupportActionBar(toolbar_header);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
+
+        ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                }
+                else
+                {
+                    view.setBackgroundResource(R.drawable.custom_editview);
+                }
+            }
+        });
+
+        ed_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                    emailLength = ed_email.getText().toString().length();
+                    Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
+                    if(emailLength > 0 && passwordLength > 0)
+                    {
+                        btn_regist_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        btn_regist_next.setTextColor(Color.WHITE);
+                    }
+                    if(emailLength == 0)
+                    {
+                        btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner);
+                        btn_regist_next.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        ed_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                passwordLength = ed_password.getText().toString().length();
+                Log.e("PLEA", "passwordLength : " + String.valueOf(passwordLength));
+                if(emailLength > 0 && passwordLength > 0)
+                {
+                    btn_regist_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    btn_regist_next.setTextColor(Color.WHITE);
+                }
+                if(passwordLength == 0)
+                {
+                    btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner);
+                    btn_regist_next.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        ed_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                }
+                else
+                {
+                    view.setBackgroundResource(R.drawable.custom_editview);
+                }
+            }
+        });
     }
 
     private void userPasswordCheck(String email)
@@ -117,11 +198,11 @@ public class EmailSignUpFragment extends BaseFragment{
                         DataManager.getInstance(getActivity()).api.userEmailCheck(getActivity(), email, new DataInterface.ResponseCallback<ResponseData>() {
                             @Override
                             public void onSuccess(ResponseData response) {
-
+                                ed_email_alert.setVisibility(View.GONE);
+                                ed_email_alert.setText(response.getMessage());
                                 if(response.getResult().equals(Constants.API_FAIL))
                                 {
                                     stopIndicator();
-                                    Toast.makeText(getActivity(), "Server Error!" + response.getMessage(), Toast.LENGTH_LONG).show();
                                     return;
                                 }
                                 else
@@ -135,6 +216,7 @@ public class EmailSignUpFragment extends BaseFragment{
                                     }
                                     else
                                     {
+                                        ed_email_alert.setText(response.getMessage());
                                         ed_email_alert.setVisibility(View.VISIBLE);
                                         return;
                                     }
@@ -143,7 +225,6 @@ public class EmailSignUpFragment extends BaseFragment{
 
                             @Override
                             public void onError() {
-                                Toast.makeText(getActivity(), "userLogin onError", Toast.LENGTH_SHORT).show();
                                 stopIndicator();
                             }
                         });

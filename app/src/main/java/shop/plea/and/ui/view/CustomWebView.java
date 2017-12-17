@@ -62,6 +62,8 @@ public class CustomWebView {
     private InAppWebView.titleCallback callbackTitle;
     private int mPosition = 0;
 
+
+
     public CustomWebView(BaseActivity baseActivity, View v, int postion) {
         base = baseActivity;
 
@@ -176,7 +178,7 @@ public class CustomWebView {
                 titleParam = (titleParam == null) ? "" : titleParam;
                 targetParam = (targetParam == null) ? "" : targetParam;
 
-                if(targetParam.equals("popup"))     //리스트 터치시 상세화면 popup
+                if(targetParam.equals("popup"))     //리스트 터치시 상세화면 popup 현재 적용 안됨
                 {
                     IntentData indata = new IntentData();
                     indata.link = String.format(urlParam);
@@ -192,6 +194,7 @@ public class CustomWebView {
                     IntentData indata = new IntentData();
                     indata.link = String.format(urlParam);
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
+                    indata.screenType = 0;
                     Intent intent = new Intent(base, InAppWebView.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
                     base.startActivity(intent);

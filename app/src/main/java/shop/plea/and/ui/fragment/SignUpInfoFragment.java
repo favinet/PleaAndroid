@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -14,11 +15,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 
@@ -44,6 +42,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.ui.activity.InAppWebView;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontEditView;
@@ -185,14 +184,26 @@ public class SignUpInfoFragment extends BaseFragment{
         Spannable spannable = (Spannable) txt_agree_info.getText();
         String text = spannable.toString();
 
-        int start = text.indexOf("Terms");
-        int end = start + "Terms".length();
-        int start2 = text.indexOf("Privacy Policy.");
-        int end2 = start2 + "Privacy Policy.".length();
+        String term = (text.indexOf("Terms") > 0) ? "Terms" : "서비스 이용약관" ;
+        int start = text.indexOf(term);
+        int end = start + term.length();
+        String privacy = (text.indexOf("Privacy Policy.") > 0) ? "Privacy Policy." : "개인정보 처리" ;
+        int start2 = text.indexOf(privacy);
+        int end2 = start2 + privacy.length();
         spannable.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                Toast.makeText(getActivity(), "Terms", Toast.LENGTH_LONG).show();
+                IntentData indata = new IntentData();
+                UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+                String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+                indata.link = String.format(Constants.MENU_LINKS.TERMS, locale);
+                indata.title = getString(R.string.menu_term);
+                indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
+                indata.screenType = 1;
+                Intent intent = new Intent(getActivity(), InAppWebView.class);
+                intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                getActivity().startActivity(intent);
+
             }
 
             @Override
@@ -203,7 +214,16 @@ public class SignUpInfoFragment extends BaseFragment{
         spannable.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                Toast.makeText(getActivity(), "Privacy Policy.", Toast.LENGTH_LONG).show();
+                IntentData indata = new IntentData();
+                UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+                String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+                indata.link = String.format(Constants.MENU_LINKS.POLICY, locale);
+                indata.title = getString(R.string.menu_privacy);
+                indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
+                indata.screenType = 1;
+                Intent intent = new Intent(getActivity(), InAppWebView.class);
+                intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                getActivity().startActivity(intent);
             }
 
             @Override
@@ -266,9 +286,13 @@ public class SignUpInfoFragment extends BaseFragment{
             if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
         }
 
+        RequestBody deviceTypeBody = RequestBody.create(MediaType.parse(MULTI_PART), "android");
+        params.put(Constants.API_PARAMS_KEYS.DEVICE_TYPE, deviceTypeBody);
+
         String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
         RequestBody tokenBody = RequestBody.create(MediaType.parse(MULTI_PART), gcmToken);
         params.put(Constants.API_PARAMS_KEYS.GCM_TOKEN, tokenBody);
+
 
         DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
@@ -279,7 +303,8 @@ public class SignUpInfoFragment extends BaseFragment{
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    Toast.makeText(getActivity(), "회원가입 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
                 }
                 else
                 {
@@ -291,7 +316,6 @@ public class SignUpInfoFragment extends BaseFragment{
             @Override
             public void onError() {
                 stopIndicator();
-                Toast.makeText(getActivity(), "회원가입 실패!!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -318,6 +342,7 @@ public class SignUpInfoFragment extends BaseFragment{
 
         String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
@@ -330,7 +355,8 @@ public class SignUpInfoFragment extends BaseFragment{
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    Toast.makeText(getActivity(), "로그인 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
                 }
                 else
                 {
@@ -354,7 +380,6 @@ public class SignUpInfoFragment extends BaseFragment{
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "로그인 실패!!", Toast.LENGTH_LONG).show();
                 stopIndicator();
             }
         });
@@ -390,10 +415,10 @@ public class SignUpInfoFragment extends BaseFragment{
                         DataManager.getInstance(getActivity()).api.userNickNameCheck(getActivity(), nickname, new DataInterface.ResponseCallback<ResponseData>() {
                             @Override
                             public void onSuccess(ResponseData response) {
+                                ed_nickname_alert.setText(response.getMessage());
                                 if(response.getResult().equals(Constants.API_FAIL))
                                 {
                                     stopIndicator();
-                                    Toast.makeText(getActivity(), "닉네임 체크 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
                                     return;
                                 }
                                 else
@@ -410,7 +435,6 @@ public class SignUpInfoFragment extends BaseFragment{
                                     }
                                     else
                                     {
-                                        Toast.makeText(getActivity(), "닉네임 체크 사용 불가능!!" + flag, Toast.LENGTH_LONG).show();
                                         ed_nickname.setTextColor(Color.parseColor("#E83636"));
                                         if(ed_nickname_alert.getVisibility() == View.GONE)
                                             ed_nickname_alert.setVisibility(View.VISIBLE);
@@ -423,7 +447,6 @@ public class SignUpInfoFragment extends BaseFragment{
 
                             @Override
                             public void onError() {
-                                Toast.makeText(getActivity(), "userNickNameCheck onError !", Toast.LENGTH_LONG).show();
                                 stopIndicator();
                             }
                         });
@@ -431,7 +454,6 @@ public class SignUpInfoFragment extends BaseFragment{
                     else
                     {
                         stopIndicator();
-                        Toast.makeText(getActivity(), "닉네임을 입력해주세요." + nickname, Toast.LENGTH_LONG).show();
                         return;
                     }
                     break;

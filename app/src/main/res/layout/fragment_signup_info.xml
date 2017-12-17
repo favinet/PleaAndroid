@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    android:clickable="true">
 
     <include android:id="@+id/toolbar_header"
         layout="@layout/custom_toolbar"/>
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Add a profile photo(optional)\n \u0026 nickname so your friends know it's you."
+                android:text="@string/user_profile_img"
                 android:textSize="14.4sp"
                 android:textColor="#000000"
                 app:customFont="NotoSansKR-Light.otf"/>
@@ -65,7 +66,7 @@
                 android:layout_marginTop="30dp"
                 android:inputType="textEmailAddress"
                 android:id="@+id/ed_email"
-                android:hint="Please enter your email"
+                android:hint="@string/edit_email_hint"
                 android:text=""
                 android:textSize="14.4sp"
                 android:drawableLeft="@drawable/icon_email_black"
@@ -84,7 +85,7 @@
                 android:layout_height="34.4dp"
                 android:layout_marginTop="21.3dp"
                 android:id="@+id/ed_nickname"
-                android:hint="Please enter your Nickname"
+                android:hint="@string/edit_nick_hint"
                 android:textSize="14.4sp"
                 android:drawableLeft="@drawable/icon_email_black"
                 android:background="@drawable/custom_editview"
@@ -106,7 +107,7 @@
                 android:visibility="gone"
                 android:textColor="#d92222"
                 android:textSize="12.5sp"
-                android:text="The nickname you entered is already being used by \nanother user. Please enter a different one."
+                android:text="@string/nick_error"
                 app:customFont="NotoSansKR-Light.otf"/>
 
             <shop.plea.and.ui.view.CustomFontBtn
@@ -114,7 +115,7 @@
                 android:layout_height="@dimen/btn_logins_height"
                 android:layout_marginTop="34dp"
                 android:id="@+id/btn_regist_end"
-                android:text="Create Account"
+                android:text="@string/create_account"
                 android:textColor="#4c3994"
                 android:background="@drawable/round_stroke_corner"
                 android:textSize="14.4sp"
@@ -134,7 +135,7 @@
         android:layout_alignParentBottom="true"
         android:textSize="13.4sp"
         android:textColor="#999999"
-        android:text="By signing up,\nyou agree to our Terms \u0026 Privacy Policy."
+        android:text="@string/term"
         android:bufferType="spannable"
         app:customFont="NotoSansKR-Light.otf"/>
     <!-- content area //-->

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ public class FindPasswordFragment extends BaseFragment {
     @BindView(R.id.btn_send_password_set_mail) Button btn_send_password_set_mail;
     @BindView(R.id.ed_email) EditText ed_email;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
+    private int emailLength = 0;
 
     public static FindPasswordFragment newInstance(int page)
     {
@@ -78,7 +81,7 @@ public class FindPasswordFragment extends BaseFragment {
         toolbar_header.findViewById(R.id.toolbar_title).setVisibility(View.VISIBLE);
         toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
 
-        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText("Create new password");
+        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText(getString(R.string.create_new_password));
 
         Utils.changeStatusColor((BaseActivity) getActivity(), R.color.colorSubHeader);
 
@@ -88,6 +91,43 @@ public class FindPasswordFragment extends BaseFragment {
     {
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         btn_send_password_set_mail.setOnClickListener(mListner);
+        ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                }
+                else
+                {
+                    view.setBackgroundResource(R.drawable.custom_editview);
+                }
+            }
+        });
+
+        ed_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                emailLength = ed_email.getText().toString().length();
+                Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
+                if(emailLength > 0)
+                {
+                    btn_send_password_set_mail.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    btn_send_password_set_mail.setTextColor(Color.WHITE);
+                }
+                if(emailLength == 0)
+                {
+                    btn_send_password_set_mail.setBackgroundResource(R.drawable.round_stroke_corner);
+                    btn_send_password_set_mail.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
 
     private void sendPasswordMail(String email)
@@ -98,26 +138,25 @@ public class FindPasswordFragment extends BaseFragment {
             DataManager.getInstance(getActivity()).api.userSendPasswordMail(getActivity(), email, new DataInterface.ResponseCallback<ResponseData>() {
                 @Override
                 public void onSuccess(ResponseData response) {
+                    Logger.log(Logger.LogState.E, "response : " + Utils.getStringByObject(response));
                     if(response.getResult().equals(Constants.API_FAIL))
                     {
-                        Toast.makeText(getActivity(), "메일 전송 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
                     }
                     else
                     {
-                        Logger.log(Logger.LogState.E, "response : " + Utils.getStringByObject(response));
+
                         String result = response.getResult();
                         if(result.equals(Constants.API_SUCCESS)) {
-                            if (response.isFlag())
-                            {
+
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                                dialog.setTitle(R.string.app_name).setMessage("입력하신 메일을 통해 비밀번호 변경을 진행해주세요.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_send_ok)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
                                     }
                                 }).create().show();
-                            }
-
                         }
                     }
                     stopIndicator();
@@ -125,14 +164,14 @@ public class FindPasswordFragment extends BaseFragment {
 
                 @Override
                 public void onError() {
-                    Toast.makeText(getActivity(), "메일 전송 실패!!", Toast.LENGTH_LONG).show();
                     stopIndicator();
                 }
             });
         }
         else
         {
-            Toast.makeText(getActivity(), "이메일 형식이 아닙니다.!!" + email, Toast.LENGTH_LONG).show();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_pattern_error)).setPositiveButton(getString(R.string.yes), null).create().show();
         }
 
     }

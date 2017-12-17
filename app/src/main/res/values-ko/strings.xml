@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">플리</string>
     <string name="facebook_app_id">1710595838960405</string>
+    <string name="fb_login_protocol_scheme">fb1710595838960405</string>
     <string name="user_resist_finish">%1$s,\n회원 가입이 완료되었습니다!</string>
-    <string name="user_profile_img">나만의 프로필 사진과 닉네임을 설정해 보세요.\n(언제든지 변경할 수 있습니다)</string>
-    <string name="user_email_check">다른 회원이 사용하고 있는 이메일입니다.\n다른 이메일을 사용해주세요.</string>
-    <string name="user_password_check">비밀번호는 최소 8자리 이상, 대, 소문자와 숫자를 포함해야 합니다.</string>
+    <string name="user_profile_img">프로필 사진과 닉네임을 설정해 보세요.</string>
+    <string name="user_email_check">이메일 형식이 올바르지 않습니다.\n정확한 이메일 주소를 입력해 주세요.</string>
+    <string name="user_password_check">비밀번호는 최소 6자리 이상 영문과 숫자를 포함해야 합니다.</string>
     <string name="reset_language">언어 변경시 어플리케이션이 재실행 해야됩니다.\n동의하십니까?</string>
     <string name="user_next">다음</string>
     <string name="yes">예</string>
@@ -30,5 +31,21 @@
     <string name="menu_signout">로그아웃</string>
     <string name="menu_delete_account">회원탈퇴</string>
     <string name="searchbox_tag">상품명 또는 #태그로 검색하세요.</string>
-
+    <string name="find_password">회원가입 시 사용한 이메일 주소를 입력해 주세요. 해당 이메일로 비밀번호 설정 주소가 발송됩니다.</string>
+    <string name="SIGNUP">회원가입</string>
+    <string name="user_email_join">Plea에서 사용하실 이메일과 비밀번호를 입력해 주세요.</string>
+    <string name="edit_email_hint">이메일</string>
+    <string name="edit_password_hint">패스워드</string>
+    <string name="create_new_password">비밀번호 재설정</string>
+    <string name="send_email">주소 보내기</string>
+    <string name="email_pattern_error">이메일 형식이 올바르지 않습니다. 정확한 이메일 주소를 입력해 주세요.</string>
+    <string name="exist_user">이미 회원이신가요?</string>
+    <string name="login_user">로그인</string>
+    <string name="profile_user">프로필 사진과 닉네임을 설정해 보세요.</string>
+    <string name="edit_nick_hint">닉네임</string>
+    <string name="nick_error">이미 사용중인 닉네임입니다. 다른 닉네임을 등록해 주세요.</string>
+    <string name="create_account">가입 완료</string>
+    <string name="term">가입 완료 버튼을 누름으로써,\n서비스 이용약관 및 개인정보 처리 방침을 읽고 동의한 것으로 간주됩니다.</string>
+    <string name="forgot_password">비밀번호를 잊으셨나요?</string>
+    <string name="email_send_ok">입력하신 메일을 통해 비밀번호 변경을 진행해주세요.</string>
 </resources>

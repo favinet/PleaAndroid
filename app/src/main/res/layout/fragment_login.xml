@@ -1,53 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shadow_background"
-    android:weightSum="10"
     android:orientation="vertical">
 
+    <!-- content area -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingLeft="26.3dp"
+        android:paddingRight="26.3dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/intro_logo"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-
-    </RelativeLayout>
-
-    <!-- content area -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="26.3dp"
-        android:paddingRight="26.3dp"
-        android:layout_weight="7">
+            android:layout_centerHorizontal="true"
+            android:id="@+id/login_logo"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:layout_below="@id/login_logo"
+            android:layout_marginTop="20dp">
 
             <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
                 android:inputType="textEmailAddress"
                 android:id="@+id/ed_email"
-                android:hint="Please enter your email"
+                android:hint="@string/edit_email_hint"
                 android:text=""
                 android:textSize="14.4sp"
                 android:drawableLeft="@drawable/icon_email"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
+                android:paddingLeft="5dp"
                 android:textColor="#4cffffff"
                 android:textColorHint="#4cffffff"
                 app:customFont="NotoSansKR-Regular.otf"/>
@@ -64,11 +59,12 @@
                 android:id="@+id/ed_password"
                 android:text=""
                 android:textSize="14.4sp"
-                android:hint="Please enter your password"
+                android:hint="@string/edit_password_hint"
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/icon_password"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
+                android:paddingLeft="5dp"
                 android:textColor="#4cffffff"
                 android:textColorHint="#4cffffff"
                 app:customFontEdit="NotoSansKR-Regular.otf"/>
@@ -84,7 +80,7 @@
                 android:layout_height="@dimen/btn_logins_height"
                 android:layout_marginTop="29dp"
                 android:id="@+id/btn_login"
-                android:text="Log in"
+                android:text="@string/login_user"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
@@ -177,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:bufferType="spannable"
-                    android:text="Sign up"
+                    android:text="@string/SIGNUP"
                     android:id="@+id/txt_regist"
                     android:textSize="14.4sp"
                     android:textColor="#FFFFFF"
@@ -213,4 +209,4 @@
 
     </RelativeLayout>
     <!-- content area //-->
-</LinearLayout>
+</RelativeLayout>

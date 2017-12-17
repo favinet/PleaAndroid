@@ -1,5 +1,6 @@
 package shop.plea.and.ui.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -95,6 +96,27 @@ public class LoginFragment extends BaseFragment{
         btn_google.setOnClickListener(mListner);
         btn_login.setOnClickListener(mListner);
         helper = new SNSHelper((BaseActivity) getActivity(), facebook, true);
+
+
+        ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                    view.setBackgroundResource(R.drawable.round_stroke_white_corner);
+                else
+                    view.setBackgroundResource(R.drawable.custom_editview);
+            }
+        });
+
+        ed_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                    view.setBackgroundResource(R.drawable.round_stroke_white_corner);
+                else
+                    view.setBackgroundResource(R.drawable.custom_editview);
+            }
+        });
     }
 
     private void setTextSpan()
@@ -155,6 +177,7 @@ public class LoginFragment extends BaseFragment{
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, ed_password.getText().toString());
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
@@ -167,13 +190,13 @@ public class LoginFragment extends BaseFragment{
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    Toast.makeText(getActivity(), "로그인 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
                 }
                 else
                 {
                     UserInfoData userInfoData = response.userData;
                     UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
-                    BasePreference.getInstance(getActivity()).put(BasePreference.ID, userInfoData.getAuthId());
                     BasePreference.getInstance(getActivity()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                     BasePreference.getInstance(getActivity()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                     BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
@@ -191,7 +214,6 @@ public class LoginFragment extends BaseFragment{
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "로그인 실패!!", Toast.LENGTH_LONG).show();
                 stopIndicator();
             }
         });

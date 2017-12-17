@@ -1,13 +1,18 @@
 package shop.plea.and.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import shop.plea.and.R;
+import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.UserInfo;
+import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -25,9 +30,12 @@ public class InAppWebView extends PleaActivity{
     @BindView(R.id.inapp_footer_refresh) ImageView inapp_footer_refresh;
     @BindView(R.id.inapp_footer_plea) CustomFontBtn inapp_footer_plea;
     @BindView(R.id.inapp_close) ImageView inapp_close;
+    @BindView(R.id.inapp_footer) RelativeLayout inapp_footer;
+
 
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
+    private static MainPleaListActivity.pleaCallBack mPleaCallback;
 
     private titleCallback mTitleCallback = new titleCallback() {
         @Override
@@ -35,6 +43,11 @@ public class InAppWebView extends PleaActivity{
             inapp_title.setText(title);
         }
     };
+
+    public static  void setPleaCallback(MainPleaListActivity.pleaCallBack listener)
+    {
+        mPleaCallback = listener;
+    }
 
 
     @Override
@@ -52,7 +65,14 @@ public class InAppWebView extends PleaActivity{
 
     public void initScreen()
     {
-        inapp_title.setSelected(true);
+        Log.e("PLEA", "타이틀!" + inData.title);
+        if(inData.screenType == 0)
+            inapp_title.setSelected(true);
+        else if(inData.screenType == 1){
+            inapp_title.setText(inData.title);
+            inapp_footer.setVisibility(View.GONE);
+        }
+
         inapp_footer_back.setOnClickListener(mListener);
         inapp_footer_next.setOnClickListener(mListener);
         inapp_footer_refresh.setOnClickListener(mListener);
@@ -64,7 +84,9 @@ public class InAppWebView extends PleaActivity{
     private void init()
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
-        customWebView.setWebTitleCallback(mTitleCallback);
+        if(inData.title.equals("")) {
+            customWebView.setWebTitleCallback(mTitleCallback);
+        }
         customWebView.initContentView(inData.link);
     }
 
@@ -132,14 +154,15 @@ public class InAppWebView extends PleaActivity{
                     break;
 
                 case R.id.inapp_footer_plea :
-
-                    Toast.makeText(InAppWebView.this, "함수 호출!", Toast.LENGTH_SHORT).show();
+                    UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(context);
+                    String url = customWebView.mView.getUrl();
+                    mPleaCallback.onPlea(String.format(Constants.MENU_LINKS.PLEA, url, userInfoData.getId()));
                     finish();
 
                     break;
 
                 case R.id.inapp_close :
-
+                    System.exit(0);
                     finish();
 
                     break;

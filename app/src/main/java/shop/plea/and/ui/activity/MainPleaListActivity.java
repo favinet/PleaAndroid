@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -88,6 +89,13 @@ public class MainPleaListActivity extends PleaActivity{
         }
     };
 
+    private pleaCallBack mPleaCallBack = new pleaCallBack() {
+        @Override
+        public void onPlea(String url) {
+            customWebView.initContentView(url);
+        }
+    };
+
     public interface headerJsonCallback{
         void onReceive(JSONObject jsonObject);
     }
@@ -95,6 +103,11 @@ public class MainPleaListActivity extends PleaActivity{
 
     public interface sideMenuCallback{
         void onReceive(String url);
+    }
+
+
+    public interface pleaCallBack{
+        void onPlea(String url);
     }
 
     Handler handler = new Handler();
@@ -110,9 +123,6 @@ public class MainPleaListActivity extends PleaActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plealist);
 
-        Toast.makeText(this, "KEYHASH =>" + Utils.getKeyHash(this), Toast.LENGTH_LONG).show(); ;
-
-
         if(inData.isRegist)
         {
             hellow_area.setVisibility(View.VISIBLE);
@@ -126,6 +136,8 @@ public class MainPleaListActivity extends PleaActivity{
 
         ((SideMenuDrawerFragment)drawer_Fragment).setDrawerLayout(mDrawerLayout);
         ((SideMenuDrawerFragment)drawer_Fragment).setMenuCallback(mSideMenuCallback);
+
+        InAppWebView.setPleaCallback(mPleaCallBack);
 
         initScreen();
         init();
@@ -174,6 +186,9 @@ public class MainPleaListActivity extends PleaActivity{
                             tickerMap.put(name, ticker);
 
                         }
+
+                        if(!noticeCnt.getText().toString().equals("0") && !likeCnt.getText().toString().equals("0") && !followCnt.getText().toString().equals("0"))
+                            ticker_header.setVisibility(View.VISIBLE);
                     }
 
                     if(tickers.length() > 0)
@@ -258,6 +273,22 @@ public class MainPleaListActivity extends PleaActivity{
                 {
                     toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
                     ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setVisibility(View.VISIBLE);
+                    if(customWebView.mView.getUrl().contains("tag"))
+                    {
+                        String url = customWebView.mView.getUrl();
+                        Log.e("PLEA", "url = " + url);
+                        String[] urls = url.split("/");
+                        int urlLen = urls.length;
+                        if(urlLen > 4)
+                        {
+                            String tag = Utils.decode(urls[5], "UTF-8");
+                            Log.e("PLEA", "tag = " + tag);
+                            Log.e("PLEA", "tag = " + tag.indexOf("?"));
+                            tag = tag.substring(0, tag.indexOf("?"));
+
+                            ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setText(tag);
+                        }
+                    }
                 }
                 else
                 {
@@ -314,11 +345,17 @@ public class MainPleaListActivity extends PleaActivity{
         String status = userInfo.getStatus();
         String uid = userInfo.getId();
 
-        if(status.equals("T"))
-            customWebView.initContentView(String.format(Constants.MENU_LINKS.BLOCK, uid));
-        else
+        if(status == null || uid == null)
+        {
             customWebView.initContentView(inData.link);
-
+        }
+        else
+        {
+            if(status.equals("T"))
+                customWebView.initContentView(String.format(Constants.MENU_LINKS.BLOCK, uid));
+            else
+                customWebView.initContentView(inData.link);
+        }
         //customWebView.initContentView("http://plea.shop/block/"+uid);
     }
 
@@ -447,6 +484,12 @@ public class MainPleaListActivity extends PleaActivity{
         @Override
         public void onClick(View v) {
             String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
+            if(id.equals(""))
+            {
+                UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(MainPleaListActivity.this);
+                id =   userInfoData.getId();
+            }
+
             switch (v.getId())
             {
                 case R.id.btn_menu :
@@ -463,7 +506,8 @@ public class MainPleaListActivity extends PleaActivity{
                     if(isViewSearchBox)
                     {
                         String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
-                        customWebView.initContentView(String.format(Constants.MENU_LINKS.SEARCH_RESULT, keyword, id));
+                        String searchAction = "javascript:searchAction("+keyword+");";
+                        customWebView.initContentView(searchAction);
                     }
                     else
                     {

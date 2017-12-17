@@ -61,7 +61,7 @@ public class LoginActivity extends PleaActivity {
 
         UserInfoData userInfoData = (UserInfoData) BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         if(userInfoData == null)
-            addFragment(Constants.FRAGMENT_MENUID.SINGUP);
+            addFragment(Constants.FRAGMENT_MENUID.LOGIN);
         else
         {
             IntentData indata = new IntentData();

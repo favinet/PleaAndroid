@@ -1,13 +1,11 @@
 package shop.plea.and.ui.sns;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -29,12 +27,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.preference.BasePreference;
@@ -110,7 +104,9 @@ public class SNSHelper {
 
             @Override
             public void onError(FacebookException error) {
-                    Toast.makeText(base, "페이스북 에러 ! " + Utils.getStringByObject(error), Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+                dialog.setTitle(R.string.app_name).setMessage(Utils.getStringByObject(error)).setPositiveButton(base.getString(R.string.yes), null).create().show();
             }
         });
 
@@ -202,7 +198,8 @@ public class SNSHelper {
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    Toast.makeText(base, "로그인 실패!!" + response.getMessage(), Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
                 }
                 else
                 {
@@ -226,7 +223,6 @@ public class SNSHelper {
 
             @Override
             public void onError() {
-                Toast.makeText(base, "로그인 실패!!", Toast.LENGTH_LONG).show();
                 base.stopIndicator();
             }
         });
@@ -305,9 +301,10 @@ public class SNSHelper {
 
                 userCheck(UserInfo.getInstance().getLoginParams());
             }
-            else {
-
-                Toast.makeText(base, "구글 로그인 실패!!" + result.getStatus(), Toast.LENGTH_LONG).show();
+            else
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+                dialog.setTitle(R.string.app_name).setMessage(result.getStatus().getStatus().getStatusMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
             }
         }
     }

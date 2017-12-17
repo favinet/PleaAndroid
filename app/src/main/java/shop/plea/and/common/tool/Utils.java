@@ -77,11 +77,11 @@ public class Utils {
     }
 
     /**
-     * 비밀번호 포맷 체크(8자리이상, 숫자, 문자 1자리 이상 포함)
+     * 비밀번호 포맷 체크(6자리이상, 숫자, 영문자 1자리 이상 포함)
      * @param password
      * @return
      */
-    public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,})");
+    public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^(?=.*[a-zA-Z]+)(?=.*[!@#$%^*+=-]|.*[0-9]+).{6,16}$");
 
     public static boolean validatePassword(String pwStr) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr); return matcher.matches();

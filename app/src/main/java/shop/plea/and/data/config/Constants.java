@@ -33,6 +33,9 @@ public class Constants {
         public static final String SEARCH_RESULT = "http://" + Constants.DOING_DOMAIN + "/search/tag/%s?uid=%s";
         public static final String PUSH = "http://" + Constants.DOING_DOMAIN + "/member/pushSetting?uid=%s";
         public static final String EMAIL_RECEIVE = "http://" + Constants.DOING_DOMAIN + "/member/mailSetting?uid=%s";
+        public static final String PLEA = "http://" + Constants.DOING_DOMAIN + "/cart/reg?txtUrl=%s&uid=%s ";
+
+         
 
     }
 
@@ -75,6 +78,7 @@ public class Constants {
         public static final String ID = "id";
         public static final String LOCALE = "locale";
         public static final String GCM_TOKEN = "deviceToken";
+        public static final String DEVICE_TYPE = "deviceType";
 
 
     }

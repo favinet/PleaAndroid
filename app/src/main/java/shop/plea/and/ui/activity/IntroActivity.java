@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -45,14 +46,17 @@ public class IntroActivity extends PleaActivity {
             stopIndicator();
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-            indata.link = Constants.BASE_URL;
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            indata.link = (mUrl == null) ? Constants.BASE_URL : mUrl;
+            indata.screenType = 1;
+            indata.title = getString(R.string.menu_reset_password);
+            Intent intent = (mUrl == null) ? new Intent(getApplicationContext(), LoginActivity.class) :  new Intent(getApplicationContext(), InAppWebView.class);
             intent.putExtra(Constants.INTENT_DATA_KEY, indata);
             startActivity(intent);
             finish();
         }
     };
 
+    private String mUrl = null;
     private Context context;
 
     @Override
@@ -66,13 +70,14 @@ public class IntroActivity extends PleaActivity {
         if(getIntent() != null)
         {
             Uri uri = getIntent().getData();
+            Log.e("PLEA", "비밀번호!" + uri);
             if(uri != null)
             {
-                String action = uri.toString();
-                if(action.contains("reset_password"))
+                mUrl = Utils.queryToMap(uri.toString()).get("url");
+                Log.e("PLEA", "주소!" + mUrl);
+                if(uri.toString().contains("reset_password"))
                 {
                     Logger.log(Logger.LogState.E, "::::" + Utils.getStringByObject(uri));
-                    Toast.makeText(this, "비밀번호 변경 페이지 호출", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -161,7 +166,7 @@ public class IntroActivity extends PleaActivity {
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
 
-        handler.postDelayed(runMain, 3000);
+        handler.postDelayed(runMain, 1500);
         startIndicator("");
     }
 

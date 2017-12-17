@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Plea</string>
     <string name="facebook_app_id">1710595838960405</string>
+    <string name="fb_login_protocol_scheme">fb1710595838960405</string>
     <string name="user_resist_finish">%1$s,\nCongratulations! :D</string>
-    <string name="user_profile_img">Add a profile photo(optional) \n \u0026 nickname so your friends know it\'s you.</string>
-    <string name="user_email_check">The e-mail you entered is already being used by \nanother user. Please enter a different one.</string>
-    <string name="user_password_check">The password must contain a minimum of 8 \ncharacters including a lower-case letter, an upper-\ncase letter and a number.</string>
+    <string name="user_profile_img">Add a profile photo \u0026 nickname.</string>
+    <string name="user_email_check">Email fail! Please type in your correct email address.</string>
+    <string name="user_password_check">he password must contain a minimum of 6 characters including a letter and a number.</string>
     <string name="reset_language">The application will need to be re-run when changing the language.\nDo you agree?</string>
     <string name="user_next">Next</string>
     <string name="yes">Yes</string>
@@ -30,4 +31,21 @@
     <string name="menu_signout">Sign Out</string>
     <string name="menu_delete_account">Delete Account</string>
     <string name="searchbox_tag">search for terms or #tags</string>
+    <string name="find_password">To reset your password, enter your email address below and follow the instructions in the email we\'ll send you.</string>
+    <string name="SIGNUP">SIGN UP</string>
+    <string name="user_email_join">Please enter your email and password.</string>
+    <string name="edit_email_hint">email</string>
+    <string name="edit_password_hint">password</string>
+    <string name="create_new_password">CREATE NEW PASSWORD</string>
+    <string name="send_email">SEND RESET LINK</string>
+    <string name="email_pattern_error">Email fail! Please type in your correct email address.</string>
+    <string name="exist_user">Already have an account?</string>
+    <string name="login_user">Log In</string>
+    <string name="profile_user">Add a profile photo \u0026 nickname.</string>
+    <string name="edit_nick_hint">Nickname</string>
+    <string name="nick_error">The nickname you entered is already being used by another user.</string>
+    <string name="create_account">Create Account</string>
+    <string name="term">By signing up, \nyou agree to our Terms \u0026 Privacy Policy.</string>
+    <string name="forgot_password">Forgotten password?</string>
+    <string name="email_send_ok">The e-mail you entered is sign up by SNS.</string>
 </resources>

@@ -99,10 +99,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Already have an account?   "
+                    android:text="@string/exist_user"
                     android:textSize="14.4sp"
                     android:textColor="#FFFFFF"
-                    app:customFont="NotoSansKR-Light.otf"/>
+                    app:customFont="NotoSansKR-Light.otf"
+                    android:layout_marginRight="10dp"/>
 
                 <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
