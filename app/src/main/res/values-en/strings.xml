@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Plea</string>
-    <string name="facebook_app_id">1710595838960405</string>
-    <string name="fb_login_protocol_scheme">fb1710595838960405</string>
+    <string name="facebook_app_id">1966104266739530</string>
+    <string name="fb_login_protocol_scheme">fb1966104266739530</string>
     <string name="user_resist_finish">%1$s,\nCongratulations! :D</string>
     <string name="user_profile_img">Add a profile photo \u0026 nickname.</string>
     <string name="user_email_check">Email fail! Please type in your correct email address.</string>

@@ -13,6 +13,8 @@ public class Constants {
     public static final String BASE_URL = "http://" + Constants.DOING_DOMAIN;
     public static final String MAIN_URL = "http://" + Constants.DOING_DOMAIN + "/main?uid=%s";
 
+    public static final String INTENT_ACTION_SAVE_COMPLETE = "INTENT_ACTION_SAVE_COMPLETE";
+
     public static final String LOG_TAG = "PLEA";
     public static final String INTENT_DATA_KEY = "INTENT_DATA_KEY";
 
@@ -34,8 +36,6 @@ public class Constants {
         public static final String PUSH = "http://" + Constants.DOING_DOMAIN + "/member/pushSetting?uid=%s";
         public static final String EMAIL_RECEIVE = "http://" + Constants.DOING_DOMAIN + "/member/mailSetting?uid=%s";
         public static final String PLEA = "http://" + Constants.DOING_DOMAIN + "/cart/reg?txtUrl=%s&uid=%s ";
-
-         
 
     }
 

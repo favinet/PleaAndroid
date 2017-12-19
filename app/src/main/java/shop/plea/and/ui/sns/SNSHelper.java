@@ -143,6 +143,8 @@ public class SNSHelper {
 
                         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
                         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
+                       // UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+                      //  UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, req.joinType);
 
                         if(profileImg != null)
                             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImg.toString());
@@ -288,10 +290,13 @@ public class SNSHelper {
                 req.joinType = "google";
 
                 Uri profileImg = account.getPhotoUrl();
+                String gcmToken = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
 
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.SNS_EMAIL, account.getEmail());
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
 
                 if(profileImg != null)
                     UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, account.getPhotoUrl().toString());

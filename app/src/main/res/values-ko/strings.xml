@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">플리</string>
-    <string name="facebook_app_id">1710595838960405</string>
-    <string name="fb_login_protocol_scheme">fb1710595838960405</string>
+    <string name="facebook_app_id">1966104266739530</string>
+    <string name="fb_login_protocol_scheme">fb1966104266739530</string>
     <string name="user_resist_finish">%1$s,\n회원 가입이 완료되었습니다!</string>
     <string name="user_profile_img">프로필 사진과 닉네임을 설정해 보세요.</string>
     <string name="user_email_check">이메일 형식이 올바르지 않습니다.\n정확한 이메일 주소를 입력해 주세요.</string>

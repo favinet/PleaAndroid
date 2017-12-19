@@ -506,7 +506,7 @@ public class MainPleaListActivity extends PleaActivity{
                     if(isViewSearchBox)
                     {
                         String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
-                        String searchAction = "javascript:searchAction("+keyword+");";
+                        String searchAction = "javascript:searchAction('"+keyword+"');";
                         customWebView.initContentView(searchAction);
                     }
                     else

@@ -83,7 +83,7 @@
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider1710595838960405"
+            android:authorities="com.facebook.app.FacebookContentProvider1966104266739530"
             android:exported="true" />
 
         <!-- sns configration end -->
