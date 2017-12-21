@@ -531,6 +531,11 @@ public class MainPleaListActivity extends PleaActivity{
 
         @Override
         public void onClick(View v) {
+
+            ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
+            toolbar_header.findViewById(R.id.btn_toolbar_alert).setTag("off");
+            ticker_header.setVisibility(View.GONE);
+
             String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
             if(id.equals(""))
             {
@@ -542,6 +547,7 @@ public class MainPleaListActivity extends PleaActivity{
             {
                 case R.id.btn_menu :
                 case R.id.btn_menu_profile :
+
                     openDrawer();
                     break;
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class BaseFragment extends Fragment {
     protected List<Fragment> mFragments = new ArrayList<>();
     protected Unbinder mUnbinder;
     protected Dialog materiaDg;
-    protected ProgressWheel mProgressWheel;
+    protected ImageView mProgressWheel;
     protected boolean mChecked = false;
 
 
@@ -56,7 +57,7 @@ public class BaseFragment extends Fragment {
 
         materiaDg = new Dialog(mContext, R.style.Theme_CustomProgressDialog);
         materiaDg.setContentView(R.layout.progress_dialog_material);
-        mProgressWheel = (ProgressWheel) materiaDg.findViewById(R.id.progress_wheel);
+        mProgressWheel = (ImageView) materiaDg.findViewById(R.id.progress_wheel);
 
       //  mToolbar = (Toolbar)
     }
@@ -136,7 +137,7 @@ public class BaseFragment extends Fragment {
             } else {
                 materiaDg.setCancelable(true);
             }
-            mProgressWheel.spin();
+            //mProgressWheel.spin();
             materiaDg.show();
         }
     }
@@ -144,7 +145,7 @@ public class BaseFragment extends Fragment {
     public void stopIndicator() {
         if(getActivity() != null && !getActivity().isFinishing() && materiaDg != null && materiaDg.isShowing())
         {
-            mProgressWheel.stopSpinning();
+            //mProgressWheel.stopSpinning();
             materiaDg.dismiss();
         }
     }

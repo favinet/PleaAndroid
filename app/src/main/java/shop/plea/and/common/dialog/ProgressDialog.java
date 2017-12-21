@@ -2,6 +2,8 @@ package shop.plea.and.common.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.widget.ImageView;
 
 import shop.plea.and.R;
 import shop.plea.and.common.tool.Logger;
@@ -13,7 +15,8 @@ import shop.plea.and.common.view.ProgressWheel;
 
 public class ProgressDialog extends Dialog {
 
-    private ProgressWheel progressWheel;
+    private ImageView progressWheel;
+    private AnimationDrawable frameAnimation;
 
     public ProgressDialog(Context context, int themeResId) {
         super(context, themeResId);
@@ -30,7 +33,8 @@ public class ProgressDialog extends Dialog {
 
         super.setContentView(layoutResID);
 
-        progressWheel = (ProgressWheel) this.findViewById(R.id.progress_wheel);
+        progressWheel = (ImageView) this.findViewById(R.id.progress_wheel);
+        frameAnimation = (AnimationDrawable) progressWheel.getBackground();
 
         Logger.log(Logger.LogState.D, "progressWheel setContentView: " + progressWheel);
         // here you can get your drawer buttons and define how they
@@ -40,13 +44,13 @@ public class ProgressDialog extends Dialog {
 
     @Override
     public void show() {
-        progressWheel.spin();
+        frameAnimation.start();
         super.show();
     }
 
     @Override
     public void dismiss() {
-        progressWheel.stopSpinning();
+        frameAnimation.stop();
         super.dismiss();
     }
 }

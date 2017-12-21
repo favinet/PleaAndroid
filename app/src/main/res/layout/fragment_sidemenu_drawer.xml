@@ -37,8 +37,8 @@
         </LinearLayout>
 
         <shop.plea.and.ui.view.CustomFontBtn
-            android:layout_width="wrap_content"
-            android:layout_height="25.3dp"
+            android:layout_width="77.3dp"
+            android:layout_height="34.8dp"
             android:id="@+id/side_btn_profile"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -57,53 +57,107 @@
         android:layout_height="1.3dp"
         android:background="#1A000000"/>
 
+    <!-- 상단 메뉴 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="139.5dp"
+        android:orientation="horizontal"
+        android:weightSum="9"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="30dp"
+        android:background="#4c3994">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:id="@+id/side_btn_myplea">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_icon_00"/>
+
+            <shop.plea.and.ui.view.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13.8dp"
+                android:text="@string/menu_myplea"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:id="@+id/side_btn_follower">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_icon_01"/>
+
+            <shop.plea.and.ui.view.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13.8dp"
+                android:text="@string/menu_follower"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:id="@+id/side_btn_foryou">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_icon_02"/>
+
+            <shop.plea.and.ui.view.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13.8dp"
+                android:text="@string/menu_foryou"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/side_menu_font"
+                app:customFont="NotoSansKR-Light.otf"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- 상단 메뉴 //-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="22.5dp"
-        android:layout_marginTop="33.3dp"
+        android:layout_marginTop="32dp"
         android:scrollbarSize="0dp"
         android:scrollbars="none">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:id="@+id/side_btn_myplea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_myplea"
-                android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font"
-                app:customFont="NotoSansKR-Light.otf"/>
-
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:id="@+id/side_btn_follower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="@string/menu_follower"
-                android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font"
-                app:customFont="NotoSansKR-Light.otf"/>
-
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:id="@+id/side_btn_foryou"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="@string/menu_foryou"
-                android:textColor="@color/colorSideMenu"
-                android:textSize="@dimen/side_menu_font"
-                app:customFont="NotoSansKR-Light.otf"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/side_menu_gap">
+                android:layout_marginTop="0dp"
+                android:id="@+id/side_btn_follower_following">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -111,45 +165,37 @@
                     android:orientation="horizontal">
 
                     <shop.plea.and.ui.view.CustomFontTextView
-                        android:id="@+id/side_btn_push"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:text="@string/menu_push"
+                        android:text="@string/menu_follower_following"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/side_menu_font"
                         app:customFont="NotoSansKR-Light.otf"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/menu_question"
-                        android:visibility="gone" />
                 </LinearLayout>
 
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/side_menu_gap">
+                android:layout_marginTop="@dimen/side_menu_gap"
+                android:id="@+id/side_btn_push_email">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
                     android:orientation="horizontal">
-
                     <shop.plea.and.ui.view.CustomFontTextView
-                        android:id="@+id/side_btn_email"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:text="@string/menu_email"
+                        android:text="@string/menu_push_email"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/side_menu_font"
                         app:customFont="NotoSansKR-Light.otf"/>
@@ -161,7 +207,6 @@
                         android:src="@drawable/menu_question"
                         android:visibility="gone" />
                 </LinearLayout>
-
 
             </RelativeLayout>
 
@@ -281,16 +326,7 @@
                     app:customFontBtn="NotoSansKR-Regular.otf"/>
             </RelativeLayout>
 
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:id="@+id/side_btn_api"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/side_menu_gap"
-                android:text="@string/menu_api"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/side_menu_font"
-                app:customFont="NotoSansKR-Light.otf"/>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -300,7 +336,7 @@
 
                 <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_support"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10.5dp"
@@ -336,7 +372,7 @@
 
                 <shop.plea.and.ui.view.CustomFontTextView
                     android:id="@+id/side_btn_signout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10.5dp"

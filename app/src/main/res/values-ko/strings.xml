@@ -14,9 +14,9 @@
     <string name="side_profile">프로필보기</string>
     <string name="menu_myplea">내 플리 보기</string>
     <string name="menu_follower">친구 소식</string>
-    <string name="menu_foryou">추천 Plea</string>
-    <string name="menu_push">푸시 설정</string>
-    <string name="menu_email">이메일 받기</string>
+    <string name="menu_follower_following">팔로워 관리</string>
+    <string name="menu_foryou">추천 플리</string>
+    <string name="menu_push_email">푸시 및 이메일 설정</string>
     <string name="menu_language">언어 선택</string>
     <string name="menu_language_eng">English</string>
     <string name="menu_notice">새로운 소식</string>

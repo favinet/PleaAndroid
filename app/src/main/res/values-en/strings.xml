@@ -13,10 +13,10 @@
     <string name="ok">ok</string>
     <string name="side_profile">Profile</string>
     <string name="menu_myplea">My Plea</string>
-    <string name="menu_follower">Follower\'s Feed</string>
+    <string name="menu_follower">Follower</string>
+    <string name="menu_follower_following">Follower \u0026 Following </string>
     <string name="menu_foryou">For You</string>
-    <string name="menu_push">Push</string>
-    <string name="menu_email">E-mail</string>
+    <string name="menu_push_email">Push and Email</string>
     <string name="menu_language">Language</string>
     <string name="menu_language_eng">English</string>
     <string name="menu_notice">Notice</string>

@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
@@ -56,23 +58,24 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     @BindView(R.id.side_nickname) CustomFontTextView side_nickname;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
     @BindView(R.id.side_btn_profile) CustomFontBtn side_btn_profile;
-    @BindView(R.id.side_btn_myplea) CustomFontTextView side_btn_myplea;
-    @BindView(R.id.side_btn_follower) CustomFontTextView side_btn_follower;
-    @BindView(R.id.side_btn_foryou) CustomFontTextView side_btn_foryou;
-    @BindView(R.id.side_btn_push) CustomFontTextView side_btn_push;
-    @BindView(R.id.side_btn_email) CustomFontTextView side_btn_email;
+    @BindView(R.id.side_btn_myplea) LinearLayout side_btn_myplea;
+    @BindView(R.id.side_btn_follower) LinearLayout side_btn_follower;
+    @BindView(R.id.side_btn_foryou) LinearLayout side_btn_foryou;
+    @BindView(R.id.side_btn_push_email) RelativeLayout side_btn_push_email;
+
     @BindView(R.id.side_btn_notice) CustomFontTextView side_btn_notice;
     @BindView(R.id.side_btn_notice_badge) CustomFontBtn side_btn_notice_badge;
     @BindView(R.id.side_btn_terms) CustomFontTextView side_btn_terms;
     @BindView(R.id.side_btn_privacy) CustomFontTextView side_btn_privacy;
     @BindView(R.id.side_btn_version) CustomFontTextView side_btn_version;
     @BindView(R.id.side_btn_update) CustomFontBtn side_btn_update;
-    @BindView(R.id.side_btn_api) CustomFontTextView side_btn_api;
+
     @BindView(R.id.side_btn_support) CustomFontTextView side_btn_support;
     @BindView(R.id.side_btn_reset_pwd) CustomFontTextView side_btn_reset_pwd;
     @BindView(R.id.side_btn_signout) CustomFontTextView side_btn_signout;
     @BindView(R.id.side_btn_delete_user) CustomFontTextView side_btn_delete_user;
     @BindView(R.id.side_btn_language) CustomFontBtn side_btn_language;
+    @BindView(R.id.side_btn_follower_following) RelativeLayout side_btn_follower_following;
 
 
     public static SideMenuDrawerFragment newInstance() {
@@ -107,20 +110,19 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         side_btn_myplea.setOnClickListener(mListener);
         side_btn_follower.setOnClickListener(mListener);
         side_btn_foryou.setOnClickListener(mListener);
-        side_btn_push.setOnClickListener(mListener);
-        side_btn_email.setOnClickListener(mListener);
+        side_btn_push_email.setOnClickListener(mListener);
         side_btn_notice.setOnClickListener(mListener);
         side_btn_notice_badge.setOnClickListener(mListener);
         side_btn_terms.setOnClickListener(mListener);
         side_btn_privacy.setOnClickListener(mListener);
         side_btn_version.setOnClickListener(mListener);
         side_btn_update.setOnClickListener(mListener);
-        side_btn_api.setOnClickListener(mListener);
         side_btn_support.setOnClickListener(mListener);
         side_btn_reset_pwd.setOnClickListener(mListener);
         side_btn_signout.setOnClickListener(mListener);
         side_btn_delete_user.setOnClickListener(mListener);
         side_btn_language.setOnClickListener(mListener);
+        side_btn_follower_following.setOnClickListener(mListener);
 
         side_btn_version.setText(String.format(getString(R.string.menu_version), "1.0.0"));
 
@@ -368,14 +370,11 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     url = String.format(Constants.MENU_LINKS.RECOMMEND_PLEA, uid);
                     menuCallback.onReceive(url);
                     break;
-                case R.id.side_btn_push :
-                    url = String.format(Constants.MENU_LINKS.PUSH, uid);
+                case R.id.side_btn_push_email :
+                    url = String.format(Constants.MENU_LINKS.PUSH_EMAIL, uid);
                     menuCallback.onReceive(url);
                     break;
-                case R.id.side_btn_email :
-                     url = String.format(Constants.MENU_LINKS.EMAIL_RECEIVE, uid);
-                    menuCallback.onReceive(url);
-                    break;
+
                 case R.id.side_btn_notice :
                 case R.id.side_btn_notice_badge :
                     url = String.format(Constants.MENU_LINKS.NOTICE, uid);
@@ -391,9 +390,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     break;
                 case R.id.side_btn_update :
                     setVersion();
-                    break;
-                case R.id.side_btn_api :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.side_btn_support :
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
@@ -411,6 +407,10 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     break;
                 case R.id.side_btn_language :
                     selectLanguageDialog();
+                    break;
+                case R.id.side_btn_follower_following :
+                    url = String.format(Constants.MENU_LINKS.FRIEND_MGR, uid, uid);
+                    menuCallback.onReceive(url);
                     break;
             }
         }

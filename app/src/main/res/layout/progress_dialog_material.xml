@@ -13,6 +13,7 @@
 
         <!-- This can of course also be a regular indeterminate ProgressBar, but then it won't be styled -->
 
+        <!--
         <shop.plea.and.common.view.ProgressWheel
             android:id="@+id/progress_wheel"
             android:layout_width="80dp"
@@ -21,7 +22,15 @@
             android:layout_centerVertical="true"
             wheel:matProg_barColor="#f65037"
             android:visibility="visible"/>
+           -->
 
+        <ImageView
+            android:id="@+id/progress_wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/loading_animation"
+            />
 
 
         <TextView

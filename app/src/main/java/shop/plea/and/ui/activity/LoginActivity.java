@@ -3,6 +3,7 @@ package shop.plea.and.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -61,7 +62,9 @@ public class LoginActivity extends PleaActivity {
         String action = null;
         String pushUrl = null;
 
-        if(getIntent() != null)
+        Log.e("PLEA", "getIntent() : " + getIntent());
+
+        if(getIntent().getExtras() != null)
         {
             action = getIntent().getExtras().getString("action", null);
             pushUrl = getIntent().getExtras().getString("pushUrl", null);
