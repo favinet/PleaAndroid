@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -126,7 +127,7 @@ public class MainPleaListActivity extends PleaActivity{
         if(inData.isRegist)
         {
             hellow_area.setVisibility(View.VISIBLE);
-            handler.postDelayed(runMain, 5000);
+            handler.postDelayed(runMain, 2500);
         }
 
         drawer_Fragment = SideMenuDrawerFragment.newInstance();
@@ -187,8 +188,11 @@ public class MainPleaListActivity extends PleaActivity{
 
                         }
 
-                        if(!noticeCnt.getText().toString().equals("0") && !likeCnt.getText().toString().equals("0") && !followCnt.getText().toString().equals("0"))
+                        if(!noticeCnt.getText().toString().equals("0") || !likeCnt.getText().toString().equals("0") || !followCnt.getText().toString().equals("0")) {
                             ticker_header.setVisibility(View.VISIBLE);
+                            ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice_on);
+                            ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setTag("on");
+                        }
                     }
 
                     if(tickers.length() > 0)
@@ -273,6 +277,23 @@ public class MainPleaListActivity extends PleaActivity{
                 {
                     toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
                     ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setVisibility(View.VISIBLE);
+
+                    ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                            Logger.log(Logger.LogState.E, "onEditorAction = " + Utils.getStringByObject(actionId));
+                            switch (actionId) {
+
+                                case EditorInfo.IME_ACTION_SEARCH:
+                                    searchAction();
+                                    break;
+                                default:
+                                    return false;
+                            }
+                            return true;
+                        }
+                    });
+
                     if(customWebView.mView.getUrl().contains("tag"))
                     {
                         String url = customWebView.mView.getUrl();
@@ -448,6 +469,33 @@ public class MainPleaListActivity extends PleaActivity{
         }
     }
 
+    private void searchAction()
+    {
+        String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
+        if(id.equals(""))
+        {
+            UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(MainPleaListActivity.this);
+            id =   userInfoData.getId();
+        }
+
+        CustomFontEditView searchBox = (CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox);
+
+        boolean isViewSearchBox = (searchBox.getVisibility() == View.VISIBLE) ? true : false;
+
+        if(isViewSearchBox)
+        {
+            String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
+            String searchAction = "javascript:searchAction('"+keyword+"');";
+            Logger.log(Logger.LogState.E, "keyword = " + searchAction);
+            Logger.log(Logger.LogState.E, "keyword = " + Utils.encode(searchAction));
+            customWebView.initContentView(searchAction);
+        }
+        else
+        {
+            customWebView.initContentView(String.format(Constants.MENU_LINKS.SEARCH_MAIN, id));
+        }
+    }
+
     private void setTickerUrl(int  index)
     {
         String tickerUrl = "";
@@ -499,20 +547,7 @@ public class MainPleaListActivity extends PleaActivity{
 
                 case R.id.btn_toolbar_search :
 
-                    CustomFontEditView searchBox = (CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox);
-
-                    boolean isViewSearchBox = (searchBox.getVisibility() == View.VISIBLE) ? true : false;
-
-                    if(isViewSearchBox)
-                    {
-                        String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
-                        String searchAction = "javascript:searchAction('"+keyword+"');";
-                        customWebView.initContentView(searchAction);
-                    }
-                    else
-                    {
-                        customWebView.initContentView(String.format(Constants.MENU_LINKS.SEARCH_MAIN, id));
-                    }
+                    searchAction();
 
                     break;
 

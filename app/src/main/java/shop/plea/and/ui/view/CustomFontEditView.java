@@ -66,6 +66,7 @@ public class CustomFontEditView extends EditText {
             }
 
             setTypeface(tf);
+
         }
 
         return true;

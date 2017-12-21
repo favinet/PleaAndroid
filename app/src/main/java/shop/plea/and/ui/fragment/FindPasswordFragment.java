@@ -96,7 +96,7 @@ public class FindPasswordFragment extends BaseFragment {
             public void onFocusChange(View view, boolean b) {
                 if(b)
                 {
-                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                    view.setBackgroundResource(R.drawable.edit_focus_round_stroke);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ public class FindPasswordFragment extends BaseFragment {
                 Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
                 if(emailLength > 0)
                 {
-                    btn_send_password_set_mail.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    btn_send_password_set_mail.setBackgroundResource(R.drawable.round_stroke_corner_focus);
                     btn_send_password_set_mail.setTextColor(Color.WHITE);
                 }
                 if(emailLength == 0)

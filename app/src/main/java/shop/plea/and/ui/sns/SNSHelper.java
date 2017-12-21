@@ -133,7 +133,8 @@ public class SNSHelper {
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
-                        Logger.log(Logger.LogState.D, response.toString());
+                        Logger.log(Logger.LogState.E, response.toString());
+                        Logger.log(Logger.LogState.E, "FACEBOOK : " + Utils.getStringByObject(object));
 
                         RequestData req = new RequestData();
                         req.authId = profile.getId();

@@ -92,16 +92,16 @@ public class DataInterface extends BaseDataInterface{
     {
         try {
             Call<UserInfoResultData> call = service.callUserLogin(params);
-            Logger.log(Logger.LogState.E, "error callUserLogin = " + Utils.getStringByObject(params));
+            Logger.log(Logger.LogState.E, "call userLogin = " + Utils.getStringByObject(params));
             call.enqueue(new RetryableCallback<UserInfoResultData>(call, context) {
                 @Override
                 public void onFinalResponse(Call<UserInfoResultData> call, retrofit2.Response<UserInfoResultData> response) {
                     if (callback == null) return;
-
+                    Logger.log(Logger.LogState.E, "call userLogin response = " + Utils.getStringByObject(response));
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error callUserLogin = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.E, "error userLogin = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }

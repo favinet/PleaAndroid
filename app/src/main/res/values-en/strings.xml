@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Plea</string>
     <string name="facebook_app_id">1966104266739530</string>
-    <string name="fb_login_protocol_scheme">fb1966104266739530</string>
     <string name="user_resist_finish">%1$s,\nCongratulations! :D</string>
     <string name="user_profile_img">Add a profile photo \u0026 nickname.</string>
     <string name="user_email_check">Email fail! Please type in your correct email address.</string>
@@ -48,4 +47,10 @@
     <string name="term">By signing up, \nyou agree to our Terms \u0026 Privacy Policy.</string>
     <string name="forgot_password">Forgotten password?</string>
     <string name="email_send_ok">The e-mail you entered is sign up by SNS.</string>
+    <string name="Man">Man</string>
+    <string name="Woman">Woman</string>
+    <string name="birth">Birth Year</string>
+    <string name="birth_error">Please choose your age.</string>
+    <string name="gener_error">Please choose your gender.</string>
+    <string name="nick_empty">Please enter your nickname.</string>
 </resources>

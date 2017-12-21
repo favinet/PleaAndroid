@@ -15,5 +15,5 @@
         android:layout_centerHorizontal="true"
         android:text="Copyright ⓒ Plea All rights reserved"
         app:customFont="NotoSansKR-Light.otf"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="#A3A3A3"/>
 </RelativeLayout>

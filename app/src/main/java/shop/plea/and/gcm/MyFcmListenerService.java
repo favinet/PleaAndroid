@@ -22,6 +22,7 @@ import shop.plea.and.R;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.activity.IntroActivity;
 
 /**
@@ -72,7 +73,9 @@ public class MyFcmListenerService extends FirebaseMessagingService{
             // notification pending setting
             Intent notificationIntent = new Intent(this, IntroActivity.class);
 
-            notificationIntent.putExtra("key_1","value");
+            notificationIntent.putExtra("action", "URL_PUSH");
+            notificationIntent.putExtra("url", pushData.url);
+
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this, m, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

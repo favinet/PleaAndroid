@@ -43,7 +43,7 @@
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="#4cffffff"
+                android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
                 app:customFont="NotoSansKR-Regular.otf"/>
             
@@ -65,7 +65,7 @@
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="#4cffffff"
+                android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
                 app:customFontEdit="NotoSansKR-Regular.otf"/>
 

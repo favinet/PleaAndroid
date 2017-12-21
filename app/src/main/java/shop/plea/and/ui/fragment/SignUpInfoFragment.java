@@ -6,22 +6,30 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +52,7 @@ import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.activity.InAppWebView;
 import shop.plea.and.ui.activity.MainPleaListActivity;
+import shop.plea.and.ui.adapter.SpinnerBirthAdapter;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -69,6 +78,8 @@ public class SignUpInfoFragment extends BaseFragment{
     private final String MULTI_PART = "multipart/form-data";
 
     private SignUpInfoFragment.Listner mListner;
+    private int emailLength = 0;
+    private int nickLength = 0;
 
     @BindView(R.id.ed_nickname) CustomFontEditView ed_nickname;
     @BindView(R.id.ed_nickname_alert) CustomFontTextView ed_nickname_alert;
@@ -79,6 +90,14 @@ public class SignUpInfoFragment extends BaseFragment{
     @BindView(R.id.txt_agree_info) CustomFontTextView txt_agree_info;
     @BindView(R.id.img_profile) BootstrapCircleThumbnail img_profile;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
+    @BindView(R.id.spinner_birth) Spinner spinner_birth;
+    @BindView(R.id.gender_m) CustomFontTextView gender_m;
+    @BindView(R.id.gender_f) CustomFontTextView gender_f;
+
+
+    private SpinnerBirthAdapter spinnerBirthAdapter;
+    private String gender;
+    private String birth;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,6 +121,7 @@ public class SignUpInfoFragment extends BaseFragment{
     //public static SignUpInfoFragment newInstance(int page, String email, String passwd, String typ)
     public static SignUpInfoFragment newInstance(int page, HashMap<String, String> params)
     {
+
         SignUpInfoFragment signUpInfoFragment = new SignUpInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_PAGE_NUM, page);
@@ -140,7 +160,7 @@ public class SignUpInfoFragment extends BaseFragment{
         toolbar_header.findViewById(R.id.toolbar_back).setVisibility(View.VISIBLE);
         toolbar_header.findViewById(R.id.toolbar_title).setVisibility(View.VISIBLE);
         toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
-        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText("SIGN UP");
+        ((TextView) toolbar_header.findViewById(R.id.toolbar_title)).setText(getString(R.string.SIGNUP));
         Utils.changeStatusColor((BaseActivity) getActivity(), R.color.colorSubHeader);
     }
 
@@ -149,18 +169,153 @@ public class SignUpInfoFragment extends BaseFragment{
         upload_profile.setOnClickListener(mListner);
         btn_regist_end.setOnClickListener(mListner);
         img_profile.setOnClickListener(mListner);
+        gender_m.setOnClickListener(mListner);
+        gender_f.setOnClickListener(mListner);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         String email = (getJoinType().equals("email")) ? getEmail() : getSnsEmail();
         ed_email.setText(email);
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        int getTime = Integer.valueOf(sdf.format(date));
+
+        //데이터
+        final List<String> data = new ArrayList<>();
+        data.add(getString(R.string.birth));
+        for(int i = getTime; i >= getTime-97; i--)
+        {
+            data.add(String.valueOf(i));
+        }
+
+        //spinner_birth.setPrompt(getString(R.string.birth));
+
+        //Adapter
+        spinnerBirthAdapter = new SpinnerBirthAdapter(getActivity(), data);
+
+        //Adapter 적용
+        spinner_birth.setAdapter(spinnerBirthAdapter);
+        /*
+        spinner_birth.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                spinner_birth.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinner_birth.setScaleY(200F);
+                    }
+                }, 1000);
+
+                return false;
+            }
+        });
+        */
+
+        spinner_birth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                birth = (String) spinner_birth.getSelectedItem();
+                if(birth.equals(getString(R.string.birth))) birth = null;
+                Logger.log(Logger.LogState.E, "birth = " + Utils.getStringByObject(birth));
+                formStatusCheck();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackgroundResource(R.drawable.edit_focus_round_stroke);
+                }
+                else
+                {
+                    view.setBackgroundResource(R.drawable.custom_editview);
+                }
+            }
+        });
+
+        ed_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+                formStatusCheck();
+                if(emailLength == 0)
+                {
+                    btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner);
+                    btn_regist_end.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        ed_nickname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackgroundResource(R.drawable.edit_focus_round_stroke);
+                }
+                else
+                {
+                    view.setBackgroundResource(R.drawable.custom_editview);
+                }
+            }
+        });
+
+        ed_nickname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                formStatusCheck();
+                if(nickLength == 0)
+                {
+                    btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner);
+                    btn_regist_end.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+    }
+
+    private void formStatusCheck()
+    {
+        emailLength = ed_email.getText().toString().length();
+        nickLength = ed_nickname.getText().toString().length();
+        Log.e("PLEA", "ed_nickname : " + String.valueOf(nickLength));
+        if(emailLength > 0 && nickLength > 0 && birth != null && gender != null)
+        {
+            btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner_focus);
+            btn_regist_end.setTextColor(Color.WHITE);
+        }
     }
 
     private String getEmail()
     {
-        return getArguments().getString(ARG_EMAIL);
+        return (getArguments().getString(ARG_EMAIL) == null) ? ed_email.getText().toString() : getArguments().getString(ARG_EMAIL);
     }
     private String getSnsEmail()
     {
-        return getArguments().getString(ARG_SNS_EMAIL);
+        return (getArguments().getString(ARG_SNS_EMAIL) == null) ? ed_email.getText().toString() : getArguments().getString(ARG_SNS_EMAIL);
     }
     private String getPassword()
     {
@@ -199,7 +354,7 @@ public class SignUpInfoFragment extends BaseFragment{
                 indata.link = String.format(Constants.MENU_LINKS.TERMS, locale);
                 indata.title = getString(R.string.menu_term);
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
-                indata.screenType = 1;
+                indata.screenType = Constants.SCREEN_TYPE.INAPP;
                 Intent intent = new Intent(getActivity(), InAppWebView.class);
                 intent.putExtra(Constants.INTENT_DATA_KEY, indata);
                 getActivity().startActivity(intent);
@@ -220,7 +375,7 @@ public class SignUpInfoFragment extends BaseFragment{
                 indata.link = String.format(Constants.MENU_LINKS.POLICY, locale);
                 indata.title = getString(R.string.menu_privacy);
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
-                indata.screenType = 1;
+                indata.screenType = Constants.SCREEN_TYPE.INAPP;
                 Intent intent = new Intent(getActivity(), InAppWebView.class);
                 intent.putExtra(Constants.INTENT_DATA_KEY, indata);
                 getActivity().startActivity(intent);
@@ -258,66 +413,88 @@ public class SignUpInfoFragment extends BaseFragment{
 
     private void registUser()
     {
-        startIndicator("");
-        Map<String, RequestBody> params = new HashMap<>();
-
-        String joinType = getJoinType();
-        File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
-
-        RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
-        RequestBody nickNameBody = RequestBody.create(MediaType.parse(MULTI_PART), ed_nickname.getText().toString());
-        if(loginTypBody != null) params.put(Constants.API_PARAMS_KEYS.JOIN_TYPE, loginTypBody);
-        if(nickNameBody != null) params.put(Constants.API_PARAMS_KEYS.NICKNAME, nickNameBody);
-
-        if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+        Logger.log(Logger.LogState.E, "registUser gender = " + Utils.getStringByObject(gender));
+        Logger.log(Logger.LogState.E, "registUser birth = " + Utils.getStringByObject(birth));
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        if(gender == null)
         {
-            RequestBody pwdBody = RequestBody.create(MediaType.parse(MULTI_PART), getPassword());
-            RequestBody emailBody = RequestBody.create(MediaType.parse(MULTI_PART), getEmail());
-            if(pwdBody != null) params.put(Constants.API_PARAMS_KEYS.PASSWORD, pwdBody);
-            if(emailBody != null) params.put(Constants.API_PARAMS_KEYS.EMAIL, emailBody);
+            dialog.setTitle(R.string.app_name).setMessage(getString(R.string.gener_error)).setPositiveButton(getString(R.string.yes), null).create().show();
+        }
+        else if(birth == null)
+        {
+            dialog.setTitle(R.string.app_name).setMessage(getString(R.string.birth_error)).setPositiveButton(getString(R.string.yes), null).create().show();
         }
         else
         {
-            RequestBody authIdBody = RequestBody.create(MediaType.parse(MULTI_PART), getAuthId());
-            RequestBody profileImgBody = RequestBody.create(MediaType.parse(MULTI_PART), getProfileImg());
-            RequestBody snsEmailBody = RequestBody.create(MediaType.parse(MULTI_PART), getSnsEmail());
-            if(authIdBody != null) params.put(Constants.API_PARAMS_KEYS.AUTHID, authIdBody);
-            if(profileImgBody != null) params.put(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImgBody);
-            if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
+            startIndicator("");
+            Map<String, RequestBody> params = new HashMap<>();
+
+            String joinType = getJoinType();
+            File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
+
+            RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
+            RequestBody nickNameBody = RequestBody.create(MediaType.parse(MULTI_PART), ed_nickname.getText().toString());
+            if(loginTypBody != null) params.put(Constants.API_PARAMS_KEYS.JOIN_TYPE, loginTypBody);
+            if(nickNameBody != null) params.put(Constants.API_PARAMS_KEYS.NICKNAME, nickNameBody);
+
+            if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+            {
+                RequestBody pwdBody = RequestBody.create(MediaType.parse(MULTI_PART), getPassword());
+                RequestBody emailBody = RequestBody.create(MediaType.parse(MULTI_PART), getEmail());
+                if(pwdBody != null) params.put(Constants.API_PARAMS_KEYS.PASSWORD, pwdBody);
+                if(emailBody != null) params.put(Constants.API_PARAMS_KEYS.EMAIL, emailBody);
+            }
+            else
+            {
+                RequestBody authIdBody = RequestBody.create(MediaType.parse(MULTI_PART), getAuthId());
+                RequestBody profileImgBody = RequestBody.create(MediaType.parse(MULTI_PART), getProfileImg());
+                RequestBody snsEmailBody = RequestBody.create(MediaType.parse(MULTI_PART), getSnsEmail());
+                if(authIdBody != null) params.put(Constants.API_PARAMS_KEYS.AUTHID, authIdBody);
+                if(profileImgBody != null) params.put(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImgBody);
+                if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
+            }
+
+            RequestBody deviceTypeBody = RequestBody.create(MediaType.parse(MULTI_PART), "android");
+            params.put(Constants.API_PARAMS_KEYS.DEVICE_TYPE, deviceTypeBody);
+
+            String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
+            RequestBody tokenBody = RequestBody.create(MediaType.parse(MULTI_PART), gcmToken);
+            params.put(Constants.API_PARAMS_KEYS.GCM_TOKEN, tokenBody);
+
+            RequestBody genderBody = RequestBody.create(MediaType.parse(MULTI_PART), gender);
+            params.put(Constants.API_PARAMS_KEYS.GENDER, genderBody);
+
+            RequestBody birthBody = RequestBody.create(MediaType.parse(MULTI_PART), birth);
+            params.put(Constants.API_PARAMS_KEYS.BIRTH, birthBody);
+
+            Logger.log(Logger.LogState.E, "userRegist params = " + Utils.getStringByObject(params));
+
+            DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
+                @Override
+                public void onSuccess(UserInfoResultData response) {
+                    stopIndicator();
+                    Logger.log(Logger.LogState.E, "userRegist = " + Utils.getStringByObject(response));
+
+                    String result = response.getResult();
+                    if(result.equals(Constants.API_FAIL))
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
+                    }
+                    else
+                    {
+                        UserInfoData userInfoData = response.userData;
+                        userLogin(userInfoData);
+                    }
+                }
+
+                @Override
+                public void onError() {
+                    stopIndicator();
+                }
+            });
         }
 
-        RequestBody deviceTypeBody = RequestBody.create(MediaType.parse(MULTI_PART), "android");
-        params.put(Constants.API_PARAMS_KEYS.DEVICE_TYPE, deviceTypeBody);
-
-        String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
-        RequestBody tokenBody = RequestBody.create(MediaType.parse(MULTI_PART), gcmToken);
-        params.put(Constants.API_PARAMS_KEYS.GCM_TOKEN, tokenBody);
-
-
-        DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
-            @Override
-            public void onSuccess(UserInfoResultData response) {
-                stopIndicator();
-                Logger.log(Logger.LogState.E, "userRegist = " + Utils.getStringByObject(response));
-
-                String result = response.getResult();
-                if(result.equals(Constants.API_FAIL))
-                {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
-                }
-                else
-                {
-                    UserInfoData userInfoData = response.userData;
-                    userLogin(userInfoData);
-                }
-            }
-
-            @Override
-            public void onError() {
-                stopIndicator();
-            }
-        });
     }
 
     private void userLogin(UserInfoData userInfoData)
@@ -406,6 +583,24 @@ public class SignUpInfoFragment extends BaseFragment{
                 case R.id.toolbar_back :
                     mUpdateListenerCallBack.fragmentBackPressed();
                     break;
+                case R.id.gender_m :
+                    gender_m.setBackgroundResource(R.drawable.round_txt_gender_ltlb_on);
+                    gender_m.setTextColor(Color.WHITE);
+                    gender_f.setBackgroundResource(R.drawable.round_txt_gender_rtrb_off);
+                    gender_f.setTextColor(Color.BLACK);
+                    gender = "M";
+                    Logger.log(Logger.LogState.E, "gender = " + Utils.getStringByObject(gender));
+                    formStatusCheck();
+                    break;
+                case R.id.gender_f :
+                    gender_m.setBackgroundResource(R.drawable.round_txt_gender_ltlb_off);
+                    gender_m.setTextColor(Color.BLACK);
+                    gender_f.setBackgroundResource(R.drawable.round_txt_gender_rtrb_on);
+                    gender_f.setTextColor(Color.WHITE);
+                    gender = "F";
+                    Logger.log(Logger.LogState.E, "gender = " + Utils.getStringByObject(gender));
+                    formStatusCheck();
+                    break;
                 case R.id.btn_regist_end :
 
                     String nickname = ed_nickname.getText().toString();
@@ -453,6 +648,8 @@ public class SignUpInfoFragment extends BaseFragment{
                     }
                     else
                     {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(getString(R.string.nick_empty)).setPositiveButton(getString(R.string.yes), null).create().show();
                         stopIndicator();
                         return;
                     }

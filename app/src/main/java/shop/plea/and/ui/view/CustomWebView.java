@@ -194,7 +194,7 @@ public class CustomWebView {
                     IntentData indata = new IntentData();
                     indata.link = String.format(urlParam);
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
-                    indata.screenType = 0;
+                    indata.screenType = Constants.SCREEN_TYPE.SHOP;
                     Intent intent = new Intent(base, InAppWebView.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
                     base.startActivity(intent);

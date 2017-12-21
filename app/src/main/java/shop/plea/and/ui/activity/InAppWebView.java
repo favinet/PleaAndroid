@@ -66,9 +66,9 @@ public class InAppWebView extends PleaActivity{
     public void initScreen()
     {
         Log.e("PLEA", "타이틀!" + inData.title);
-        if(inData.screenType == 0)
+        if(inData.screenType.equals(Constants.SCREEN_TYPE.SHOP))
             inapp_title.setSelected(true);
-        else if(inData.screenType == 1){
+        else if(inData.screenType.equals(Constants.SCREEN_TYPE.INAPP)){
             inapp_title.setText(inData.title);
             inapp_footer.setVisibility(View.GONE);
         }
@@ -162,7 +162,7 @@ public class InAppWebView extends PleaActivity{
                     break;
 
                 case R.id.inapp_close :
-                    System.exit(0);
+                  //  System.exit(0);
                     finish();
 
                     break;

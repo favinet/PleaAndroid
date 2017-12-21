@@ -39,24 +39,26 @@ import shop.plea.and.data.parcel.IntentData;
 
 public class IntroActivity extends PleaActivity {
 
+    private String action;
+    private String pushUrl;
     Handler handler = new Handler();
     Runnable runMain = new Runnable() {
         @Override
         public void run() {
+
             stopIndicator();
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-            indata.link = (mUrl == null) ? Constants.BASE_URL : mUrl;
-            indata.screenType = 1;
-            indata.title = getString(R.string.menu_reset_password);
-            Intent intent = (mUrl == null) ? new Intent(getApplicationContext(), LoginActivity.class) :  new Intent(getApplicationContext(), InAppWebView.class);
+            indata.link = Constants.BASE_URL;
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.putExtra("action", action);
+            intent.putExtra("pushUrl", pushUrl);
             intent.putExtra(Constants.INTENT_DATA_KEY, indata);
             startActivity(intent);
             finish();
         }
     };
 
-    private String mUrl = null;
     private Context context;
 
     @Override
@@ -67,19 +69,33 @@ public class IntroActivity extends PleaActivity {
 
         this.context = this;
 
-        if(getIntent() != null)
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
         {
-            Uri uri = getIntent().getData();
-            Log.e("PLEA", "비밀번호!" + uri);
-            if(uri != null)
+            action = bundle.getString("action");
+            if(action != null)
             {
-                mUrl = Utils.queryToMap(uri.toString()).get("url");
-                Log.e("PLEA", "주소!" + mUrl);
-                if(uri.toString().contains("reset_password"))
+                if(action.equals("URL_PUSH"))
                 {
-                    Logger.log(Logger.LogState.E, "::::" + Utils.getStringByObject(uri));
+                    pushUrl = Utils.decode(bundle.getString("url"), "UTF-8");
+                    Logger.log(Logger.LogState.E, "pushUrl::::" + pushUrl);
                 }
             }
+            else
+            {
+                Uri uri = getIntent().getData();
+                Log.e("PLEA", "비밀번호!" + uri);
+                if(uri != null)
+                {
+                    pushUrl = Utils.queryToMap(Utils.decode(uri.toString(), "UTF-8")).get("url");
+                    Log.e("PLEA", "주소!" + pushUrl);
+                    if(uri.toString().contains("reset_password"))
+                    {
+                        action = "URL_PUSH";
+                    }
+                }
+            }
+
         }
 
         // 네트워크 상태체크

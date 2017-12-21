@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -62,6 +67,13 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
 
         progressDlg = new ProgressDialog(this, R.style.Theme_CustomProgressDialog);
         progressDlg.setContentView(R.layout.progress_dialog_material);
+
+        /*
+        ImageView gif_loading = (ImageView)findViewById(R.id.gif_loading);
+        Glide.with(context)
+                .load("http://www.favinet.co.kr/download/loading.gif")
+                .into(gif_loading);
+                */
 
         startTransition();
    }

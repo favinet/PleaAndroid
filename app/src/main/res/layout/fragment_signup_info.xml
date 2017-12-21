@@ -12,11 +12,15 @@
     <!-- content area -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="@dimen/layoutpadding"
         android:paddingRight="@dimen/layoutpadding"
+        android:paddingTop="33.5dp"
+        android:paddingBottom="33.5dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolbar_header"
+        android:id="@+id/profileBox">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +64,42 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:id= "@+id/gender_m"
+                    android:layout_width="74.8dp"
+                    android:layout_height="35.8dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/Man"
+                    android:tag="M"
+                    app:customFont="NotoSansKR-Regular.otf"
+                    android:textColor="#000000"
+                    android:background="@drawable/round_txt_gender_ltlb_off"/>
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:id= "@+id/gender_f"
+                    android:layout_width="74.8dp"
+                    android:layout_height="35.8dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/Woman"
+                    android:tag="F"
+                    app:customFont="NotoSansKR-Regular.otf"
+                    android:textColor="#000000"
+                    android:background="@drawable/round_txt_gender_rtrb_off"
+                    android:layout_marginRight="13.3dp"/>
+
+                <Spinner
+                    android:id="@+id/spinner_birth"
+                    android:background="@drawable/spinner_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="35.8dp"/>
+
+            </LinearLayout>
+
             <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
                 android:layout_height="34.4dp"
@@ -72,6 +112,7 @@
                 android:drawableLeft="@drawable/icon_email_black"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
+                android:paddingLeft="10dp"
                 android:textColor="#000000"
                 app:customFontEdit="NotoSansKR-Light.otf"/>
 
@@ -87,9 +128,10 @@
                 android:id="@+id/ed_nickname"
                 android:hint="@string/edit_nick_hint"
                 android:textSize="14.4sp"
-                android:drawableLeft="@drawable/icon_email_black"
+                android:drawableLeft="@drawable/icon_signup_nickname"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="5dp"
+                android:paddingLeft="10dp"
                 android:textColor="#000000"
                 app:customFontEdit="NotoSansKR-Light.otf"/>
 
@@ -128,7 +170,8 @@
     </RelativeLayout>
     <shop.plea.and.ui.view.CustomFontTextView
         android:layout_width="match_parent"
-        android:layout_height="95.8dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileBox"
         android:id="@+id/txt_agree_info"
         android:background="#edebf4"
         android:gravity="center_horizontal|center_vertical"

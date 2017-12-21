@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:padding="5dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <shop.plea.and.ui.view.CustomFontTextView
+        android:id="@+id/birth"
+        android:text="@string/birth"
+        android:textSize="14.4sp"
+        android:textColor="#000000"
+        android:paddingLeft="16.8dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        app:customFont="NotoSansKR-Regular.otf"
+        android:layout_height="match_parent"
+        android:singleLine="true"
+        style="?android:attr/spinnerItemStyle"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_signup_arrow"/>
+
+</LinearLayout>

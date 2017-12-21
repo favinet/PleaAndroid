@@ -79,6 +79,8 @@ public class Constants {
         public static final String LOCALE = "locale";
         public static final String GCM_TOKEN = "deviceToken";
         public static final String DEVICE_TYPE = "deviceType";
+        public static final String GENDER = "gender";
+        public static final String BIRTH = "birth";
 
 
     }
@@ -87,6 +89,13 @@ public class Constants {
         public static final String EMAIL = "email";
         public static final String GOOGLE = "google";
         public static final String FACEBOOK = "facebook";
+
+    }
+
+    public final class SCREEN_TYPE {
+        public static final String INAPP = "inapp";
+        public static final String SHOP = "shop";
+        public static final String PUSH = "push";
 
     }
 }

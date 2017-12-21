@@ -86,7 +86,7 @@ public class EmailSignUpFragment extends BaseFragment{
             public void onFocusChange(View view, boolean b) {
                 if(b)
                 {
-                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                    view.setBackgroundResource(R.drawable.edit_focus_round_stroke);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ public class EmailSignUpFragment extends BaseFragment{
                     Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
                     if(emailLength > 0 && passwordLength > 0)
                     {
-                        btn_regist_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner_focus);
                         btn_regist_next.setTextColor(Color.WHITE);
                     }
                     if(emailLength == 0)
@@ -129,7 +129,7 @@ public class EmailSignUpFragment extends BaseFragment{
                 Log.e("PLEA", "passwordLength : " + String.valueOf(passwordLength));
                 if(emailLength > 0 && passwordLength > 0)
                 {
-                    btn_regist_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner_focus);
                     btn_regist_next.setTextColor(Color.WHITE);
                 }
                 if(passwordLength == 0)
@@ -148,7 +148,7 @@ public class EmailSignUpFragment extends BaseFragment{
             public void onFocusChange(View view, boolean b) {
                 if(b)
                 {
-                    view.setBackgroundResource(R.drawable.round_stroke_corner);
+                    view.setBackgroundResource(R.drawable.edit_focus_round_stroke);
                 }
                 else
                 {

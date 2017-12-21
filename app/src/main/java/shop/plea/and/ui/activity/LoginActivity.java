@@ -58,16 +58,33 @@ public class LoginActivity extends PleaActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        String action = null;
+        String pushUrl = null;
 
-        UserInfoData userInfoData = (UserInfoData) BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        if(getIntent() != null)
+        {
+            action = getIntent().getExtras().getString("action", null);
+            pushUrl = getIntent().getExtras().getString("pushUrl", null);
+        }
+
+
+        UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         if(userInfoData == null)
             addFragment(Constants.FRAGMENT_MENUID.LOGIN);
         else
         {
+            Intent intent = new Intent(this, MainPleaListActivity.class);
             IntentData indata = new IntentData();
             indata.isRegist = false;
-            indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
-            Intent intent = new Intent(this, MainPleaListActivity.class);
+            if(action != null && pushUrl != null)
+            {
+                indata.link = pushUrl;
+                intent.putExtra("action", action);
+                intent.putExtra("pushUrl", pushUrl);
+            }
+            else
+                indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
+
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra(Constants.INTENT_DATA_KEY, indata);
             startActivity(intent);

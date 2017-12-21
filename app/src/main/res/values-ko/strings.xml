@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">플리</string>
     <string name="facebook_app_id">1966104266739530</string>
-    <string name="fb_login_protocol_scheme">fb1966104266739530</string>
     <string name="user_resist_finish">%1$s,\n회원 가입이 완료되었습니다!</string>
     <string name="user_profile_img">프로필 사진과 닉네임을 설정해 보세요.</string>
     <string name="user_email_check">이메일 형식이 올바르지 않습니다.\n정확한 이메일 주소를 입력해 주세요.</string>
@@ -48,4 +47,10 @@
     <string name="term">가입 완료 버튼을 누름으로써,\n서비스 이용약관 및 개인정보 처리 방침을 읽고 동의한 것으로 간주됩니다.</string>
     <string name="forgot_password">비밀번호를 잊으셨나요?</string>
     <string name="email_send_ok">입력하신 메일을 통해 비밀번호 변경을 진행해주세요.</string>
+    <string name="Man">남</string>
+    <string name="Woman">여</string>
+    <string name="birth">생년월일</string>
+    <string name="birth_error">나이를 선택하세요.</string>
+    <string name="gener_error">성별을 선택하세요.</string>
+    <string name="nick_empty">닉네임을 선택하세요.</string>
 </resources>

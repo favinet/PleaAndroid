@@ -4,13 +4,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ import com.beardedhen.androidbootstrap.BootstrapAlert;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -61,6 +65,8 @@ public class LoginFragment extends BaseFragment{
     @BindView(R.id.txt_regist) TextView txt_regist;
 
     private SNSHelper helper;
+    private int emailLength = 0;
+    private int passLength = 0;
 
     public static LoginFragment newInstance(int page)
     {
@@ -92,12 +98,13 @@ public class LoginFragment extends BaseFragment{
     public void initScreen()
     {
 
+        facebook.setReadPermissions(Arrays.asList("public_profile, email, user_friends"));
         btn_facebook.setOnClickListener(mListner);
         btn_google.setOnClickListener(mListner);
         btn_login.setOnClickListener(mListner);
         helper = new SNSHelper((BaseActivity) getActivity(), facebook, true);
 
-
+        /*
         ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -117,6 +124,55 @@ public class LoginFragment extends BaseFragment{
                     view.setBackgroundResource(R.drawable.custom_editview);
             }
         });
+        */
+
+        ed_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                formStatusCheck();
+                if(emailLength == 0)
+                {
+                    btn_login.setBackgroundResource(R.drawable.round_corner);
+                    btn_login.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        ed_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                formStatusCheck();
+                if(passLength == 0)
+                {
+                    btn_login.setBackgroundResource(R.drawable.round_corner);
+                    btn_login.setTextColor(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+    }
+
+    private void formStatusCheck()
+    {
+        emailLength = ed_email.getText().toString().length();
+        passLength = ed_password.getText().toString().length();
+        Log.e("PLEA", "ed_password : " + String.valueOf(passLength));
+        if(emailLength > 0 && passLength > 0)
+        {
+            btn_login.setBackgroundResource(R.drawable.btn_round_stroke_corner);
+            btn_login.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
     }
 
     private void setTextSpan()
