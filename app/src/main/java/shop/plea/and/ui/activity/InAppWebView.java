@@ -72,6 +72,11 @@ public class InAppWebView extends PleaActivity{
             inapp_title.setText(inData.title);
             inapp_footer.setVisibility(View.GONE);
         }
+        else            //비밀번호 변경 헤더 변경
+        {
+            inapp_title.setText(inData.title);
+            inapp_footer.setVisibility(View.GONE);
+        }
 
         inapp_footer_back.setOnClickListener(mListener);
         inapp_footer_next.setOnClickListener(mListener);

@@ -21,6 +21,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import shop.plea.and.R;
+import shop.plea.and.common.dialog.ProgressDialog;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.common.view.ProgressWheel;
 import shop.plea.and.data.config.Constants;
@@ -42,7 +43,7 @@ public class BaseFragment extends Fragment {
     protected String mUrl;
     protected List<Fragment> mFragments = new ArrayList<>();
     protected Unbinder mUnbinder;
-    protected Dialog materiaDg;
+    protected ProgressDialog materiaDg;
     protected ImageView mProgressWheel;
     protected boolean mChecked = false;
 
@@ -55,7 +56,7 @@ public class BaseFragment extends Fragment {
         mUpdateListenerCallBack = (UpdateListener) mContext;
         mUnbinder = ButterKnife.bind(this, mView);
 
-        materiaDg = new Dialog(mContext, R.style.Theme_CustomProgressDialog);
+        materiaDg = new ProgressDialog(mContext, R.style.Theme_CustomProgressDialog);
         materiaDg.setContentView(R.layout.progress_dialog_material);
         mProgressWheel = (ImageView) materiaDg.findViewById(R.id.progress_wheel);
 
@@ -145,7 +146,7 @@ public class BaseFragment extends Fragment {
     public void stopIndicator() {
         if(getActivity() != null && !getActivity().isFinishing() && materiaDg != null && materiaDg.isShowing())
         {
-            //mProgressWheel.stopSpinning();
+           // mProgressWheel.stopSpinning();
             materiaDg.dismiss();
         }
     }

@@ -47,6 +47,8 @@ public class IntroActivity extends PleaActivity {
         public void run() {
 
             stopIndicator();
+            Log.e("PLEA", "action!" + action);
+            Log.e("PLEA", "pushUrl!" + pushUrl);
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
             indata.link = Constants.BASE_URL;
@@ -87,12 +89,21 @@ public class IntroActivity extends PleaActivity {
                 Log.e("PLEA", "비밀번호!" + uri);
                 if(uri != null)
                 {
-                    pushUrl = Utils.queryToMap(Utils.decode(uri.toString(), "UTF-8")).get("url");
-                    Log.e("PLEA", "주소!" + pushUrl);
-                    if(uri.toString().contains("reset_password"))
+                    String uriStr = uri.toString();
+                    uriStr = Utils.decode(uriStr, "UTF-8");
+                    Log.e("PLEA", "uriStr!" + uriStr);
+                    String[] urls = uriStr.split("url=");
+                    Log.e("PLEA", "urls!" + urls.length);
+                    if(urls.length > 1)
                     {
-                        action = "URL_PUSH";
+                        pushUrl = urls[1];
+                        Log.e("PLEA", "주소!" + pushUrl);
+                        if(uri.toString().contains("reset_password"))
+                        {
+                            action = "RESET_PASSWORD";
+                        }
                     }
+
                 }
             }
 

@@ -377,7 +377,7 @@ public class MainPleaListActivity extends PleaActivity{
             else
                 customWebView.initContentView(inData.link);
         }
-        //customWebView.initContentView("http://plea.shop/block/"+uid);
+        //customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
     }
 
     @Override
@@ -532,9 +532,13 @@ public class MainPleaListActivity extends PleaActivity{
         @Override
         public void onClick(View v) {
 
+            String tag = toolbar_header.findViewById(R.id.btn_toolbar_alert).getTag().toString();
             ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
-            toolbar_header.findViewById(R.id.btn_toolbar_alert).setTag("off");
-            ticker_header.setVisibility(View.GONE);
+            if(tag.equals("on"))
+            {
+                toolbar_header.findViewById(R.id.btn_toolbar_alert).setTag("off");
+                ticker_header.setVisibility(View.GONE);
+            }
 
             String id  = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.ID, "");
             if(id.equals(""))
@@ -558,7 +562,7 @@ public class MainPleaListActivity extends PleaActivity{
                     break;
 
                 case R.id.btn_toolbar_alert :
-                    String tag = toolbar_header.findViewById(R.id.btn_toolbar_alert).getTag().toString();
+
                     ImageButton alertBtn = (ImageButton) toolbar_header.findViewById(R.id.btn_toolbar_alert);
                     if(tag.equals("off"))
                     {

@@ -165,6 +165,16 @@ public class CustomWebView {
                     setWebViewHeaderJson(null);
                     return true;
                 }
+                else if(action.equals("outLink"))
+                {
+                    String outLink = Utils.queryToMap(url).get("url");
+                    if(outLink != null)
+                    {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(outLink));
+                        base.startActivity(intent);
+                    }
+                    return true;
+                }
             }
 
             if(url.contains("webview"))

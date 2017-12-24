@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
@@ -58,6 +59,9 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         super.onCreate(savedInstanceState);
 
         context = this;
+
+        // 세로만 지원
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Intent
         Intent intent = getIntent();

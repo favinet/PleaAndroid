@@ -154,6 +154,7 @@ public class FindPasswordFragment extends BaseFragment {
                                 dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_send_ok)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        mUpdateListenerCallBack.fragmentBackPressed();
                                         mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
                                     }
                                 }).create().show();

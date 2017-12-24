@@ -283,6 +283,7 @@ public class SNSHelper {
 
         if ( requestCode == RC_GOOGLE_SIGN_IN ) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Logger.log(Logger.LogState.E, "RC_GOOGLE_SIGN_IN" + Utils.getStringByObject(result));
             if ( result.isSuccess() ) {
                 GoogleSignInAccount account = result.getSignInAccount();
 
@@ -309,8 +310,9 @@ public class SNSHelper {
             }
             else
             {
+                Logger.log(Logger.LogState.E, "RC_GOOGLE_SIGN_IN" + Utils.getStringByObject(result));
                 AlertDialog.Builder dialog = new AlertDialog.Builder(base);
-                dialog.setTitle(R.string.app_name).setMessage(result.getStatus().getStatus().getStatusMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
+                dialog.setTitle(R.string.app_name).setMessage(result.getStatus().getStatusMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
             }
         }
     }

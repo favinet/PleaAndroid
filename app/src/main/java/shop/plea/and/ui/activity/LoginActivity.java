@@ -62,7 +62,7 @@ public class LoginActivity extends PleaActivity {
         String action = null;
         String pushUrl = null;
 
-        Log.e("PLEA", "getIntent() : " + getIntent());
+        Log.e("PLEA", "getIntent() : " + getIntent().getExtras());
 
         if(getIntent().getExtras() != null)
         {
@@ -71,13 +71,31 @@ public class LoginActivity extends PleaActivity {
         }
 
 
+        IntentData indata = new IntentData();
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         if(userInfoData == null)
-            addFragment(Constants.FRAGMENT_MENUID.LOGIN);
-        else
+        {
+            if(action != null && pushUrl != null)           //비번찾기
+            {
+                Intent intent = new Intent(this, InAppWebView.class);
+                indata.link = pushUrl;
+                indata.screenType = Constants.SCREEN_TYPE.PUSH;
+                indata.title = getString(R.string.menu_reset_password);
+                intent.putExtra("action", action);
+                intent.putExtra("pushUrl", pushUrl);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                addFragment(Constants.FRAGMENT_MENUID.LOGIN);
+            }
+        }
+        else                                                        //noti 통해서 오는 case
         {
             Intent intent = new Intent(this, MainPleaListActivity.class);
-            IntentData indata = new IntentData();
             indata.isRegist = false;
             if(action != null && pushUrl != null)
             {
