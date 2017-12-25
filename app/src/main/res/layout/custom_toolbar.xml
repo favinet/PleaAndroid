@@ -155,6 +155,16 @@
                     android:layout_centerVertical="true"
                     android:tag="off"/>
 
+                <ImageButton
+                    android:id="@+id/btn_toolbar_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_icon_modify"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:tag="off"/>
+
 
             </LinearLayout>
 

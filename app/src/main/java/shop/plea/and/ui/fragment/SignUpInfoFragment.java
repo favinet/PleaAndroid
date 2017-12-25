@@ -603,56 +603,65 @@ public class SignUpInfoFragment extends BaseFragment{
                     break;
                 case R.id.btn_regist_end :
 
-                    String nickname = ed_nickname.getText().toString();
-                    if(nickname.length() > 0)
+                    if(Utils.checkEmail(ed_email.getText().toString()))
                     {
-                        startIndicator("");
-                        DataManager.getInstance(getActivity()).api.userNickNameCheck(getActivity(), nickname, new DataInterface.ResponseCallback<ResponseData>() {
-                            @Override
-                            public void onSuccess(ResponseData response) {
-                                ed_nickname_alert.setText(response.getMessage());
-                                if(response.getResult().equals(Constants.API_FAIL))
-                                {
-                                    stopIndicator();
-                                    return;
-                                }
-                                else
-                                {
-                                    stopIndicator();
-                                    boolean flag = response.isFlag();
-                                    if(flag)
+                        String nickname = ed_nickname.getText().toString();
+                        if(nickname.length() > 0)
+                        {
+                            startIndicator("");
+                            DataManager.getInstance(getActivity()).api.userNickNameCheck(getActivity(), nickname, new DataInterface.ResponseCallback<ResponseData>() {
+                                @Override
+                                public void onSuccess(ResponseData response) {
+                                    ed_nickname_alert.setText(response.getMessage());
+                                    if(response.getResult().equals(Constants.API_FAIL))
                                     {
-                                        ed_nickname.setTextColor(Color.parseColor("#000000"));
-                                        if(ed_nickname_alert.getVisibility() == View.VISIBLE)
-                                            ed_nickname_alert.setVisibility(View.GONE);
-
-                                        registUser();
+                                        stopIndicator();
+                                        return;
                                     }
                                     else
                                     {
-                                        ed_nickname.setTextColor(Color.parseColor("#E83636"));
-                                        if(ed_nickname_alert.getVisibility() == View.GONE)
-                                            ed_nickname_alert.setVisibility(View.VISIBLE);
+                                        stopIndicator();
+                                        boolean flag = response.isFlag();
+                                        if(flag)
+                                        {
+                                            ed_nickname.setTextColor(Color.parseColor("#000000"));
+                                            if(ed_nickname_alert.getVisibility() == View.VISIBLE)
+                                                ed_nickname_alert.setVisibility(View.GONE);
+
+                                            registUser();
+                                        }
                                         else
-                                            ed_nickname_alert.setVisibility(View.GONE);
-                                        return;
+                                        {
+                                            ed_nickname.setTextColor(Color.parseColor("#E83636"));
+                                            if(ed_nickname_alert.getVisibility() == View.GONE)
+                                                ed_nickname_alert.setVisibility(View.VISIBLE);
+                                            else
+                                                ed_nickname_alert.setVisibility(View.GONE);
+                                            return;
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onError() {
-                                stopIndicator();
-                            }
-                        });
+                                @Override
+                                public void onError() {
+                                    stopIndicator();
+                                }
+                            });
+                        }
+                        else
+                        {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                            dialog.setTitle(R.string.app_name).setMessage(getString(R.string.nick_empty)).setPositiveButton(getString(R.string.yes), null).create().show();
+                            stopIndicator();
+                            return;
+                        }
                     }
                     else
                     {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                        dialog.setTitle(R.string.app_name).setMessage(getString(R.string.nick_empty)).setPositiveButton(getString(R.string.yes), null).create().show();
-                        stopIndicator();
-                        return;
+                        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_pattern_error)).setPositiveButton(getString(R.string.yes), null).create().show();
                     }
+
                     break;
             }
         }

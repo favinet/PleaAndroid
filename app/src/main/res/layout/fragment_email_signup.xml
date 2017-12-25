@@ -16,102 +16,123 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="@dimen/layoutpadding"
             android:paddingRight="@dimen/layoutpadding"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:weightSum="10">
 
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/user_email_join"
-                android:textSize="14.4sp"
-                android:textColor="#000000"
-                app:customFont="NotoSansKR-Light.otf"
-                android:includeFontPadding="false"/>
-
-            <shop.plea.and.ui.view.CustomFontEditView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="34.4dp"
-                android:layout_marginTop="42.8dp"
-                android:inputType="textEmailAddress"
-                android:id="@+id/ed_email"
-                android:hint="@string/edit_email_hint"
-                android:text=""
-                android:textSize="14.4sp"
-                android:drawableLeft="@drawable/icon_email_black"
-                android:paddingLeft="10dp"
-                android:background="@drawable/custom_editview"
-                android:drawablePadding="5dp"
-                android:textColor="#000000"
-                app:customFontEdit="NotoSansKR-Regular.otf"/>
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="5">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.3dp"
-                android:background="#1A000000"/>
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/user_email_join"
+                    android:textSize="14.4sp"
+                    android:textColor="#000000"
+                    app:customFont="NotoSansKR-Light.otf"
+                    android:includeFontPadding="false"/>
 
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ed_email_alert"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="24.3dp"
-                android:visibility="gone"
-                android:textColor="#d92222"
-                android:textSize="12.5sp"
-                android:text="@string/user_email_check"
-                app:customFont="NotoSansKR-Light.otf">
-            </shop.plea.and.ui.view.CustomFontTextView>
 
-            <shop.plea.and.ui.view.CustomFontEditView
-                android:layout_width="match_parent"
-                android:layout_height="34.4dp"
-                android:layout_marginTop="21.3dp"
-                android:inputType="textPassword"
-                android:id="@+id/ed_password"
-                android:hint="@string/edit_password_hint"
-                android:text=""
-                android:textSize="14.4sp"
-                android:drawableLeft="@drawable/icon_password_black"
-                android:background="@drawable/custom_editview"
-                android:drawablePadding="5dp"
-                android:paddingLeft="10dp"
-                android:textColor="#000000"
-                app:customFontEdit="NotoSansKR-Regular.otf"/>
+            </RelativeLayout>
 
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1.3dp"
-                android:background="#1A000000"/>
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-            <shop.plea.and.ui.view.CustomFontTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ed_password_alert"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="39.8dp"
-                android:visibility="gone"
-                android:textColor="#d92222"
-                android:textSize="12.5sp"
-                android:text="@string/user_password_check"
-                app:customFont="NotoSansKR-Light.otf">
-            </shop.plea.and.ui.view.CustomFontTextView>
+                <shop.plea.and.ui.view.CustomFontEditView
+                    android:layout_width="match_parent"
+                    android:layout_height="34.4dp"
+                    android:layout_marginTop="0dp"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/ed_email"
+                    android:hint="@string/edit_email_hint"
+                    android:text=""
+                    android:textSize="14.4sp"
+                    android:drawableLeft="@drawable/icon_email_black"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/custom_editview"
+                    android:drawablePadding="5dp"
+                    android:textColor="#000000"
+                    app:customFontEdit="NotoSansKR-Regular.otf"/>
 
-            <shop.plea.and.ui.view.CustomFontBtn
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_logins_height"
-                android:layout_marginTop="34dp"
-                android:id="@+id/btn_regist_next"
-                android:text="@string/user_next"
-                android:textColor="#4c3994"
-                android:background="@drawable/round_stroke_corner"
-                android:textSize="14.4sp"
-                style="?android:attr/borderlessButtonStyle"
-                android:textAllCaps="false"
-                app:customFontBtn="NotoSansKR-Medium.otf"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.3dp"
+                    android:background="#1A000000"/>
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ed_email_alert"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="24.3dp"
+                    android:visibility="gone"
+                    android:textColor="#d92222"
+                    android:textSize="12.5sp"
+                    android:text="@string/user_email_check"
+                    app:customFont="NotoSansKR-Light.otf">
+                </shop.plea.and.ui.view.CustomFontTextView>
+
+                <shop.plea.and.ui.view.CustomFontEditView
+                    android:layout_width="match_parent"
+                    android:layout_height="34.4dp"
+                    android:layout_marginTop="21.3dp"
+                    android:inputType="textPassword"
+                    android:id="@+id/ed_password"
+                    android:hint="@string/edit_password_hint"
+                    android:text=""
+                    android:textSize="14.4sp"
+                    android:drawableLeft="@drawable/icon_password_black"
+                    android:background="@drawable/custom_editview"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    app:customFontEdit="NotoSansKR-Regular.otf"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.3dp"
+                    android:background="#1A000000"/>
+
+                <shop.plea.and.ui.view.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ed_password_alert"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="39.8dp"
+                    android:visibility="gone"
+                    android:textColor="#d92222"
+                    android:textSize="12.5sp"
+                    android:text="@string/user_password_check"
+                    app:customFont="NotoSansKR-Light.otf">
+                </shop.plea.and.ui.view.CustomFontTextView>
+
+                <shop.plea.and.ui.view.CustomFontBtn
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btn_logins_height"
+                    android:layout_marginTop="34dp"
+                    android:id="@+id/btn_regist_next"
+                    android:text="@string/user_next"
+                    android:textColor="#4c3994"
+                    android:background="@drawable/round_stroke_corner"
+                    android:textSize="14.4sp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textAllCaps="false"
+                    app:customFontBtn="NotoSansKR-Medium.otf"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
     </RelativeLayout>

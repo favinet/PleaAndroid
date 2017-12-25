@@ -136,6 +136,9 @@ public class SNSHelper {
                         Logger.log(Logger.LogState.E, response.toString());
                         Logger.log(Logger.LogState.E, "FACEBOOK : " + Utils.getStringByObject(object));
 
+                        String token = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
+                        String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, "en");
+
                         RequestData req = new RequestData();
                         req.authId = profile.getId();
                         req.joinType = "facebook";
@@ -144,8 +147,9 @@ public class SNSHelper {
 
                         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
                         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
-                       // UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
-                      //  UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, req.joinType);
+                        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+                        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, token);
+                        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
                         if(profileImg != null)
                             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImg.toString());
@@ -178,6 +182,7 @@ public class SNSHelper {
     private void userCheck(HashMap<String, String> params)
     {
         Logger.log(Logger.LogState.E, "userCheck = " + Utils.getStringByObject(params));
+        /*
         if(isLogin)
         {
             userLogin(params);
@@ -186,9 +191,11 @@ public class SNSHelper {
         {
             nextScreen(params);
         }
+        */
+        userLogin(params);
     }
 
-    private void userLogin(HashMap<String, String> params)
+    private void userLogin(final HashMap<String, String> params)
     {
         base.startIndicator("");
 
@@ -201,8 +208,15 @@ public class SNSHelper {
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(base);
-                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
+                    if(response.getMessage().contains("Unregistered email"))
+                    {
+                        nextScreen(params);
+                    }
+                    else
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+                        dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
+                    }
                 }
                 else
                 {

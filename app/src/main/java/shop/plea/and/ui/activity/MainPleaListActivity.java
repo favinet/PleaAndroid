@@ -164,6 +164,7 @@ public class MainPleaListActivity extends PleaActivity{
                 String likeBt = (jsonObject.has("likeBt")) ? jsonObject.getString("likeBt") : "N";
                 String likeyn = (jsonObject.has("likeyn")) ? jsonObject.getString("likeyn") : "N";
                 String searchBox = (jsonObject.has("searchBox")) ? jsonObject.getString("searchBox") : "N";
+                String homeBt = (jsonObject.has("homeBt")) ? jsonObject.getString("homeBt") : "N";
 
                 if(alertBt.equals("Y"))
                 {
@@ -258,6 +259,12 @@ public class MainPleaListActivity extends PleaActivity{
                 else
                     toolbar_header.findViewById(R.id.btn_toolbar_modify).setVisibility(View.GONE);
 
+
+                if(homeBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.btn_toolbar_home).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.btn_toolbar_home).setVisibility(View.GONE);
+
                 if(likeBt.equals("Y"))
                 {
                     toolbar_header.findViewById(R.id.btn_toolbar_like).setVisibility(View.VISIBLE);
@@ -339,7 +346,7 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.toolbar_back_profile).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_img).setOnClickListener(mListener);
-        toolbar_header.findViewById(R.id.btn_toolbar_modify).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_toolbar_home).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_like).setOnClickListener(mListener);
 
 
@@ -605,14 +612,11 @@ public class MainPleaListActivity extends PleaActivity{
                     customWebView.initContentView(String.format(Constants.MAIN_URL, id));
                     break;
 
-                case R.id.btn_toolbar_modify :
-                    Toast.makeText(MainPleaListActivity.this, "memberUpdate 함수 호출 되는지 확인!", Toast.LENGTH_LONG).show();
-                    String memberUpdate = "javascript:memberUpdate();";
-                    customWebView.mView.loadUrl(memberUpdate);
+                case R.id.btn_toolbar_home :
+                    customWebView.initContentView(String.format(Constants.MAIN_URL, id));
                     break;
 
                 case R.id.btn_toolbar_like :
-                   // Toast.makeText(MainPleaListActivity.this, "followAction 함수 호출 되는지 확인!", Toast.LENGTH_LONG).show();
                     String followAction = "javascript:followAction();";
                     customWebView.mView.loadUrl(followAction);
                     break;

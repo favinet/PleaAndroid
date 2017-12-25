@@ -91,6 +91,10 @@ public class SignUpFragment extends BaseFragment{
                 mUpdateListenerCallBack.addFragment(Constants.FRAGMENT_MENUID.LOGIN);
             }
 
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setUnderlineText(false);
+            }
         }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

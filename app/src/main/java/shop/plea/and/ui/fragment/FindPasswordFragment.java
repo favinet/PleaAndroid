@@ -1,5 +1,6 @@
 package shop.plea.and.ui.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class FindPasswordFragment extends BaseFragment {
     @BindView(R.id.ed_email) EditText ed_email;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
     private int emailLength = 0;
+    private InputMethodManager inputMethodManager;
 
     public static FindPasswordFragment newInstance(int page)
     {
@@ -89,6 +92,7 @@ public class FindPasswordFragment extends BaseFragment {
 
     public void initScreen()
     {
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         btn_send_password_set_mail.setOnClickListener(mListner);
         ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -181,9 +185,11 @@ public class FindPasswordFragment extends BaseFragment {
 
         @Override
         public void onClick(View v) {
+
             switch (v.getId())
             {
                 case R.id.toolbar_back :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
                     mUpdateListenerCallBack.fragmentBackPressed();
                     break;
                 case R.id.btn_send_password_set_mail :

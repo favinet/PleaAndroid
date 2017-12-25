@@ -1,5 +1,6 @@
 package shop.plea.and.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +42,7 @@ public class EmailSignUpFragment extends BaseFragment{
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
     private int emailLength = 0;
     private int passwordLength = 0;
+    private InputMethodManager inputMethodManager;
 
     public static EmailSignUpFragment newInstance(int page)
     {
@@ -77,6 +80,7 @@ public class EmailSignUpFragment extends BaseFragment{
 
     public void initScreen()
     {
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         btn_regist_next.setOnClickListener(mListner);
         ((BaseActivity)mContext).setSupportActionBar(toolbar_header);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
@@ -241,6 +245,8 @@ public class EmailSignUpFragment extends BaseFragment{
                     break;
 
                 case R.id.toolbar_back :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
+                    inputMethodManager.hideSoftInputFromWindow(ed_password.getWindowToken(), 0);
                     mUpdateListenerCallBack.fragmentBackPressed();
                     break;
 
@@ -248,6 +254,11 @@ public class EmailSignUpFragment extends BaseFragment{
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+    }
 
     @Override
     public void onDestroy() {

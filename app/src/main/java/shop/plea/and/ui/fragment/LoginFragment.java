@@ -224,55 +224,67 @@ public class LoginFragment extends BaseFragment{
 
     private void userLogin()
     {
-        startIndicator("");
 
-        String joinType = Constants.LOGIN_TYPE.EMAIL;
-        String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
+        String email = ed_email.getText().toString();
+        if(Utils.checkEmail(email)) {
 
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, ed_password.getText().toString());
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+            startIndicator("");
 
-        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+            String joinType = Constants.LOGIN_TYPE.EMAIL;
+            String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
 
-        DataManager.getInstance(getActivity()).api.userLogin(getActivity(), params, new DataInterface.ResponseCallback<UserInfoResultData>() {
-            @Override
-            public void onSuccess(UserInfoResultData response) {
-                stopIndicator();
-                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, ed_password.getText().toString());
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
 
-                String result = response.getResult();
-                if(result.equals(Constants.API_FAIL))
-                {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                    dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
+            HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+
+            DataManager.getInstance(getActivity()).api.userLogin(getActivity(), params, new DataInterface.ResponseCallback<UserInfoResultData>() {
+                @Override
+                public void onSuccess(UserInfoResultData response) {
+                    stopIndicator();
+                    Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
+
+                    String result = response.getResult();
+                    if(result.equals(Constants.API_FAIL))
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(response.getMessage()).setPositiveButton(getString(R.string.yes), null).create().show();
+                    }
+                    else
+                    {
+                        UserInfoData userInfoData = response.userData;
+                        UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
+                        BasePreference.getInstance(getActivity()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
+                        BasePreference.getInstance(getActivity()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                        BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+
+                        IntentData indata = new IntentData();
+                        indata.isRegist = false;
+                        indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
+                        Intent intent = new Intent(getActivity(), MainPleaListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
                 }
-                else
-                {
-                    UserInfoData userInfoData = response.userData;
-                    UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
-                    BasePreference.getInstance(getActivity()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
-                    BasePreference.getInstance(getActivity()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
-                    BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                    IntentData indata = new IntentData();
-                    indata.isRegist = false;
-                    indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
-                    Intent intent = new Intent(getActivity(), MainPleaListActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra(Constants.INTENT_DATA_KEY, indata);
-                    startActivity(intent);
-                    getActivity().finish();
+                @Override
+                public void onError() {
+                    stopIndicator();
                 }
-            }
+            });
 
-            @Override
-            public void onError() {
-                stopIndicator();
-            }
-        });
+        }
+        else
+        {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_pattern_error)).setPositiveButton(getString(R.string.yes), null).create().show();
+        }
+
 
     }
 

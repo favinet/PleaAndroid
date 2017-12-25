@@ -82,8 +82,6 @@ public class Constants {
         public static final String DEVICE_TYPE = "deviceType";
         public static final String GENDER = "gender";
         public static final String BIRTH = "birth";
-
-
     }
 
     public final class LOGIN_TYPE {

@@ -181,14 +181,16 @@ public class IntroActivity extends PleaActivity {
         Locale.setDefault(Locale.ENGLISH);
         config.locale = Locale.ENGLISH;
 
-        Logger.log(Logger.LogState.E, "locale : " + locale);
-
         if(locale.equals("ko"))
         {
             Locale.setDefault(Locale.KOREA);
             config.locale = Locale.KOREA;
         }
 
+
+        Logger.log(Logger.LogState.E, "locale : " + locale);
+
+        BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
 
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());

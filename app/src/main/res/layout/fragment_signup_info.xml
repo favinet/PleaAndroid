@@ -133,6 +133,7 @@
                 android:drawablePadding="5dp"
                 android:paddingLeft="10dp"
                 android:textColor="#000000"
+                android:maxLength="10"
                 app:customFontEdit="NotoSansKR-Light.otf"/>
 
             <View

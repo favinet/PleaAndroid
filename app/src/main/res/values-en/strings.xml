@@ -39,7 +39,7 @@
     <string name="send_email">SEND RESET LINK</string>
     <string name="email_pattern_error">Email fail! Please type in your correct email address.</string>
     <string name="exist_user">Already have an account?</string>
-    <string name="login_user">Log In</string>
+    <string name="login_user">Sign up</string>
     <string name="profile_user">Add a profile photo \u0026 nickname.</string>
     <string name="edit_nick_hint">Nickname</string>
     <string name="nick_error">The nickname you entered is already being used by another user.</string>
