@@ -46,16 +46,17 @@
                 android:visibility="gone"
                 />
 
-            <shop.plea.and.ui.view.CustomFontBtn
+            <shop.plea.and.ui.view.CustomFontTextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_logins_height"
                 android:id="@+id/login_email"
                 android:text="E-mail"
+                android:gravity="center_horizontal|center_vertical"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/round_corner"
                 android:textSize="14.4sp"
                 android:textAllCaps="false"
-                app:customFontBtn="NotoSansKR-Medium.otf"/>
+                app:customFont="NotoSansKR-Medium.otf"/>
 
 
             <RelativeLayout
@@ -111,7 +112,7 @@
                     android:id="@+id/txt_login"
                     android:bufferType="spannable"
                     android:layout_gravity="center_horizontal"
-                    android:text="Log In."
+                    android:text="@string/user_regist"
                     android:textSize="14.4sp"
                     android:textColor="#FFFFFF"
                     app:customFont="NotoSansKR-Light.otf"/>

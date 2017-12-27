@@ -104,12 +104,12 @@ public class LoginFragment extends BaseFragment{
         btn_login.setOnClickListener(mListner);
         helper = new SNSHelper((BaseActivity) getActivity(), facebook, true);
 
-        /*
+
         ed_email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b)
-                    view.setBackgroundResource(R.drawable.round_stroke_white_corner);
+                    view.setBackgroundResource(R.drawable.round_stroke_login_corner_focus);
                 else
                     view.setBackgroundResource(R.drawable.custom_editview);
             }
@@ -119,12 +119,12 @@ public class LoginFragment extends BaseFragment{
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b)
-                    view.setBackgroundResource(R.drawable.round_stroke_white_corner);
+                    view.setBackgroundResource(R.drawable.round_stroke_login_corner_focus);
                 else
                     view.setBackgroundResource(R.drawable.custom_editview);
             }
         });
-        */
+
 
         ed_email.addTextChangedListener(new TextWatcher() {
             @Override

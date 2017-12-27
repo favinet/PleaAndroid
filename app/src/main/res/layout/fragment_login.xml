@@ -6,6 +6,7 @@
     android:background="@drawable/shadow_background"
     android:orientation="vertical">
 
+
     <!-- content area -->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,21 +16,14 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/intro_logo"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/login_logo"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_below="@id/login_logo"
-            android:layout_marginTop="@dimen/margin_20">
+            android:layout_alignParentBottom="true"
+            android:id="@+id/a">
 
             <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
@@ -42,7 +36,7 @@
                 android:drawableLeft="@drawable/icon_email"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="@dimen/padding_5"
-                android:paddingLeft="@dimen/padding_5"
+                android:paddingLeft="10dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
                 app:customFontEdit="NotoSansKR-Regular.otf"/>
@@ -50,7 +44,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_view_height_1_3"
-                android:background="#7968B5"/>
+                android:background="#7968B5"
+                android:layout_marginLeft="1.5dp"
+                android:layout_marginRight="1.5dp"/>
 
             <shop.plea.and.ui.view.CustomFontEditView
                 android:layout_width="match_parent"
@@ -64,7 +60,7 @@
                 android:drawableLeft="@drawable/icon_password"
                 android:background="@drawable/custom_editview"
                 android:drawablePadding="@dimen/padding_5"
-                android:paddingLeft="@dimen/padding_5"
+                android:paddingLeft="10dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
                 app:customFontEdit="NotoSansKR-Regular.otf"/>
@@ -72,7 +68,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_view_height_1_3"
-                android:background="#7968B5"/>
+                android:background="#7968B5"
+                android:layout_marginLeft="1.5dp"
+                android:layout_marginRight="1.5dp"/>
 
 
             <shop.plea.and.ui.view.CustomFontBtn
@@ -174,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:bufferType="spannable"
-                    android:text="@string/SIGNUP"
+                    android:text="@string/SIGNUP_lowcase"
                     android:id="@+id/txt_regist"
                     android:textSize="@dimen/common_font_size_14_4"
                     android:textColor="#FFFFFF"
@@ -196,7 +194,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/margin_10"
                     android:bufferType="spannable"
-                    android:text="Forgotten password?"
+                    android:text="@string/user_regist_pass"
                     android:textSize="@dimen/common_font_size_14_4"
                     android:textColor="#FFFFFF"
                     app:customFont="NotoSansKR-Light.otf"/>
@@ -207,7 +205,24 @@
         </LinearLayout>
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/a">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_logo"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/login_logo"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
     <!-- content area //-->
+
+
+
 </RelativeLayout>

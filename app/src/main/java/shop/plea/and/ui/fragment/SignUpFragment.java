@@ -23,6 +23,7 @@ import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.ui.sns.SNSHelper;
+import shop.plea.and.ui.view.CustomFontTextView;
 
 /**
  * Created by kwon7575 on 2017-10-17.
@@ -35,8 +36,8 @@ public class SignUpFragment extends BaseFragment{
     @BindView(R.id.facebook_login_btn) com.facebook.login.widget.LoginButton facebook;
     @BindView(R.id.login_facebook) ImageButton btn_facebook;
     @BindView(R.id.login_google) ImageButton btn_google;
-    @BindView(R.id.login_email) Button btn__email;
-    @BindView(R.id.txt_login)TextView txt_login;
+    @BindView(R.id.login_email) CustomFontTextView btn__email;
+    @BindView(R.id.txt_login) CustomFontTextView txt_login;
 
 
     private SNSHelper helper;

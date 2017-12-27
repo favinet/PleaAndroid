@@ -11,6 +11,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.model.ResponseData;
@@ -158,7 +159,8 @@ public class DataInterface extends BaseDataInterface{
 
     public void userSendPasswordMail(Context context, String email, String locale, final ResponseCallback callback)
     {
-        try {
+        try
+        {
             Call<ResponseData> call = service.callSendPasswordMail(email, locale);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
@@ -226,7 +228,9 @@ public class DataInterface extends BaseDataInterface{
 
     public void userUpdate(Context context, String id, HashMap<String, String> params, final ResponseCallback callback)
     {
+
         try {
+
             Call<UserInfoResultData> call = service.callUserUpdate(id, params);
 
             call.enqueue(new RetryableCallback<UserInfoResultData>(call, context) {

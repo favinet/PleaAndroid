@@ -198,21 +198,41 @@ public class IntroActivity extends PleaActivity {
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-        String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+        String locale = "";
 
         Configuration config = new Configuration();
-        Locale.setDefault(Locale.ENGLISH);
-        config.locale = Locale.ENGLISH;
-
-        if(locale.equals("ko"))
+        Locale defaultLocale = Locale.getDefault();
+        if(userInfoData == null)
         {
-            Locale.setDefault(Locale.KOREA);
-            config.locale = Locale.KOREA;
+            if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
+            {
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
+                locale = "ko";
+            }
+            else
+            {
+                Locale.setDefault(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
+                locale = "en";
+            }
+        }
+        else
+        {
+            locale = userInfoData.getLocale();
+            if(locale.equals("ko"))
+            {
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
+            }
+            else
+            {
+                Locale.setDefault(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
+            }
         }
 
-
         Logger.log(Logger.LogState.E, "locale : " + locale);
-
         BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
 
         getBaseContext().getResources().updateConfiguration(config,

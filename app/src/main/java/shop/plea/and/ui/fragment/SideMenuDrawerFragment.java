@@ -171,7 +171,13 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 Logger.log(Logger.LogState.E, "setNoticeCnt = " + Utils.getStringByObject(response));
                 if(response.getResult().equals(Constants.API_SUCCESS))
                 {
-                    side_btn_notice_badge.setText(String.valueOf(response.count));
+                    if(response.count == 0)
+                        side_btn_notice_badge.setVisibility(View.INVISIBLE);
+                    else
+                    {
+                        side_btn_notice_badge.setVisibility(View.VISIBLE);
+                        side_btn_notice_badge.setText(String.valueOf(response.count));
+                    }
 
                     setVersion();
                 }
@@ -236,6 +242,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 side_btn_language.setText((updateLocale.equals("en") ? "English" : "Korean"));
                 userInfoData.setLocale(updateLocale);
                 setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN));
+
+                base.finish();
             }
 
             @Override
@@ -252,18 +260,10 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         Configuration config = new Configuration();
         config.locale = locale;
 
-
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(base);
-        dialog.setTitle(getString(R.string.app_name)).setMessage(R.string.reset_language).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-                base.finish();
-            }
-        }).setNegativeButton(R.string.cancel, null).create().show();
     }
 
     private void signOut()
@@ -281,11 +281,14 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     {
         startIndicator("");
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
+
         String id = userInfoData.getId();
+
         Logger.log(Logger.LogState.E, "deleteUser  id= " + id);
 
         UserInfo.getInstance().clearParams();
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.ID, id);
+
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
         DataManager.getInstance(getActivity()).api.userDelete(getActivity(), id, params, new DataInterface.ResponseCallback<ResponseData>() {
@@ -314,7 +317,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         final CharSequence[] languages = {"English", "Korean"};
         final AlertDialog.Builder radioAlert = new AlertDialog.Builder(getActivity());
         radioAlert.setIcon(R.mipmap.ic_launcher);
-        radioAlert.setTitle("Select a Language");
+        radioAlert.setTitle(getString(R.string.select_locale));
 
         UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
         final String locale = userInfoData.getLocale();
@@ -326,7 +329,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         radioAlert.setSingleChoiceItems(languages, index, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
 
-                String updateLocale = (languages[item].equals("English")) ? "en" : "ko";
+                String updateLocale = (languages[item].toString().toLowerCase().contains("eng")) ? "en" : "ko";
 
                 updateUser(updateLocale);
 
@@ -395,9 +398,18 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.side_btn_reset_pwd :
-                    url = String.format(Constants.MENU_LINKS.RESET_PASSWORD, uid);
-                    menuCallback.onReceive(url);
 
+                    String joinType = userInfoData.getJoinType();
+                    if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+                    {
+                        url = String.format(Constants.MENU_LINKS.RESET_PASSWORD, uid);
+                        menuCallback.onReceive(url);
+                    }
+                    else
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                        dialog.setTitle(R.string.app_name).setMessage(getString(R.string.join_type_check)).setPositiveButton(getString(R.string.yes), null).create().show();
+                    }
                     break;
                 case R.id.side_btn_signout :
                     signOut();
@@ -406,7 +418,16 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     deleteUser();
                     break;
                 case R.id.side_btn_language :
-                    selectLanguageDialog();
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(base);
+                    dialog.setTitle(getString(R.string.app_name)).setMessage(R.string.reset_language).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            selectLanguageDialog();
+                        }
+                    }).setNegativeButton(R.string.cancel, null).create().show();
+
                     break;
                 case R.id.side_btn_follower_following :
                     url = String.format(Constants.MENU_LINKS.FRIEND_MGR, uid, uid);

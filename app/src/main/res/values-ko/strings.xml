@@ -11,7 +11,7 @@
     <string name="no">아니오</string>
     <string name="cancel">취소</string>
     <string name="ok">네</string>
-    <string name="side_profile">프로필보기</string>
+    <string name="side_profile">프로필</string>
     <string name="menu_myplea">내 플리 보기</string>
     <string name="menu_follower">친구 소식</string>
     <string name="menu_follower_following">팔로워 관리</string>
@@ -32,7 +32,8 @@
     <string name="searchbox_tag">상품명 또는 #태그로 검색하세요.</string>
     <string name="find_password">회원가입 시 사용한 이메일 주소를 입력해 주세요. 해당 이메일로 비밀번호 설정 주소가 발송됩니다.</string>
     <string name="SIGNUP">회원가입</string>
-    <string name="user_email_join">Plea에서 사용하실 이메일과 비밀번호를 입력해 주세요.</string>
+    <string name="SIGNUP_lowcase">회원가입</string>
+    <string name="user_email_join">Plea에서 사용하실 이메일과 비밀번호를 \n입력해 주세요.</string>
     <string name="edit_email_hint">이메일</string>
     <string name="edit_password_hint">패스워드</string>
     <string name="create_new_password">비밀번호 재설정</string>
@@ -44,7 +45,7 @@
     <string name="edit_nick_hint">닉네임</string>
     <string name="nick_error">이미 사용중인 닉네임입니다. 다른 닉네임을 등록해 주세요.</string>
     <string name="create_account">가입 완료</string>
-    <string name="term">가입 완료 버튼을 누름으로써,\n서비스 이용약관 및 개인정보 처리 방침을 읽고 동의한 것으로 간주됩니다.</string>
+    <string name="term">가입 완료 버튼을 누름으로써,\n서비스 이용약관 및 개인정보 처리 방침을 읽고 \n동의한 것으로 간주됩니다.</string>
     <string name="forgot_password">비밀번호를 잊으셨나요?</string>
     <string name="email_send_ok">입력하신 메일을 통해 비밀번호 변경을 진행해주세요.</string>
     <string name="Man">남</string>
@@ -53,4 +54,8 @@
     <string name="birth_error">나이를 선택하세요.</string>
     <string name="gener_error">성별을 선택하세요.</string>
     <string name="nick_empty">닉네임을 선택하세요.</string>
+    <string name="user_regist">로그인</string>
+    <string name="user_regist_pass">비밀번호 찾기</string>
+    <string name="join_type_check">SNS로 가입된 계정입니다.</string>
+    <string name="select_locale">언어 선택</string>
 </resources>

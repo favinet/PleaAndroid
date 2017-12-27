@@ -62,8 +62,7 @@ public class CustomWebView {
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
     private InAppWebView.titleCallback callbackTitle;
-    private int mPosition = 0;
-
+    private final static int INTENT_CALL_GALLERY = 3001;
 
 
     public CustomWebView(BaseActivity baseActivity, View v, int postion) {
@@ -80,8 +79,6 @@ public class CustomWebView {
         mView.setVerticalScrollBarEnabled(true);
         mView.getSettings().setDomStorageEnabled(true);
         mView.getSettings().setSupportMultipleWindows(true);
-
-        mPosition = postion;
 
         if (18 < Build.VERSION.SDK_INT) {
             mView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -107,6 +104,14 @@ public class CustomWebView {
         mView.setWebViewClient(new MyCustomWebViewClient());
         // alert check
         mView.setWebChromeClient(new MyCustomWebChromeClient());
+    }
+
+    public void callGallery() {
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        base.startActivityForResult(Intent.createChooser(intent, "File Chooser"), INTENT_CALL_GALLERY);
     }
 
     private class MyCustomWebViewClient extends WebViewClient {
@@ -183,6 +188,11 @@ public class CustomWebView {
                     Intent intent = new Intent(base, LoginActivity.class);
                     base.startActivity(intent);
                     base.finish();
+                    return true;
+                }
+                else if(action.equals("gallery"))
+                {
+                    callGallery();
                     return true;
                 }
             }

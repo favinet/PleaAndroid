@@ -26,20 +26,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_weight="5">
 
                 <shop.plea.and.ui.view.CustomFontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
                     android:text="@string/user_email_join"
                     android:textSize="14.4sp"
                     android:textColor="#000000"
                     app:customFont="NotoSansKR-Light.otf"
-                    android:includeFontPadding="false"/>
-
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="left"
+                    android:includeFontPadding="true"/>
 
             </RelativeLayout>
 

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,6 +152,10 @@ public class MainPleaListActivity extends PleaActivity{
             if(jsonObject == null)
             {
                 toolbar_header.setVisibility(View.GONE);
+                ((ImageButton)toolbar_header.findViewById(R.id.btn_toolbar_alert)).setImageResource(R.drawable.top_icon_notice);
+                toolbar_header.findViewById(R.id.btn_toolbar_alert).setTag("off");
+                ticker_header.setVisibility(View.GONE);
+                toolbar_header.findViewById(R.id.btn_toolbar_alert).setVisibility(View.GONE);
             }
             else
             {
@@ -227,7 +232,8 @@ public class MainPleaListActivity extends PleaActivity{
                 else
                 {
                     toolbar_title.setVisibility(View.VISIBLE);
-                    toolbar_title.setText(Utils.decode(title, "UTF-8"));
+                    Log.e("타이틀!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", Utils.decode(title, "UTF-8"));
+                    toolbar_title.setText(Utils.decode(title, "UTF-8").replace("&amp;", "&"));
                     toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
                 }
 
@@ -359,6 +365,7 @@ public class MainPleaListActivity extends PleaActivity{
 
         Glide.with(this)
                 .load(userInfo.getProfileImg())
+                .apply(new RequestOptions().override(100, 100).placeholder(R.drawable.image_profile_de).error(R.drawable.image_profile_de))
                 .into(main_profile);
 
     }
