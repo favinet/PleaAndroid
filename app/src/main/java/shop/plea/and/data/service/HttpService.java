@@ -33,14 +33,14 @@ public interface HttpService {
     Call<UserInfoResultData> callUserLogin(@FieldMap Map<String, String> params);
 
     @GET("/join/api/checkEmail")
-    Call<ResponseData> callUserEmailCheck(@Query("email") String email);
+    Call<ResponseData> callUserEmailCheck(@Query("email") String email, @Query("locale") String locale);
 
     @GET("/join/api/checkNickname")
-    Call<ResponseData> callUserNickNameCheck(@Query("nickname") String nickname);
+    Call<ResponseData> callUserNickNameCheck(@Query("nickname") String nickname, @Query("locale") String locale);
 
     @FormUrlEncoded
     @POST("/join/api/password/sendMail")
-    Call<ResponseData> callSendPasswordMail(@Field("email") String email);
+    Call<ResponseData> callSendPasswordMail(@Field("email") String email, @Field("locale") String locale);
 
     @FormUrlEncoded
     @POST("/member/api/modify/{id}")

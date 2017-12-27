@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
@@ -44,6 +45,7 @@ import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.activity.InAppWebView;
+import shop.plea.and.ui.activity.LoginActivity;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 
 /**
@@ -170,9 +172,17 @@ public class CustomWebView {
                     String outLink = Utils.queryToMap(url).get("url");
                     if(outLink != null)
                     {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(outLink));
+                        Log.e("outLink : ",outLink);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.decode(outLink, "UTF-8")));
                         base.startActivity(intent);
                     }
+                    return true;
+                }
+                else if(action.equals("goSignUp"))
+                {
+                    Intent intent = new Intent(base, LoginActivity.class);
+                    base.startActivity(intent);
+                    base.finish();
                     return true;
                 }
             }

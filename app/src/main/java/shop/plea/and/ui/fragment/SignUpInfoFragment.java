@@ -430,6 +430,8 @@ public class SignUpInfoFragment extends BaseFragment{
             Map<String, RequestBody> params = new HashMap<>();
 
             String joinType = getJoinType();
+            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+
             File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
             RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
@@ -467,6 +469,9 @@ public class SignUpInfoFragment extends BaseFragment{
             RequestBody birthBody = RequestBody.create(MediaType.parse(MULTI_PART), birth);
             params.put(Constants.API_PARAMS_KEYS.BIRTH, birthBody);
 
+            RequestBody localeBody = RequestBody.create(MediaType.parse(MULTI_PART), locale);
+            params.put(Constants.API_PARAMS_KEYS.LOCALE, localeBody);
+
             Logger.log(Logger.LogState.E, "userRegist params = " + Utils.getStringByObject(params));
 
             DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
@@ -501,7 +506,9 @@ public class SignUpInfoFragment extends BaseFragment{
     {
         startIndicator("");
         UserInfo.getInstance().clearParams();
+
         String joinType = userInfoData.getJoinType();
+        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
 
         Logger.log(Logger.LogState.E, "userLogin userInfoData= " + Utils.getStringByObject(userInfoData));
 
@@ -520,6 +527,8 @@ public class SignUpInfoFragment extends BaseFragment{
         String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
+
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
@@ -606,10 +615,12 @@ public class SignUpInfoFragment extends BaseFragment{
                     if(Utils.checkEmail(ed_email.getText().toString()))
                     {
                         String nickname = ed_nickname.getText().toString();
+                        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+
                         if(nickname.length() > 0)
                         {
                             startIndicator("");
-                            DataManager.getInstance(getActivity()).api.userNickNameCheck(getActivity(), nickname, new DataInterface.ResponseCallback<ResponseData>() {
+                            DataManager.getInstance(getActivity()).api.userNickNameCheck(getActivity(), nickname, locale, new DataInterface.ResponseCallback<ResponseData>() {
                                 @Override
                                 public void onSuccess(ResponseData response) {
                                     ed_nickname_alert.setText(response.getMessage());

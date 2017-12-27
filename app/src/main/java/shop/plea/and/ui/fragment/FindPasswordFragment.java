@@ -33,6 +33,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -136,10 +137,11 @@ public class FindPasswordFragment extends BaseFragment {
 
     private void sendPasswordMail(String email)
     {
+        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
         if(Utils.checkEmail(email) && email.length() > 0)
         {
             startIndicator("");
-            DataManager.getInstance(getActivity()).api.userSendPasswordMail(getActivity(), email, new DataInterface.ResponseCallback<ResponseData>() {
+            DataManager.getInstance(getActivity()).api.userSendPasswordMail(getActivity(), email, locale, new DataInterface.ResponseCallback<ResponseData>() {
                 @Override
                 public void onSuccess(ResponseData response) {
                     Logger.log(Logger.LogState.E, "response : " + Utils.getStringByObject(response));

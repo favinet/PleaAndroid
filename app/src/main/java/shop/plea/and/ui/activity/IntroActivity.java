@@ -72,6 +72,7 @@ public class IntroActivity extends PleaActivity {
         this.context = this;
 
         Bundle bundle = getIntent().getExtras();
+        Logger.log(Logger.LogState.E, "bundle::::" + bundle);
         if(bundle != null)
         {
             action = bundle.getString("action");
@@ -107,6 +108,28 @@ public class IntroActivity extends PleaActivity {
                 }
             }
 
+        }
+        else
+        {
+            Uri uri = getIntent().getData();
+            Log.e("PLEA", "비밀번호!" + uri);
+            if(uri != null)
+            {
+                String uriStr = uri.toString();
+                uriStr = Utils.decode(uriStr, "UTF-8");
+                Log.e("PLEA", "uriStr!" + uriStr);
+                String[] urls = uriStr.split("url=");
+                Log.e("PLEA", "urls!" + urls.length);
+                if(urls.length > 1)
+                {
+                    pushUrl = urls[1];
+                    Log.e("PLEA", "주소!" + pushUrl);
+                    if(uri.toString().contains("reset_password"))
+                    {
+                        action = "RESET_PASSWORD";
+                    }
+                }
+            }
         }
 
         // 네트워크 상태체크

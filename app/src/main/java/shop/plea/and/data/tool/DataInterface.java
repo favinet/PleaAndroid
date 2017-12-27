@@ -122,10 +122,10 @@ public class DataInterface extends BaseDataInterface{
         }
     }
 
-    public void userEmailCheck(Context context, String email, final ResponseCallback callback)
+    public void userEmailCheck(Context context, String email, String locale, final ResponseCallback callback)
     {
         try {
-            Call<ResponseData> call = service.callUserEmailCheck(email);
+            Call<ResponseData> call = service.callUserEmailCheck(email, locale);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
                 @Override
@@ -156,10 +156,10 @@ public class DataInterface extends BaseDataInterface{
         }
     }
 
-    public void userSendPasswordMail(Context context, String email, final ResponseCallback callback)
+    public void userSendPasswordMail(Context context, String email, String locale, final ResponseCallback callback)
     {
         try {
-            Call<ResponseData> call = service.callSendPasswordMail(email);
+            Call<ResponseData> call = service.callSendPasswordMail(email, locale);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
                 @Override
@@ -190,10 +190,10 @@ public class DataInterface extends BaseDataInterface{
         }
     }
 
-    public void userNickNameCheck(Context context, String nickname, final ResponseCallback callback)
+    public void userNickNameCheck(Context context, String nickname, String locale, final ResponseCallback callback)
     {
         try {
-            Call<ResponseData> call = service.callUserNickNameCheck(nickname);
+            Call<ResponseData> call = service.callUserNickNameCheck(nickname, locale);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
                 @Override

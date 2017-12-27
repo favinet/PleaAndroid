@@ -225,6 +225,7 @@ public class SNSHelper {
                     BasePreference.getInstance(base).put(BasePreference.ID, userInfoData.getId());
                     BasePreference.getInstance(base).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                     BasePreference.getInstance(base).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                    BasePreference.getInstance(base).put(BasePreference.LOCALE, userInfoData.getLocale());
                     BasePreference.getInstance(base).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                     IntentData indata = new IntentData();

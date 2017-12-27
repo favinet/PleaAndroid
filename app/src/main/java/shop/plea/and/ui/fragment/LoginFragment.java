@@ -232,12 +232,14 @@ public class LoginFragment extends BaseFragment{
 
             String joinType = Constants.LOGIN_TYPE.EMAIL;
             String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
+            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
 
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, ed_password.getText().toString());
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
             HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 
