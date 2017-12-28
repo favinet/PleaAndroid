@@ -208,7 +208,7 @@ public class SNSHelper {
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
                 {
-                    if(response.getMessage().contains("Unregistered email"))
+                    if(response.getMessage().contains("Unregistered email") || response.getMessage().contains("등록되지 않은"))
                     {
                         nextScreen(params);
                     }

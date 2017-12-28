@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
@@ -31,7 +32,10 @@ import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
+import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.data.tool.DataInterface;
+import shop.plea.and.data.tool.DataManager;
 
 /**
  * Created by shimtaewoo on 2017-10-02.
@@ -238,9 +242,63 @@ public class IntroActivity extends PleaActivity {
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
 
+        /*
+        if(userInfoData ==  null)
+        {
+
+        }
+        else
+        {
+            userLogin(userInfoData);
+        }
+
+        */
         handler.postDelayed(runMain, 1500);
         startIndicator("");
     }
+
+    /*
+    private void userLogin(UserInfoData userInfoData)
+    {
+        String joinType = userInfoData.getJoinType();
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
+
+        if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+        {
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, userInfoData.getEmail());
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, );
+        }
+
+
+
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
+
+        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+        DataManager.getInstance(this).api.userLogin(this, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
+            @Override
+            public void onSuccess(UserInfoResultData response) {
+                stopIndicator();
+                handler.postDelayed(runMain, 1500);
+                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
+
+                UserInfoData userInfoData = response.userData;
+                UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
+                BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
+                BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+
+            }
+
+            @Override
+            public void onError() {
+                stopIndicator();
+                handler.postDelayed(runMain, 1500);
+            }
+        });
+    }
+    */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -1,5 +1,7 @@
 package shop.plea.and.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,10 +27,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import shop.plea.and.R;
@@ -39,7 +44,11 @@ import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
+import shop.plea.and.data.model.UserInfoResultData;
+import shop.plea.and.data.tool.DataInterface;
+import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
+import shop.plea.and.ui.fragment.SignUpInfoFragment;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -66,7 +75,8 @@ public class MainPleaListActivity extends PleaActivity{
     @BindView(R.id.followCnt) CustomFontTextView followCnt;
     @BindView(R.id.toolbar_title) CustomFontTextView toolbar_title;
 
-
+    private final static int INTENT_CALL_GALLERY = 3001;
+    private List<MainPleaListActivity.FileInfo> fileInfoList = new ArrayList<>();
     private HashMap<String, JSONObject> tickerMap = new HashMap<>();
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
@@ -77,6 +87,26 @@ public class MainPleaListActivity extends PleaActivity{
         public void onReceive(JSONObject jsonObject) {
 
             mToobarData = jsonObject;
+
+            /*
+            if(jsonObject != null)
+            {
+                try
+                {
+                    if(jsonObject.getString("nickname") != null &&  jsonObject.getString("memo") != null)
+                    {
+                        Toast.makeText(MainPleaListActivity.this, "updateUser 준비중!!", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        initToobar(jsonObject);
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            */
             initToobar(jsonObject);
 
         }
@@ -121,6 +151,25 @@ public class MainPleaListActivity extends PleaActivity{
     };
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+/*
+        if (resultCode == RESULT_OK) {
+            Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " +requestCode);
+            if (requestCode == INTENT_CALL_GALLERY) { // 킷캣.
+                Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+
+                File file = Utils.getAlbum(this, result);
+
+                fileInfoList.add(new MainPleaListActivity.FileInfo(result, file));
+
+                return;
+            }
+        }
+        */
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_plealist);
@@ -144,6 +193,7 @@ public class MainPleaListActivity extends PleaActivity{
         initScreen();
         init();
     }
+
 
     private void initToobar(JSONObject jsonObject)
     {
@@ -539,6 +589,17 @@ public class MainPleaListActivity extends PleaActivity{
 
         customWebView.initContentView(tickerUrl);
 
+    }
+
+    private class FileInfo{
+        Uri uri;
+        File file;
+
+        public FileInfo(Uri uri, File file)
+        {
+            this.uri = uri;
+            this.file = file;
+        }
     }
 
     private class Listener implements View.OnClickListener {

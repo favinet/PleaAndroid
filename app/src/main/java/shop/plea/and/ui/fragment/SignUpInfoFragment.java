@@ -430,8 +430,9 @@ public class SignUpInfoFragment extends BaseFragment{
             Map<String, RequestBody> params = new HashMap<>();
 
             String joinType = getJoinType();
+            Logger.log(Logger.LogState.E, "registUser joinType = " + Utils.getStringByObject(joinType));
             String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
-
+            Logger.log(Logger.LogState.E, "registUser locale = " + Utils.getStringByObject(locale));
             File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
             RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
@@ -442,7 +443,7 @@ public class SignUpInfoFragment extends BaseFragment{
             if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
             {
                 RequestBody pwdBody = RequestBody.create(MediaType.parse(MULTI_PART), getPassword());
-                RequestBody emailBody = RequestBody.create(MediaType.parse(MULTI_PART), getEmail());
+                RequestBody emailBody = RequestBody.create(MediaType.parse(MULTI_PART), ed_email.getText().toString());
                 if(pwdBody != null) params.put(Constants.API_PARAMS_KEYS.PASSWORD, pwdBody);
                 if(emailBody != null) params.put(Constants.API_PARAMS_KEYS.EMAIL, emailBody);
             }
@@ -450,10 +451,13 @@ public class SignUpInfoFragment extends BaseFragment{
             {
                 RequestBody authIdBody = RequestBody.create(MediaType.parse(MULTI_PART), getAuthId());
                 RequestBody profileImgBody = RequestBody.create(MediaType.parse(MULTI_PART), getProfileImg());
-                RequestBody snsEmailBody = RequestBody.create(MediaType.parse(MULTI_PART), getSnsEmail());
+                RequestBody snsEmailBody = RequestBody.create(MediaType.parse(MULTI_PART), ed_email.getText().toString());
                 if(authIdBody != null) params.put(Constants.API_PARAMS_KEYS.AUTHID, authIdBody);
                 if(profileImgBody != null) params.put(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImgBody);
                 if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
+
+                Logger.log(Logger.LogState.E, "registUser getSnsEmail = " + Utils.getStringByObject(getSnsEmail()));
+                Logger.log(Logger.LogState.E, "registUser getAuthId = " + Utils.getStringByObject(getAuthId()));
             }
 
             RequestBody deviceTypeBody = RequestBody.create(MediaType.parse(MULTI_PART), "android");

@@ -195,6 +195,27 @@ public class CustomWebView {
                     callGallery();
                     return true;
                 }
+                else if(action.equals("userUpdate"))
+                {
+
+                    String nickname = Utils.queryToMap(url).get("nickname");
+                    String memo = Utils.queryToMap(url).get("memo");
+                    Log.e("nickname : ",nickname);
+                    Log.e("memo : ",memo);
+                    JSONObject jsonObject = new JSONObject();
+                    try
+                    {
+                        jsonObject.put("memo", memo);
+                        jsonObject.put("nickname", nickname);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    setWebViewHeaderJson(jsonObject);
+
+                    return true;
+                }
             }
 
             if(url.contains("webview"))

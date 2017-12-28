@@ -27,34 +27,6 @@ import shop.plea.and.ui.listener.FragmentListener;
 public class LoginActivity extends PleaActivity {
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Logger.log(Logger.LogState.E, "onActivityResult Main requestCode : " + requestCode);
-        Logger.log(Logger.LogState.E, "onActivityResult Main resultCode: " + resultCode);
-        Logger.log(Logger.LogState.E, "onActivityResult Main : " + curFragment.getTag());
-
-        Fragment signUpFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.SINGUP));
-        Fragment signUpInfoFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.SIGN_INFO));
-        Fragment loginFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.LOGIN));
-
-        Logger.log(Logger.LogState.E, "onActivityResult Main signUpFragment : " + signUpFragment);
-        Logger.log(Logger.LogState.E, "onActivityResult Main signUpInfoFragment : " + signUpInfoFragment);
-        Logger.log(Logger.LogState.E, "onActivityResult Main : loginFragment " + loginFragment);
-
-        if (signUpFragment != null) {
-            ((SignUpFragment) signUpFragment).onActivityResult(requestCode, resultCode, data);
-        }
-        if (signUpInfoFragment != null) {
-            ((SignUpInfoFragment) signUpInfoFragment).onActivityResult(requestCode, resultCode, data);
-        }
-        if (loginFragment != null) {
-            ((LoginFragment) loginFragment).onActivityResult(requestCode, resultCode, data);
-        }
-
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
