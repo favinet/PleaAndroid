@@ -363,4 +363,43 @@ public class DataInterface extends BaseDataInterface{
             callback.onError();
         }
     }
+
+
+    public void uploadProfile(Context context, File file, final ResponseCallback callback)
+    {
+        try {
+
+            RequestBody body = (file == null) ? null : RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part filePart = (file == null) ? null : MultipartBody.Part.createFormData("Filedata", file.getName(), body);
+
+            Call<ResponseData> call = service.callUploadImg(filePart);
+
+            call.enqueue(new RetryableCallback<ResponseData>(call, context) {
+                @Override
+                public void onFinalResponse(Call<ResponseData> call, retrofit2.Response<ResponseData> response) {
+                    if (callback == null) return;
+
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        Logger.log(Logger.LogState.E, "error callUserRegist = " + response.errorBody().toString());
+                        callback.onError();
+                    }
+                }
+
+                @Override
+                public void onFinalFailure(Call<ResponseData> call, Throwable t) {
+                    if (callback == null)
+                        return;
+                    t.printStackTrace();
+                    callback.onError();
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            callback.onError();
+        }
+    }
 }

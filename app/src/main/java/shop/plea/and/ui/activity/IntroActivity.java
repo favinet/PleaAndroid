@@ -223,17 +223,36 @@ public class IntroActivity extends PleaActivity {
         }
         else
         {
-            locale = userInfoData.getLocale();
-            if(locale.equals("ko"))
+            if(userInfoData.getLocale() == null)
             {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
+                if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
+                {
+                    Locale.setDefault(Locale.KOREA);
+                    config.locale = Locale.KOREA;
+                    locale = "ko";
+                }
+                else
+                {
+                    Locale.setDefault(Locale.ENGLISH);
+                    config.locale = Locale.ENGLISH;
+                    locale = "en";
+                }
             }
             else
             {
-                Locale.setDefault(Locale.ENGLISH);
-                config.locale = Locale.ENGLISH;
+                locale = userInfoData.getLocale();
+                if(locale.equals("ko"))
+                {
+                    Locale.setDefault(Locale.KOREA);
+                    config.locale = Locale.KOREA;
+                }
+                else
+                {
+                    Locale.setDefault(Locale.ENGLISH);
+                    config.locale = Locale.ENGLISH;
+                }
             }
+
         }
 
         Logger.log(Logger.LogState.E, "locale : " + locale);
@@ -242,63 +261,84 @@ public class IntroActivity extends PleaActivity {
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
 
-        /*
-        if(userInfoData ==  null)
-        {
 
+        String stoken = BasePreference.getInstance(this).getValue(BasePreference.GCM_TOKEN, null);
+
+        startIndicator("");
+        if(userInfoData ==  null || stoken == null)
+        {
+            handler.postDelayed(runMain, 1500);
         }
         else
         {
             userLogin(userInfoData);
         }
 
-        */
-        handler.postDelayed(runMain, 1500);
-        startIndicator("");
     }
 
-    /*
+
     private void userLogin(UserInfoData userInfoData)
     {
         String joinType = userInfoData.getJoinType();
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
 
-        if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+        if(joinType == null)
+            userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, userInfoData.getDeviceToken());
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, userInfoData.getLocale());
+
+        if(joinType == null)
+            handler.postDelayed(runMain, 1500);
+        else
         {
-            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, userInfoData.getEmail());
-            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, );
+            if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+            {
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, userInfoData.getEmail());
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, userInfoData.getPassword());
+            }
+            else
+            {
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, userInfoData.getAuthId());
+            }
+
+
+            HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+            DataManager.getInstance(this).api.userLogin(this, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
+                @Override
+                public void onSuccess(UserInfoResultData response) {
+                    stopIndicator();
+                    String result = response.getResult();
+                    if(result.equals(Constants.API_FAIL))
+                    {
+                        BasePreference.getInstance(IntroActivity.this).putObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+                        UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), new UserInfoData());
+                    }
+                    else
+                    {
+                        Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
+
+                        UserInfoData userInfoData = response.userData;
+                        UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
+                        BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
+                        BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                        BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+                    }
+                    handler.postDelayed(runMain, 1500);
+
+                }
+
+                @Override
+                public void onError() {
+                    stopIndicator();
+                    handler.postDelayed(runMain, 1500);
+                }
+            });
         }
 
 
-
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
-
-        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
-        DataManager.getInstance(this).api.userLogin(this, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
-            @Override
-            public void onSuccess(UserInfoResultData response) {
-                stopIndicator();
-                handler.postDelayed(runMain, 1500);
-                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
-
-                UserInfoData userInfoData = response.userData;
-                UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
-                BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
-                BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
-                BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
-
-            }
-
-            @Override
-            public void onError() {
-                stopIndicator();
-                handler.postDelayed(runMain, 1500);
-            }
-        });
     }
-    */
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

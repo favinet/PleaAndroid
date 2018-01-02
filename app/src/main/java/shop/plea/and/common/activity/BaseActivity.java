@@ -31,6 +31,7 @@ import java.util.List;
 import shop.plea.and.R;
 import shop.plea.and.common.dialog.ProgressDialog;
 import shop.plea.and.common.tool.Logger;
+import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.fragment.FindPasswordFragment;
@@ -70,6 +71,7 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         Logger.log(Logger.LogState.E, "onActivityResult Main signUpInfoFragment : " + signUpInfoFragment);
         Logger.log(Logger.LogState.E, "onActivityResult Main : loginFragment " + loginFragment);
 
+
         if (signUpFragment != null) {
             ((SignUpFragment) signUpFragment).onActivityResult(requestCode, resultCode, data);
         }
@@ -79,6 +81,7 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         if (loginFragment != null) {
             ((LoginFragment) loginFragment).onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     @Override
@@ -189,7 +192,7 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
             if (iNumActivity == 1) {
                 if (System.currentTimeMillis() > backKeyPressedTime + 1500) {
                     backKeyPressedTime = System.currentTimeMillis();
-                    Toast.makeText(this, "뒤로 버튼을 한번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.app_end), Toast.LENGTH_SHORT).show();
                     return false;
                 }
 

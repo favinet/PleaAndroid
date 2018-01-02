@@ -62,7 +62,7 @@ public class CustomWebView {
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
     private InAppWebView.titleCallback callbackTitle;
-    private final static int INTENT_CALL_GALLERY = 3001;
+    private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
 
 
     public CustomWebView(BaseActivity baseActivity, View v, int postion) {
@@ -111,7 +111,7 @@ public class CustomWebView {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
-        base.startActivityForResult(Intent.createChooser(intent, "File Chooser"), INTENT_CALL_GALLERY);
+        base.startActivityForResult(Intent.createChooser(intent, "File Chooser"), INTENT_CALL_PROFILE_GALLERY);
     }
 
     private class MyCustomWebViewClient extends WebViewClient {
@@ -195,18 +195,13 @@ public class CustomWebView {
                     callGallery();
                     return true;
                 }
-                else if(action.equals("userUpdate"))
+                else if(action.equals("updateUser"))
                 {
 
-                    String nickname = Utils.queryToMap(url).get("nickname");
-                    String memo = Utils.queryToMap(url).get("memo");
-                    Log.e("nickname : ",nickname);
-                    Log.e("memo : ",memo);
                     JSONObject jsonObject = new JSONObject();
                     try
                     {
-                        jsonObject.put("memo", memo);
-                        jsonObject.put("nickname", nickname);
+                        jsonObject.put("type", "updateUser");
                     }
                     catch (JSONException e)
                     {

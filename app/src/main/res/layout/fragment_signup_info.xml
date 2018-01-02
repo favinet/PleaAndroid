@@ -114,7 +114,8 @@
                 android:drawablePadding="5dp"
                 android:paddingLeft="10dp"
                 android:textColor="#000000"
-                app:customFontEdit="NotoSansKR-Light.otf"/>
+                app:customFontEdit="NotoSansKR-Light.otf"
+                android:singleLine="true"/>
 
             <View
                 android:layout_width="match_parent"
@@ -134,7 +135,8 @@
                 android:paddingLeft="10dp"
                 android:textColor="#000000"
                 android:maxLength="10"
-                app:customFontEdit="NotoSansKR-Light.otf"/>
+                app:customFontEdit="NotoSansKR-Light.otf"
+                android:singleLine="true"/>
 
             <View
                 android:layout_width="match_parent"

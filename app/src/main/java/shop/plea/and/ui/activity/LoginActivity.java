@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.prefs.Preferences;
 
 import shop.plea.and.R;
@@ -42,6 +44,9 @@ public class LoginActivity extends PleaActivity {
             pushUrl = getIntent().getExtras().getString("pushUrl", null);
         }
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Logger.log(Logger.LogState.E, "start token: " + token);
+        BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
         IntentData indata = new IntentData();
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);

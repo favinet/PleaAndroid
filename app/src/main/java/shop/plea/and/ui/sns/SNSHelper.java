@@ -307,7 +307,9 @@ public class SNSHelper {
                 req.joinType = "google";
 
                 Uri profileImg = account.getPhotoUrl();
+
                 String gcmToken = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
+                Logger.log(Logger.LogState.E, "gcmToken : " + gcmToken);
 
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);

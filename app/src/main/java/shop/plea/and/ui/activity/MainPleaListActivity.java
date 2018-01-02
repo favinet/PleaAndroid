@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,9 +43,11 @@ import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.ResponseData;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.model.UserInfoResultData;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
@@ -75,40 +78,19 @@ public class MainPleaListActivity extends PleaActivity{
     @BindView(R.id.followCnt) CustomFontTextView followCnt;
     @BindView(R.id.toolbar_title) CustomFontTextView toolbar_title;
 
-    private final static int INTENT_CALL_GALLERY = 3001;
+    private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
     private List<MainPleaListActivity.FileInfo> fileInfoList = new ArrayList<>();
     private HashMap<String, JSONObject> tickerMap = new HashMap<>();
     public CustomWebView customWebView;
     private Listener mListener = new Listener();
     private Fragment drawer_Fragment;
     private JSONObject mToobarData;
+
     private headerJsonCallback mHeaderJsonCallback = new headerJsonCallback() {
         @Override
         public void onReceive(JSONObject jsonObject) {
-
             mToobarData = jsonObject;
-
-            /*
-            if(jsonObject != null)
-            {
-                try
-                {
-                    if(jsonObject.getString("nickname") != null &&  jsonObject.getString("memo") != null)
-                    {
-                        Toast.makeText(MainPleaListActivity.this, "updateUser 준비중!!", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                        initToobar(jsonObject);
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            */
             initToobar(jsonObject);
-
         }
     };
 
@@ -153,20 +135,39 @@ public class MainPleaListActivity extends PleaActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/*
+        startIndicator("");
         if (resultCode == RESULT_OK) {
-            Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " +requestCode);
-            if (requestCode == INTENT_CALL_GALLERY) { // 킷캣.
+            if (requestCode == INTENT_CALL_PROFILE_GALLERY) { // 킷캣.
                 Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
 
                 File file = Utils.getAlbum(this, result);
-
+                fileInfoList.clear();
                 fileInfoList.add(new MainPleaListActivity.FileInfo(result, file));
+
+                Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " +requestCode);
+
+                File fileImg = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
+
+                DataManager.getInstance(this).api.uploadProfile(this, fileImg, new DataInterface.ResponseCallback<ResponseData>() {
+                    @Override
+                    public void onSuccess(ResponseData response) {
+                        stopIndicator();
+                        Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " + Utils.getStringByObject(response));
+                        customWebView.initContentView("javascript:setProfileImg('"+response.getProfileImg()+"');");
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                        stopIndicator();
+                    }
+                });
 
                 return;
             }
         }
-        */
+
     }
 
     @Override
@@ -209,6 +210,13 @@ public class MainPleaListActivity extends PleaActivity{
             }
             else
             {
+                if(jsonObject.has("type"))
+                {
+                    if (jsonObject.getString("type").equals("updateUser"))
+                    {
+                        userLogin();
+                    }
+                }
                 toolbar_header.setVisibility(View.VISIBLE);
                 String menuBt = (jsonObject.has("menuBt")) ? jsonObject.getString("menuBt") : "N";
                 String searchBt = (jsonObject.has("searchBt")) ? jsonObject.getString("searchBt") : "N";
@@ -220,6 +228,7 @@ public class MainPleaListActivity extends PleaActivity{
                 String likeyn = (jsonObject.has("likeyn")) ? jsonObject.getString("likeyn") : "N";
                 String searchBox = (jsonObject.has("searchBox")) ? jsonObject.getString("searchBox") : "N";
                 String homeBt = (jsonObject.has("homeBt")) ? jsonObject.getString("homeBt") : "N";
+                String logoutBt = (jsonObject.has("logoutBt")) ? jsonObject.getString("logoutBt") : "N";
 
                 if(alertBt.equals("Y"))
                 {
@@ -321,6 +330,11 @@ public class MainPleaListActivity extends PleaActivity{
                 else
                     toolbar_header.findViewById(R.id.btn_toolbar_home).setVisibility(View.GONE);
 
+                if(logoutBt.equals("Y"))
+                    toolbar_header.findViewById(R.id.btn_logout).setVisibility(View.VISIBLE);
+                else
+                    toolbar_header.findViewById(R.id.btn_logout).setVisibility(View.GONE);
+
                 if(likeBt.equals("Y"))
                 {
                     toolbar_header.findViewById(R.id.btn_toolbar_like).setVisibility(View.VISIBLE);
@@ -404,6 +418,7 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.btn_toolbar_img).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_home).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_like).setOnClickListener(mListener);
+        toolbar_header.findViewById(R.id.btn_logout).setOnClickListener(mListener);
 
 
         ticker_notice.setOnClickListener(mListener);
@@ -413,9 +428,12 @@ public class MainPleaListActivity extends PleaActivity{
         UserInfoData userInfo = UserInfo.getInstance().getCurrentUserInfoData(this);
         txt_nickname.setText(String.format(getString(R.string.user_resist_finish), userInfo.getNickname()));
 
+
+        int genderImg = (userInfo.getGender().equals("M")) ? R.drawable.profile_man : R.drawable.profile_woman;
+
         Glide.with(this)
                 .load(userInfo.getProfileImg())
-                .apply(new RequestOptions().override(100, 100).placeholder(R.drawable.image_profile_de).error(R.drawable.image_profile_de))
+                .apply(new RequestOptions().override(100, 100).placeholder(genderImg).error(genderImg))
                 .into(main_profile);
 
     }
@@ -430,6 +448,7 @@ public class MainPleaListActivity extends PleaActivity{
         String status = userInfo.getStatus();
         String uid = userInfo.getId();
 
+        status = "T";
         if(status == null || uid == null)
         {
             customWebView.initContentView(inData.link);
@@ -441,7 +460,62 @@ public class MainPleaListActivity extends PleaActivity{
             else
                 customWebView.initContentView(inData.link);
         }
-        //customWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
+        //cust
+        //
+        // omWebView.initContentView("http://www.favinet.co.kr/deeplink_test.html");
+    }
+
+    private void userLogin()
+    {
+        UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
+        String joinType = userInfoData.getJoinType();
+
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, userInfoData.getDeviceToken());
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, userInfoData.getLocale());
+
+        if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
+        {
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, userInfoData.getEmail());
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PASSWORD, userInfoData.getPassword());
+        }
+        else
+        {
+            UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, userInfoData.getAuthId());
+        }
+
+
+        HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+        DataManager.getInstance(this).api.userLogin(this, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
+            @Override
+            public void onSuccess(UserInfoResultData response) {
+                stopIndicator();
+                String result = response.getResult();
+                if(result.equals(Constants.API_FAIL))
+                {
+                    BasePreference.getInstance(MainPleaListActivity.this).putObject(BasePreference.USERINFO_DATA, null);
+                    UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), new UserInfoData());
+                }
+                else
+                {
+                    Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
+
+                    UserInfoData userInfoData = response.userData;
+                    UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
+                    BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
+                    BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                    BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+                    ((SideMenuDrawerFragment)drawer_Fragment).setUserData(userInfoData);
+                    customWebView.initContentView("javascript:userUpdateFinish();");
+                }
+            }
+
+            @Override
+            public void onError() {
+                stopIndicator();
+            }
+        });
     }
 
     @Override
@@ -602,6 +676,17 @@ public class MainPleaListActivity extends PleaActivity{
         }
     }
 
+    private void signOut()
+    {
+        BasePreference.getInstance(this).removeAll();
+        Logger.log(Logger.LogState.E, "signOut!!!");
+        IntentData indata = new IntentData();
+        indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private class Listener implements View.OnClickListener {
 
         @Override
@@ -682,6 +767,10 @@ public class MainPleaListActivity extends PleaActivity{
 
                 case R.id.btn_toolbar_home :
                     customWebView.initContentView(String.format(Constants.MAIN_URL, id));
+                    break;
+
+                case R.id.btn_logout :
+                    signOut();
                     break;
 
                 case R.id.btn_toolbar_like :

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,9 +131,24 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
         setNoticeCnt();
 
+        int genderImg = (userInfoData.getGender().equals("M")) ? R.drawable.profile_man : R.drawable.profile_woman;
+
         Glide.with(base)
                 .load(userInfoData.getProfileImg())
+                .apply(new RequestOptions().override(100, 100).placeholder(genderImg).error(genderImg))
                 .into(img_profile);
+
+    }
+
+    public void setUserData(UserInfoData userInfoData )
+    {
+        int genderImg = (userInfoData.getGender().equals("M")) ? R.drawable.profile_man : R.drawable.profile_woman;
+        Glide.with(base)
+                .load(userInfoData.getProfileImg())
+                .apply(new RequestOptions().override(100, 100).placeholder(genderImg).error(genderImg))
+                .into(img_profile);
+
+        side_nickname.setText(userInfoData.getNickname());
     }
 
     public void setDrawerLayout(DrawerLayoutHorizontalSupport drawerLayout)
@@ -223,13 +239,16 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     private void updateUser(final String updateLocale)
     {
         startIndicator("");
-        final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
+        final UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         UserInfo.getInstance().clearParams();
         String id = userInfoData.getId();
-
+        Logger.log(Logger.LogState.E, "updateUser id = " + Utils.getStringByObject(id));
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, updateLocale);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.ID, id);
+
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
+        Logger.log(Logger.LogState.E, "updateUser params = " + Utils.getStringByObject(params));
 
         DataManager.getInstance(getActivity()).api.userUpdate(getActivity(), id, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
@@ -262,23 +281,34 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
-
-
     }
 
     private void signOut()
     {
-        BasePreference.getInstance(getActivity()).removeAll();
-        Logger.log(Logger.LogState.E, "signOut!!!");
-        IntentData indata = new IntentData();
-        indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        getActivity().startActivity(intent);
-        getActivity().finish();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle(getString(R.string.app_name)).setMessage(getString(R.string.logout)).setCancelable(false).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BasePreference.getInstance(getActivity()).removeAll();
+                Logger.log(Logger.LogState.E, "signOut!!!");
+                IntentData indata = new IntentData();
+                indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+            }
+        }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create().setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     private void deleteUser()
     {
+
         startIndicator("");
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
 
@@ -354,6 +384,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             String uid = userInfoData.getId();
             String url;
             String locale = userInfoData.getLocale();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
             switch (v.getId())
             {
@@ -395,7 +426,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     setVersion();
                     break;
                 case R.id.side_btn_support :
-                    Toast.makeText(getActivity(), "주소 알려주세요.", Toast.LENGTH_SHORT).show();
+
+                    dialog.setTitle(R.string.app_name).setMessage(getString(R.string.preparing)).setPositiveButton(getString(R.string.yes), null).create().show();
                     break;
                 case R.id.side_btn_reset_pwd :
 
@@ -407,7 +439,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     }
                     else
                     {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                         dialog.setTitle(R.string.app_name).setMessage(getString(R.string.join_type_check)).setPositiveButton(getString(R.string.yes), null).create().show();
                     }
                     break;
@@ -415,11 +446,23 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     signOut();
                     break;
                 case R.id.side_btn_delete_user :
-                    deleteUser();
+
+                    dialog.setTitle(getString(R.string.app_name)).setMessage(getString(R.string.delete_user)).setCancelable(false).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteUser();
+                        }
+                    }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).create().setCanceledOnTouchOutside(false);
+                    dialog.show();
+
                     break;
                 case R.id.side_btn_language :
 
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(base);
                     dialog.setTitle(getString(R.string.app_name)).setMessage(R.string.reset_language).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

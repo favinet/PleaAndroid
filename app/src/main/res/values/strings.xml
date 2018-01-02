@@ -27,7 +27,7 @@
     <string name="menu_update">update</string>
     <string name="menu_support">Support</string>
     <string name="menu_reset_password">Reset Your Password</string>
-    <string name="menu_signout">Sign Out</string>
+    <string name="menu_signout">Log Out</string>
     <string name="menu_delete_account">Delete Account</string>
     <string name="searchbox_tag">search for terms or #tags</string>
     <string name="find_password">To reset your password, enter your email address below and follow the instructions in the email we\'ll send you.</string>
@@ -58,4 +58,8 @@
     <string name="user_regist_pass">Forgotten password?</string>
     <string name="join_type_check">SNS-joined account.</string>
     <string name="select_locale">Select a Language</string>
+    <string name="preparing">preparing</string>
+    <string name="app_end">Press the Back button again to exit the app.</string>
+    <string name="delete_user">After delete account, login and contents check are impossible. Do you want to leave?</string>
+    <string name="logout">Are you sure?</string>
 </resources>

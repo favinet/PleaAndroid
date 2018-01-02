@@ -59,6 +59,58 @@ public class UserInfoData {
     @Expose
     private String locale = null;
 
+    @SerializedName("password")
+    @Expose
+    private String password = null;
+
+    @SerializedName("deviceToken")
+    @Expose
+    private String deviceToken = null;
+
+    @SerializedName("birth")
+    @Expose
+    private String birth = null;
+
+    @SerializedName("deviceType")
+    @Expose
+    private String deviceType = null;
+
+    @SerializedName("gender")
+    @Expose
+    private String gender = null;
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getId() {
         return id;
     }
@@ -186,4 +238,13 @@ public class UserInfoData {
     public void setLocale(String locale) {
         this.locale = locale;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

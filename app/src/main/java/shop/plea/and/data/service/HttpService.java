@@ -55,4 +55,8 @@ public interface HttpService {
 
     @GET("/common/api/appVersion")
     Call<ResponseData> callGetVersion();
+
+    @Multipart
+    @POST("/member/api/imgUpload")
+    Call<ResponseData> callUploadImg(@Part MultipartBody.Part file);
 }

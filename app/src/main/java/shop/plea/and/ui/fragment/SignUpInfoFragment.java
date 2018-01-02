@@ -289,6 +289,10 @@ public class SignUpInfoFragment extends BaseFragment{
                     btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner);
                     btn_regist_end.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
+                if(ed_nickname.getText().toString().replace(" ", "").equals("")){
+                    String replaceNick = ed_nickname.getText().toString().replace(" ", "");
+                    ed_nickname.setText(replaceNick);
+                }
             }
 
             @Override
@@ -618,7 +622,7 @@ public class SignUpInfoFragment extends BaseFragment{
 
                     if(Utils.checkEmail(ed_email.getText().toString()))
                     {
-                        String nickname = ed_nickname.getText().toString();
+                        String nickname = ed_nickname.getText().toString().replace(" ", "");
                         String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
 
                         if(nickname.length() > 0)

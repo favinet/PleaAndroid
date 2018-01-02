@@ -1,5 +1,6 @@
 package shop.plea.and.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,9 +11,11 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import shop.plea.and.R;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfo;
 import shop.plea.and.data.model.UserInfoData;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontBtn;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -168,6 +171,11 @@ public class InAppWebView extends PleaActivity{
 
                 case R.id.inapp_close :
                   //  System.exit(0);
+
+                    IntentData indata = new IntentData();
+                    indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
                     finish();
 
                     break;

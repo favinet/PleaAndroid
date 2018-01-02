@@ -39,7 +39,8 @@
                 android:paddingLeft="10dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
-                app:customFontEdit="NotoSansKR-Regular.otf"/>
+                app:customFontEdit="NotoSansKR-Regular.otf"
+                android:singleLine="true"/>
             
             <View
                 android:layout_width="match_parent"
@@ -63,7 +64,8 @@
                 android:paddingLeft="10dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4cffffff"
-                app:customFontEdit="NotoSansKR-Regular.otf"/>
+                app:customFontEdit="NotoSansKR-Regular.otf"
+                android:singleLine="true"/>
 
             <View
                 android:layout_width="match_parent"

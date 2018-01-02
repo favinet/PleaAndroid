@@ -62,7 +62,8 @@
                     android:background="@drawable/custom_editview"
                     android:drawablePadding="5dp"
                     android:textColor="#000000"
-                    app:customFontEdit="NotoSansKR-Regular.otf"/>
+                    app:customFontEdit="NotoSansKR-Regular.otf"
+                    android:singleLine="true"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -96,7 +97,8 @@
                     android:drawablePadding="5dp"
                     android:paddingLeft="10dp"
                     android:textColor="#000000"
-                    app:customFontEdit="NotoSansKR-Regular.otf"/>
+                    app:customFontEdit="NotoSansKR-Regular.otf"
+                    android:singleLine="true"/>
 
                 <View
                     android:layout_width="match_parent"

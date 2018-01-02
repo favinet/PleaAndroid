@@ -27,6 +27,10 @@ public class ResponseData {
     @Expose
     public String message = "";
 
+    @SerializedName("profileImg")
+    @Expose
+    public String profileImg = "";
+
     @SerializedName("data")
     @Expose
     public JSONObject data = new JSONObject();
@@ -69,5 +73,13 @@ public class ResponseData {
 
     public void setData(JSONObject data) {
         this.data = data;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
 }
