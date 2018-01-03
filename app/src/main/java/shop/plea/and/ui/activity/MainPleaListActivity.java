@@ -216,6 +216,10 @@ public class MainPleaListActivity extends PleaActivity{
                     {
                         userLogin();
                     }
+                    else if (jsonObject.getString("type").equals("updateNotice"))
+                    {
+                        ((SideMenuDrawerFragment)drawer_Fragment).setNoticeCnt();
+                    }
                 }
                 toolbar_header.setVisibility(View.VISIBLE);
                 String menuBt = (jsonObject.has("menuBt")) ? jsonObject.getString("menuBt") : "N";
@@ -448,7 +452,6 @@ public class MainPleaListActivity extends PleaActivity{
         String status = userInfo.getStatus();
         String uid = userInfo.getId();
 
-        status = "T";
         if(status == null || uid == null)
         {
             customWebView.initContentView(inData.link);
@@ -605,6 +608,16 @@ public class MainPleaListActivity extends PleaActivity{
         {
             customWebView.goBack();
         }
+
+        if(customWebView.mView.canGoBack())
+            customWebView.goBack();
+        else
+        {
+            UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
+            String url = String.format(Constants.MAIN_URL, userInfoData.getId());
+            customWebView.initContentView(url);
+        }
+
     }
 
     private void searchAction()

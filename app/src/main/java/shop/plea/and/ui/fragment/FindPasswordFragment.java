@@ -20,6 +20,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,10 @@ public class FindPasswordFragment extends BaseFragment {
     @BindView(R.id.btn_send_password_set_mail) Button btn_send_password_set_mail;
     @BindView(R.id.ed_email) EditText ed_email;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
+    @BindView(R.id.screen_password_find) RelativeLayout screen_password_find;
+
+
+
     private int emailLength = 0;
     private InputMethodManager inputMethodManager;
 
@@ -93,6 +99,7 @@ public class FindPasswordFragment extends BaseFragment {
 
     public void initScreen()
     {
+        screen_password_find.setOnClickListener(mListner);
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         btn_send_password_set_mail.setOnClickListener(mListner);
@@ -197,6 +204,9 @@ public class FindPasswordFragment extends BaseFragment {
                 case R.id.btn_send_password_set_mail :
                     String email = ed_email.getText().toString();
                     sendPasswordMail(email);
+                    break;
+                case R.id.screen_password_find :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
                     break;
             }
         }

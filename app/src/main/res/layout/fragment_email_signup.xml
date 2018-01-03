@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    android:clickable="true">
+    android:clickable="true"
+    android:id="@+id/screen_email_sign_up">
 
 
     <include android:id="@+id/toolbar_header"

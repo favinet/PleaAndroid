@@ -3,6 +3,7 @@ package shop.plea.and.ui.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -175,7 +176,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         });
     }
 
-    private void setNoticeCnt()
+    public void setNoticeCnt()
     {
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
         String id = userInfoData.getId();
@@ -259,7 +260,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
                 BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
                 side_btn_language.setText((updateLocale.equals("en") ? "English" : "Korean"));
-                userInfoData.setLocale(updateLocale);
+                BasePreference.getInstance(getActivity()).put(BasePreference.LOCALE, updateLocale);
                 setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN));
 
                 base.finish();
@@ -427,6 +428,15 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     break;
                 case R.id.side_btn_support :
 
+                    /*
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "pleashop@gmail.com" });
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                    */
                     dialog.setTitle(R.string.app_name).setMessage(getString(R.string.preparing)).setPositiveButton(getString(R.string.yes), null).create().show();
                     break;
                 case R.id.side_btn_reset_pwd :

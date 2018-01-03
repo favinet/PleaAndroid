@@ -270,6 +270,20 @@ public class CustomWebView {
                 setWebViewTitle(titleArr.get(url));
             }
 
+            if(url.toLowerCase().contains("notice"))
+            {
+                JSONObject jsonObject = new JSONObject();
+                try
+                {
+                    jsonObject.put("type", "updateNotice");
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+                setWebViewHeaderJson(jsonObject);
+            }
+
             super.onPageFinished(view, url);
         }
     }

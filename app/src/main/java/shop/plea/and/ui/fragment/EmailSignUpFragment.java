@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,9 @@ public class EmailSignUpFragment extends BaseFragment{
     @BindView(R.id.ed_password_alert) TextView ed_password_alert;
     @BindView(R.id.btn_regist_next) Button btn_regist_next;
     @BindView(R.id.toolbar_header) Toolbar toolbar_header;
+    @BindView(R.id.screen_email_sign_up) LinearLayout screen_email_sign_up;
+
+
     private int emailLength = 0;
     private int passwordLength = 0;
     private InputMethodManager inputMethodManager;
@@ -81,6 +85,7 @@ public class EmailSignUpFragment extends BaseFragment{
 
     public void initScreen()
     {
+        screen_email_sign_up.setOnClickListener(mListner);
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         btn_regist_next.setOnClickListener(mListner);
         ((BaseActivity)mContext).setSupportActionBar(toolbar_header);
@@ -250,6 +255,10 @@ public class EmailSignUpFragment extends BaseFragment{
                     inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
                     inputMethodManager.hideSoftInputFromWindow(ed_password.getWindowToken(), 0);
                     mUpdateListenerCallBack.fragmentBackPressed();
+                    break;
+                case R.id.screen_email_sign_up :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
+                    inputMethodManager.hideSoftInputFromWindow(ed_password.getWindowToken(), 0);
                     break;
 
             }

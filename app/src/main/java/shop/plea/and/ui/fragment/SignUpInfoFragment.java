@@ -1,5 +1,6 @@
 package shop.plea.and.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -19,8 +20,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -93,11 +97,13 @@ public class SignUpInfoFragment extends BaseFragment{
     @BindView(R.id.spinner_birth) Spinner spinner_birth;
     @BindView(R.id.gender_m) CustomFontTextView gender_m;
     @BindView(R.id.gender_f) CustomFontTextView gender_f;
+    @BindView(R.id.screen_sign_info) RelativeLayout screen_sign_info;
 
 
     private SpinnerBirthAdapter spinnerBirthAdapter;
     private String gender;
     private String birth;
+    private InputMethodManager inputMethodManager;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -166,11 +172,13 @@ public class SignUpInfoFragment extends BaseFragment{
 
     public void initScreen()
     {
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         upload_profile.setOnClickListener(mListner);
         btn_regist_end.setOnClickListener(mListner);
         img_profile.setOnClickListener(mListner);
         gender_m.setOnClickListener(mListner);
         gender_f.setOnClickListener(mListner);
+        screen_sign_info.setOnClickListener(mListner);
         toolbar_header.findViewById(R.id.toolbar_back).setOnClickListener(mListner);
         String email = (getJoinType().equals("email")) ? getEmail() : getSnsEmail();
         ed_email.setText(email);
@@ -289,14 +297,20 @@ public class SignUpInfoFragment extends BaseFragment{
                     btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner);
                     btn_regist_end.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                /*
                 if(ed_nickname.getText().toString().replace(" ", "").equals("")){
                     String replaceNick = ed_nickname.getText().toString().replace(" ", "");
                     ed_nickname.setText(replaceNick);
                 }
-            }
+                */
 
-            @Override
-            public void afterTextChanged(Editable editable) {}
+            }
         });
 
     }
@@ -597,7 +611,13 @@ public class SignUpInfoFragment extends BaseFragment{
                 case R.id.upload_profile :
                     callGallery();
                     break;
+                case R.id.screen_sign_info :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
+                    inputMethodManager.hideSoftInputFromWindow(ed_nickname.getWindowToken(), 0);
+                    break;
                 case R.id.toolbar_back :
+                    inputMethodManager.hideSoftInputFromWindow(ed_email.getWindowToken(), 0);
+                    inputMethodManager.hideSoftInputFromWindow(ed_nickname.getWindowToken(), 0);
                     mUpdateListenerCallBack.fragmentBackPressed();
                     break;
                 case R.id.gender_m :

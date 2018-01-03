@@ -202,11 +202,13 @@ public class IntroActivity extends PleaActivity {
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-        String locale = "";
+        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
+        Logger.log(Logger.LogState.E, "start locale: " + locale);
 
         Configuration config = new Configuration();
         Locale defaultLocale = Locale.getDefault();
-        if(userInfoData == null)
+
+        if(locale == null)
         {
             if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
             {
@@ -223,36 +225,16 @@ public class IntroActivity extends PleaActivity {
         }
         else
         {
-            if(userInfoData.getLocale() == null)
+            if(locale.equals("ko"))
             {
-                if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
-                {
-                    Locale.setDefault(Locale.KOREA);
-                    config.locale = Locale.KOREA;
-                    locale = "ko";
-                }
-                else
-                {
-                    Locale.setDefault(Locale.ENGLISH);
-                    config.locale = Locale.ENGLISH;
-                    locale = "en";
-                }
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
             }
             else
             {
-                locale = userInfoData.getLocale();
-                if(locale.equals("ko"))
-                {
-                    Locale.setDefault(Locale.KOREA);
-                    config.locale = Locale.KOREA;
-                }
-                else
-                {
-                    Locale.setDefault(Locale.ENGLISH);
-                    config.locale = Locale.ENGLISH;
-                }
+                Locale.setDefault(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
             }
-
         }
 
         Logger.log(Logger.LogState.E, "locale : " + locale);
@@ -311,8 +293,7 @@ public class IntroActivity extends PleaActivity {
                     String result = response.getResult();
                     if(result.equals(Constants.API_FAIL))
                     {
-                        BasePreference.getInstance(IntroActivity.this).putObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-                        UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), new UserInfoData());
+                        BasePreference.getInstance(IntroActivity.this).removeAll();
                     }
                     else
                     {

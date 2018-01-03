@@ -59,7 +59,11 @@
 
         <activity android:name="shop.plea.and.ui.activity.MainPleaListActivity"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/ToolbarTheme"></activity>
+            android:theme="@style/ToolbarTheme">
+
+
+
+        </activity>
 
         <activity android:name="shop.plea.and.ui.activity.InAppWebView"
             android:windowSoftInputMode="adjustResize"

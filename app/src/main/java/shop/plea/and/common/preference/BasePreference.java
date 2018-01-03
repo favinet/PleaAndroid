@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
 
+import shop.plea.and.data.model.UserInfo;
+import shop.plea.and.data.model.UserInfoData;
+
 
 public class BasePreference {
 
@@ -144,6 +147,10 @@ public class BasePreference {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.clear();
+        editor.commit();
+
+        UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(mContext);
+        editor.putString(LOCALE, userInfoData.getLocale());
         editor.commit();
     }
 }
