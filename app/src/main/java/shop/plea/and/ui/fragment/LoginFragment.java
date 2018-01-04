@@ -232,7 +232,7 @@ public class LoginFragment extends BaseFragment{
 
             String joinType = Constants.LOGIN_TYPE.EMAIL;
             String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
-            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
 
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());

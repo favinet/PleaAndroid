@@ -137,7 +137,7 @@ public class SNSHelper {
                         Logger.log(Logger.LogState.E, "FACEBOOK : " + Utils.getStringByObject(object));
 
                         String token = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
-                        String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, "en");
+                        String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
 
                         RequestData req = new RequestData();
                         req.authId = profile.getId();
@@ -302,6 +302,8 @@ public class SNSHelper {
             if ( result.isSuccess() ) {
                 GoogleSignInAccount account = result.getSignInAccount();
 
+                String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
+
                 RequestData req = new RequestData();
                 req.authId = account.getId();
                 req.joinType = "google";
@@ -316,6 +318,7 @@ public class SNSHelper {
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.SNS_EMAIL, account.getEmail());
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, gcmToken);
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
+                UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
                 if(profileImg != null)
                     UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.PROFILE_IMG, account.getPhotoUrl().toString());
@@ -329,7 +332,7 @@ public class SNSHelper {
             {
                 Logger.log(Logger.LogState.E, "RC_GOOGLE_SIGN_IN" + Utils.getStringByObject(result));
                 AlertDialog.Builder dialog = new AlertDialog.Builder(base);
-                dialog.setTitle(R.string.app_name).setMessage(result.getStatus().getStatusMessage()).setPositiveButton(base.getString(R.string.yes), null).create().show();
+                dialog.setTitle(R.string.app_name).setMessage(base.getString(R.string.google_error) + "\n" + Utils.getStringByObject(result)).setPositiveButton(base.getString(R.string.yes), null).create().show();
             }
         }
     }

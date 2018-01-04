@@ -62,4 +62,5 @@
     <string name="app_end">뒤로 버튼을 한번 더 누르면 앱이 종료됩니다.</string>
     <string name="delete_user">회원탈퇴 후에는 로그인 및 컨텐츠 확인이 불가능합니다. 탈퇴 하시겠습니까?</string>
     <string name="logout">로그아웃 하시겠습니까?</string>
+    <string name="google_error">구글 로그인을 실패하였습니다.</string>
 </resources>

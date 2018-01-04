@@ -77,6 +77,7 @@ public class Constants {
         public static final String PROFILE_IMG = "profileImg";
         public static final String SNS_EMAIL = "snsEmail";
         public static final String ID = "id";
+        public static final String UID = "uid";
         public static final String LOCALE = "locale";
         public static final String GCM_TOKEN = "deviceToken";
         public static final String DEVICE_TYPE = "deviceType";

@@ -62,4 +62,5 @@
     <string name="app_end">Press the Back button again to exit the app.</string>
     <string name="delete_user">After delete account, login and contents check are impossible. Do you want to leave?</string>
     <string name="logout">Are you sure?</string>
+    <string name="google_error">Google sign-in failed.</string>
 </resources>

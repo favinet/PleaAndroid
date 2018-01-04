@@ -262,13 +262,14 @@ public class IntroActivity extends PleaActivity {
     private void userLogin(UserInfoData userInfoData)
     {
         String joinType = userInfoData.getJoinType();
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, null);
 
         if(joinType == null)
             userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, userInfoData.getDeviceToken());
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, userInfoData.getLocale());
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
         if(joinType == null)
             handler.postDelayed(runMain, 1500);

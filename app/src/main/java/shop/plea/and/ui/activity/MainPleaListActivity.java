@@ -110,6 +110,34 @@ public class MainPleaListActivity extends PleaActivity{
         }
     };
 
+    private userUpdateCallBack mUserUpdateCallBack = new userUpdateCallBack() {
+
+
+        @Override
+        public void onUserUpdate(JSONObject jsonObject) {
+
+            if(jsonObject.has("type"))
+            {
+                try
+                {
+                    if (jsonObject.getString("type").equals("updateUser"))
+                    {
+                        userLogin();
+                    }
+                    else if (jsonObject.getString("type").equals("updateNotice"))
+                    {
+                        ((SideMenuDrawerFragment)drawer_Fragment).setNoticeCnt();
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+
     public interface headerJsonCallback{
         void onReceive(JSONObject jsonObject);
     }
@@ -122,6 +150,10 @@ public class MainPleaListActivity extends PleaActivity{
 
     public interface pleaCallBack{
         void onPlea(String url);
+    }
+
+    public interface userUpdateCallBack{
+        void onUserUpdate(JSONObject jsonObject);
     }
 
     Handler handler = new Handler();
@@ -210,17 +242,7 @@ public class MainPleaListActivity extends PleaActivity{
             }
             else
             {
-                if(jsonObject.has("type"))
-                {
-                    if (jsonObject.getString("type").equals("updateUser"))
-                    {
-                        userLogin();
-                    }
-                    else if (jsonObject.getString("type").equals("updateNotice"))
-                    {
-                        ((SideMenuDrawerFragment)drawer_Fragment).setNoticeCnt();
-                    }
-                }
+
                 toolbar_header.setVisibility(View.VISIBLE);
                 String menuBt = (jsonObject.has("menuBt")) ? jsonObject.getString("menuBt") : "N";
                 String searchBt = (jsonObject.has("searchBt")) ? jsonObject.getString("searchBt") : "N";
@@ -400,6 +422,7 @@ public class MainPleaListActivity extends PleaActivity{
 
                 toolbar_header.setBackgroundColor(getResources().getColor(R.color.colorSubHeader));
                 Utils.changeStatusColor(this, R.color.colorSubHeader);
+
             }
 
         }
@@ -446,6 +469,7 @@ public class MainPleaListActivity extends PleaActivity{
     {
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
         customWebView.setWebHeaderCallback(mHeaderJsonCallback);
+        customWebView.setUserUpdateCallback(mUserUpdateCallBack);
 
         UserInfoData userInfo = UserInfo.getInstance().getCurrentUserInfoData(this);
 
@@ -472,11 +496,12 @@ public class MainPleaListActivity extends PleaActivity{
     {
         UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
         String joinType = userInfoData.getJoinType();
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, null);
 
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, userInfoData.getDeviceToken());
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.DEVICE_TYPE, "android");
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, userInfoData.getLocale());
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
         if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
         {

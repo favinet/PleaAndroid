@@ -55,8 +55,6 @@ public class MyFcmListenerService extends FirebaseMessagingService{
 
             pushData = new Gson().fromJson(data, PushData.class);
 
-
-
             showNotification();
 
 
@@ -94,14 +92,14 @@ public class MyFcmListenerService extends FirebaseMessagingService{
     }
 
     protected NotificationCompat.Builder buildNotification(PendingIntent pIntent) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.app_smaill_icon);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
             style.setSummaryText(getString(R.string.app_name));
             style.setBigContentTitle(getString(R.string.app_name));
             style.bigText(msg);
-
+            builder.setColor(getColor(android.R.color.transparent));
             builder.setStyle(style);
             builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
             builder.setSmallIcon(R.drawable.app_smaill_icon);

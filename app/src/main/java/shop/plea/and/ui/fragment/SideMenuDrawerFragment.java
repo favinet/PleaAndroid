@@ -318,7 +318,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         Logger.log(Logger.LogState.E, "deleteUser  id= " + id);
 
         UserInfo.getInstance().clearParams();
-        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.ID, id);
+        UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.UID, id);
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
 

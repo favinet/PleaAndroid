@@ -171,13 +171,15 @@ public class InAppWebView extends PleaActivity{
 
                 case R.id.inapp_close :
                   //  System.exit(0);
-
-                    IntentData indata = new IntentData();
-                    indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-
+                    if(inData.screenType.equals(Constants.SCREEN_TYPE.PUSH)) {
+                        IntentData indata = new IntentData();
+                        indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                        finish();
                     break;
 
             }

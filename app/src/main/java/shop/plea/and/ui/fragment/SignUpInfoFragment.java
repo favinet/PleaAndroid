@@ -530,7 +530,7 @@ public class SignUpInfoFragment extends BaseFragment{
         UserInfo.getInstance().clearParams();
 
         String joinType = userInfoData.getJoinType();
-        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
 
         Logger.log(Logger.LogState.E, "userLogin userInfoData= " + Utils.getStringByObject(userInfoData));
 

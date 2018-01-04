@@ -61,6 +61,7 @@ public class CustomWebView {
     public FrameLayout mContainer;
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
+    private MainPleaListActivity.userUpdateCallBack userUpdateCallBack;
     private InAppWebView.titleCallback callbackTitle;
     private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
 
@@ -207,7 +208,7 @@ public class CustomWebView {
                     {
                         e.printStackTrace();
                     }
-                    setWebViewHeaderJson(jsonObject);
+                    setUpdateUserJson(jsonObject);
 
                     return true;
                 }
@@ -281,7 +282,7 @@ public class CustomWebView {
                 {
                     e.printStackTrace();
                 }
-                setWebViewHeaderJson(jsonObject);
+                setUpdateUserJson(jsonObject);
             }
 
             super.onPageFinished(view, url);
@@ -404,9 +405,18 @@ public class CustomWebView {
         if(callback != null) callback.onReceive(jsonObject);
     }
 
+    private void setUpdateUserJson(JSONObject jsonObject) {
+        if(userUpdateCallBack != null) userUpdateCallBack.onUserUpdate(jsonObject);
+    }
+
     public void setWebHeaderCallback(MainPleaListActivity.headerJsonCallback listener)
     {
         callback = listener;
+    }
+
+    public void setUserUpdateCallback(MainPleaListActivity.userUpdateCallBack listener)
+    {
+        userUpdateCallBack = listener;
     }
 
     public void initContentView(String link) {
