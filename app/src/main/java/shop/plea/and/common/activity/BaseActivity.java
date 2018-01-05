@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
@@ -27,9 +28,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 
 import shop.plea.and.R;
 import shop.plea.and.common.dialog.ProgressDialog;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -112,6 +115,50 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
 
         startTransition();
    }
+
+    public void setLocale(String locale)
+    {
+        Configuration config = new Configuration();
+        Locale defaultLocale = Locale.getDefault();
+
+        if(locale == null)
+        {
+            if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
+            {
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
+                locale = "ko";
+            }
+            else
+            {
+                Locale.setDefault(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
+                locale = "en";
+            }
+        }
+        else
+        {
+            if(locale.equals("ko"))
+            {
+                Locale.setDefault(Locale.KOREA);
+                config.locale = Locale.KOREA;
+            }
+            else
+            {
+                Locale.setDefault(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
+            }
+        }
+
+        Logger.log(Logger.LogState.E, "locale : " + locale);
+        BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
+
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+    }
+
+
 
     public boolean backPressed()
     {
@@ -220,6 +267,9 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
                 break;
             case Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN:
                 this.overridePendingTransition(R.anim.slide_up_in, R.anim.hold);
+                break;
+            case Constants.VIEW_ANIMATION.ANI_SLIDE_UP_IN:
+                this.overridePendingTransition(R.anim.slide_down_in, R.anim.hold);
                 break;
 
             case Constants.VIEW_ANIMATION.ANI_SLIDE_LEFT_IN:

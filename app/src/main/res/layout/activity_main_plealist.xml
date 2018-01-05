@@ -102,4 +102,14 @@
     <include android:id="@+id/ticker_header"
         layout="@layout/ticker"
         android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/btn_plea"
+        android:src="@drawable/loading_animation_01"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"/>
 </RelativeLayout>

@@ -195,6 +195,8 @@ public class IntroActivity extends PleaActivity {
         }
     }
 
+
+
     private void start() {
 
         String token = FirebaseInstanceId.getInstance().getToken();
@@ -205,44 +207,7 @@ public class IntroActivity extends PleaActivity {
         String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
         Logger.log(Logger.LogState.E, "start locale: " + locale);
 
-        Configuration config = new Configuration();
-        Locale defaultLocale = Locale.getDefault();
-
-        if(locale == null)
-        {
-            if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
-            {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
-                locale = "ko";
-            }
-            else
-            {
-                Locale.setDefault(Locale.ENGLISH);
-                config.locale = Locale.ENGLISH;
-                locale = "en";
-            }
-        }
-        else
-        {
-            if(locale.equals("ko"))
-            {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
-            }
-            else
-            {
-                Locale.setDefault(Locale.ENGLISH);
-                config.locale = Locale.ENGLISH;
-            }
-        }
-
-        Logger.log(Logger.LogState.E, "locale : " + locale);
-        BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
-
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-
+        setLocale(locale);
 
         String stoken = BasePreference.getInstance(this).getValue(BasePreference.GCM_TOKEN, null);
 
@@ -304,7 +269,11 @@ public class IntroActivity extends PleaActivity {
                         UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
+                        BasePreference.getInstance(getApplicationContext()).put(BasePreference.LOCALE, userInfoData.getLocale());
                         BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+
+                        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
+                        setLocale(locale);
                     }
                     handler.postDelayed(runMain, 1500);
 
@@ -317,8 +286,6 @@ public class IntroActivity extends PleaActivity {
                 }
             });
         }
-
-
     }
 
 

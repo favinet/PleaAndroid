@@ -1,5 +1,9 @@
 package shop.plea.and.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,11 +13,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,6 +83,7 @@ public class MainPleaListActivity extends PleaActivity{
     @BindView(R.id.likeCnt) CustomFontTextView likeCnt;
     @BindView(R.id.followCnt) CustomFontTextView followCnt;
     @BindView(R.id.toolbar_title) CustomFontTextView toolbar_title;
+    @BindView(R.id.btn_plea) ImageView btn_plea;
 
     private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
     private List<MainPleaListActivity.FileInfo> fileInfoList = new ArrayList<>();
@@ -446,7 +453,7 @@ public class MainPleaListActivity extends PleaActivity{
         toolbar_header.findViewById(R.id.btn_toolbar_home).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_toolbar_like).setOnClickListener(mListener);
         toolbar_header.findViewById(R.id.btn_logout).setOnClickListener(mListener);
-
+        btn_plea.setOnClickListener(mListener);
 
         ticker_notice.setOnClickListener(mListener);
         ticker_like.setOnClickListener(mListener);
@@ -531,9 +538,14 @@ public class MainPleaListActivity extends PleaActivity{
 
                     UserInfoData userInfoData = response.userData;
                     UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
+                    BasePreference.getInstance(getApplicationContext()).put(BasePreference.LOCALE, userInfoData.getLocale());
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                     BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
+
+                    String locale = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.LOCALE, null);
+                    setLocale(locale);
+
                     ((SideMenuDrawerFragment)drawer_Fragment).setUserData(userInfoData);
                     customWebView.initContentView("javascript:userUpdateFinish();");
                 }
@@ -814,6 +826,34 @@ public class MainPleaListActivity extends PleaActivity{
                 case R.id.btn_toolbar_like :
                     String followAction = "javascript:followAction();";
                     customWebView.mView.loadUrl(followAction);
+                    break;
+                case R.id.btn_plea :
+
+                    //https://developer.android.com/training/basics/intents/filters.html?hl=ko
+                    IntentData indata = new IntentData();
+
+                    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = clipboardManager.getPrimaryClip();
+                    String clipUrl;
+
+                    indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, "");
+
+                    if(clipData != null)
+                    {
+                        ClipData.Item item = clipData.getItemAt(0);
+                        Log.e("PLEA", "클립보드 : " + item.getText().toString());
+                        clipUrl = item.getText().toString();
+                        boolean isUrl = Patterns.WEB_URL.matcher(clipUrl).matches();
+                        if(isUrl)
+                        {
+                            indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, clipUrl);
+                        }
+                    }
+
+                    indata.aniType = Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN;
+                    Intent intent = new Intent(getApplicationContext(), PleaInsertActivity.class);
+                    intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+                    startActivity(intent);
                     break;
             }
         }

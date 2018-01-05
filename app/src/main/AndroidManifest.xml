@@ -60,9 +60,17 @@
         <activity android:name="shop.plea.and.ui.activity.MainPleaListActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/ToolbarTheme">
+        </activity>
 
-
-
+        <activity android:name="shop.plea.and.ui.activity.PleaInsertActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/ToolbarTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="image/*" />
+            </intent-filter>
         </activity>
 
         <activity android:name="shop.plea.and.ui.activity.InAppWebView"

@@ -35,8 +35,9 @@ public class Constants {
         public static final String SEARCH_RESULT = "http://" + Constants.DOING_DOMAIN + "/search/tag/%s?uid=%s";
         public static final String PUSH_EMAIL = "http://" + Constants.DOING_DOMAIN + "/member/setting?uid=%s";
         public static final String EMAIL_RECEIVE = "http://" + Constants.DOING_DOMAIN + "/member/mailSetting?uid=%s";
-        public static final String PLEA = "http://" + Constants.DOING_DOMAIN + "/cart/reg?txtUrl=%s&uid=%s ";
-        public static final String FRIEND_MGR = "http://" + Constants.DOING_DOMAIN + "/member/followList/%s?uid=%s ";
+        public static final String PLEA = "http://" + Constants.DOING_DOMAIN + "/cart/reg?txtUrl=%s&uid=%s";
+        public static final String FRIEND_MGR = "http://" + Constants.DOING_DOMAIN + "/member/followList/%s?uid=%s";
+        public static final String PLEA_INSERT = "http://" + Constants.DOING_DOMAIN + "/cart/reg?uid=%s&txtUrl=%s";
 
     }
 
@@ -49,6 +50,7 @@ public class Constants {
         public static final int ANI_SLIDE_DOWN_IN = 14;
         public static final int ANI_SLIDE_LEFT_IN = 15;
         public static final int ANI_SLIDE_RIGHT_IN = 16;
+        public static final int ANI_SLIDE_UP_IN = 17;
     }
 
     public final class PREF_KEY {
