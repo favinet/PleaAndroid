@@ -101,7 +101,7 @@ public class MyFcmListenerService extends FirebaseMessagingService{
             style.bigText(msg);
             builder.setColor(getColor(android.R.color.transparent));
             builder.setStyle(style);
-            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+            //builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
             builder.setSmallIcon(R.drawable.app_smaill_icon);
             builder.setContentTitle(getString(R.string.app_name));
             builder.setContentText(msg);

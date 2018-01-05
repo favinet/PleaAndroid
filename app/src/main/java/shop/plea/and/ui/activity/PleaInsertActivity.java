@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import shop.plea.and.R;
+import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Utils;
+import shop.plea.and.data.config.Constants;
 import shop.plea.and.ui.view.CustomWebView;
 
 /**
  * Created by kwon on 2018-01-04.
+ * https://developer.android.com/training/sharing/receive.html
  */
 
 public class PleaInsertActivity extends PleaActivity {
@@ -38,15 +41,16 @@ public class PleaInsertActivity extends PleaActivity {
 
         if(inData.link.equals(""))  //외부 공유
         {
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-        //    Uri uri = (Uri)bundle.get(Intent.EXTRA_TEXT);
 
-            if (intent.getType().equals("text/plain"))
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            String type = intent.getType();
+
+            if(Intent.ACTION_SEND.equals(action) && type != null)
             {
-                // Handle intents with text ...
-               // inData.link = data.getPath();
-                Log.e("PLEA", "data!" + Utils.getStringByObject(bundle));
+                String shareUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
+                String id = BasePreference.getInstance(this).getValue(BasePreference.ID, null);
+                inData.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, shareUrl);
             }
         }
         Log.e("PLEA", "타이틀!" + inData.link);
