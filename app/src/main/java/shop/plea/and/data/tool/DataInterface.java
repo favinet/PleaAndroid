@@ -365,14 +365,14 @@ public class DataInterface extends BaseDataInterface{
     }
 
 
-    public void uploadProfile(Context context, File file, final ResponseCallback callback)
+    public void uploadProfile(Context context, String uid, File file, final ResponseCallback callback)
     {
         try {
 
             RequestBody body = (file == null) ? null : RequestBody.create(MediaType.parse("multipart/form-data"), file);
             MultipartBody.Part filePart = (file == null) ? null : MultipartBody.Part.createFormData("Filedata", file.getName(), body);
 
-            Call<ResponseData> call = service.callUploadImg(filePart);
+            Call<ResponseData> call = service.callUploadImg(uid,filePart);
 
             call.enqueue(new RetryableCallback<ResponseData>(call, context) {
                 @Override

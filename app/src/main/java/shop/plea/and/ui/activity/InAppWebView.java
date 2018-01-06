@@ -91,7 +91,7 @@ public class InAppWebView extends PleaActivity{
 
     private void init()
     {
-        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
+        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), null);
         if(inData.title.equals("")) {
             customWebView.setWebTitleCallback(mTitleCallback);
         }

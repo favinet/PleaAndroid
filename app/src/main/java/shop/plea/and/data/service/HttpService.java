@@ -58,5 +58,5 @@ public interface HttpService {
 
     @Multipart
     @POST("/member/api/imgUpload")
-    Call<ResponseData> callUploadImg(@Part MultipartBody.Part file);
+    Call<ResponseData> callUploadImg(@Query("uid") String uid, @Part MultipartBody.Part file);
 }

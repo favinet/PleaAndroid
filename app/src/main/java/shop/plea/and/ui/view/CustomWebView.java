@@ -21,6 +21,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.activity.InAppWebView;
 import shop.plea.and.ui.activity.LoginActivity;
 import shop.plea.and.ui.activity.MainPleaListActivity;
+import shop.plea.and.ui.activity.PleaInsertActivity;
 
 /**
  * Created by kwon7575 on 2017-10-28.
@@ -62,13 +64,15 @@ public class CustomWebView {
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
     private MainPleaListActivity.userUpdateCallBack userUpdateCallBack;
+    private PleaInsertActivity.pleaCallBack pleaCallBack;
     private InAppWebView.titleCallback callbackTitle;
     private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
+    private ImageView mBtnPlea;
 
 
-    public CustomWebView(BaseActivity baseActivity, View v, int postion) {
+    public CustomWebView(BaseActivity baseActivity, View v, ImageView btnPlea) {
         base = baseActivity;
-
+        mBtnPlea = btnPlea;
         mView = (WebView) v.findViewById(R.id.webview);
         mContainer = (FrameLayout) v.findViewById(R.id.webview_frame);
         progressBar = (ProgressBar)v.findViewById(R.id.progress_bar);
@@ -212,6 +216,11 @@ public class CustomWebView {
 
                     return true;
                 }
+                else if(action.equals("pleaClose"))
+                {
+                    pleaCallBack.onPleaClose();
+                    return true;
+                }
             }
 
             if(url.contains("webview"))
@@ -258,6 +267,16 @@ public class CustomWebView {
             Logger.log(Logger.LogState.E, "onPageStarted load : " + url);
 
             super.onPageStarted(view, url, favicon);
+
+            mBtnPlea.setVisibility(View.GONE);
+
+            if(mBtnPlea != null)
+            {
+                if(url.indexOf("/memberView/") > -1 || url.indexOf("/main") > -1 || url.indexOf("/search/") > -1) {
+                    mBtnPlea.setVisibility(View.VISIBLE);
+                }
+
+            }
         }
 
         @Override
@@ -417,6 +436,11 @@ public class CustomWebView {
     public void setUserUpdateCallback(MainPleaListActivity.userUpdateCallBack listener)
     {
         userUpdateCallBack = listener;
+    }
+
+    public void setPleaCallback(PleaInsertActivity.pleaCallBack listener)
+    {
+        pleaCallBack = listener;
     }
 
     public void initContentView(String link) {

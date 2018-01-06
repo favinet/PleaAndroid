@@ -86,6 +86,7 @@ public class MainPleaListActivity extends PleaActivity{
     @BindView(R.id.btn_plea) ImageView btn_plea;
 
     private final static int INTENT_CALL_PROFILE_GALLERY = 3002;
+    public final static int INTENT_CALL_PLEA_COMPLECT = 3003;
     private List<MainPleaListActivity.FileInfo> fileInfoList = new ArrayList<>();
     private HashMap<String, JSONObject> tickerMap = new HashMap<>();
     public CustomWebView customWebView;
@@ -174,9 +175,11 @@ public class MainPleaListActivity extends PleaActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        startIndicator("");
+
         if (resultCode == RESULT_OK) {
+
             if (requestCode == INTENT_CALL_PROFILE_GALLERY) { // 킷캣.
+                startIndicator("");
                 Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
 
                 File file = Utils.getAlbum(this, result);
@@ -187,7 +190,9 @@ public class MainPleaListActivity extends PleaActivity{
 
                 File fileImg = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
-                DataManager.getInstance(this).api.uploadProfile(this, fileImg, new DataInterface.ResponseCallback<ResponseData>() {
+                String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
+
+                DataManager.getInstance(this).api.uploadProfile(this, uid, fileImg, new DataInterface.ResponseCallback<ResponseData>() {
                     @Override
                     public void onSuccess(ResponseData response) {
                         stopIndicator();
@@ -205,6 +210,11 @@ public class MainPleaListActivity extends PleaActivity{
 
                 return;
             }
+        }
+        else if(requestCode == INTENT_CALL_PLEA_COMPLECT)
+        {
+            String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
+            customWebView.initContentView(String.format(Constants.MAIN_URL, uid));
         }
 
     }
@@ -459,6 +469,7 @@ public class MainPleaListActivity extends PleaActivity{
         ticker_like.setOnClickListener(mListener);
         ticker_follow.setOnClickListener(mListener);
 
+
         UserInfoData userInfo = UserInfo.getInstance().getCurrentUserInfoData(this);
         txt_nickname.setText(String.format(getString(R.string.user_resist_finish), userInfo.getNickname()));
 
@@ -474,7 +485,7 @@ public class MainPleaListActivity extends PleaActivity{
 
     private void init()
     {
-        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
+        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), btn_plea);
         customWebView.setWebHeaderCallback(mHeaderJsonCallback);
         customWebView.setUserUpdateCallback(mUserUpdateCallBack);
 
@@ -853,7 +864,7 @@ public class MainPleaListActivity extends PleaActivity{
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN;
                     Intent intent = new Intent(getApplicationContext(), PleaInsertActivity.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
-                    startActivity(intent);
+                    startActivityForResult(intent, 0);
                     break;
             }
         }

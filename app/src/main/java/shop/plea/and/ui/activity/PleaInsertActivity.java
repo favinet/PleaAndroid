@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Utils;
@@ -21,6 +23,18 @@ public class PleaInsertActivity extends PleaActivity {
 
     public CustomWebView customWebView;
 
+    private pleaCallBack mPleaCallback = new pleaCallBack() {
+        @Override
+        public void onPleaClose() {
+            finish();
+        }
+
+        @Override
+        public void onPleaComplected() {
+            setResult(MainPleaListActivity.INTENT_CALL_PLEA_COMPLECT);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +47,7 @@ public class PleaInsertActivity extends PleaActivity {
 
     public void initScreen()
     {
-
+        customWebView.setPleaCallback(mPleaCallback);
     }
 
     private void init()
@@ -55,7 +69,12 @@ public class PleaInsertActivity extends PleaActivity {
         }
         Log.e("PLEA", "타이틀!" + inData.link);
 
-        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), 0);
+        customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), null);
         customWebView.initContentView(inData.link);
+    }
+
+    public interface pleaCallBack{
+        void onPleaClose();
+        void onPleaComplected();
     }
 }
