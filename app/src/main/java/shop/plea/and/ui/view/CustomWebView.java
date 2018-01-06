@@ -268,10 +268,9 @@ public class CustomWebView {
 
             super.onPageStarted(view, url, favicon);
 
-            mBtnPlea.setVisibility(View.GONE);
-
             if(mBtnPlea != null)
             {
+                mBtnPlea.setVisibility(View.GONE);
                 if(url.indexOf("/memberView/") > -1 || url.indexOf("/main") > -1 || url.indexOf("/search/") > -1) {
                     mBtnPlea.setVisibility(View.VISIBLE);
                 }

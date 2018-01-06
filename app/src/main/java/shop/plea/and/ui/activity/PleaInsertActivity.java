@@ -12,6 +12,8 @@ import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
+import shop.plea.and.data.model.UserInfoData;
+import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.ui.view.CustomWebView;
 
 /**
@@ -47,7 +49,22 @@ public class PleaInsertActivity extends PleaActivity {
 
     public void initScreen()
     {
-        customWebView.setPleaCallback(mPleaCallback);
+        UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
+        String stoken = BasePreference.getInstance(this).getValue(BasePreference.GCM_TOKEN, null);
+        if(userInfoData ==  null || stoken == null)
+        {
+            IntentData indata = new IntentData();
+            indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.putExtra(Constants.INTENT_DATA_KEY, indata);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            customWebView.setPleaCallback(mPleaCallback);
+        }
+
     }
 
     private void init()
