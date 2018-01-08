@@ -211,9 +211,10 @@ public class MainPleaListActivity extends PleaActivity{
                 return;
             }
         }
-        else if(requestCode == INTENT_CALL_PLEA_COMPLECT)
+        else if(resultCode == INTENT_CALL_PLEA_COMPLECT)
         {
             String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
+            customWebView.mView.clearHistory();
             customWebView.initContentView(String.format(Constants.MAIN_URL, uid));
         }
 

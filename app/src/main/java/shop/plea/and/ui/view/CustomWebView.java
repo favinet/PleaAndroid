@@ -221,6 +221,11 @@ public class CustomWebView {
                     pleaCallBack.onPleaClose();
                     return true;
                 }
+                else if(action.equals("pleaCompleted"))
+                {
+                    pleaCallBack.onPleaComplected();
+                    return true;
+                }
             }
 
             if(url.contains("webview"))

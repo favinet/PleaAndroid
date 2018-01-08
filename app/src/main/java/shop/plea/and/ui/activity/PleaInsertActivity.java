@@ -1,15 +1,21 @@
 package shop.plea.and.ui.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfoData;
@@ -34,6 +40,7 @@ public class PleaInsertActivity extends PleaActivity {
         @Override
         public void onPleaComplected() {
             setResult(MainPleaListActivity.INTENT_CALL_PLEA_COMPLECT);
+            finish();
         }
     };
 
@@ -93,5 +100,16 @@ public class PleaInsertActivity extends PleaActivity {
     public interface pleaCallBack{
         void onPleaClose();
         void onPleaComplected();
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(customWebView.mView.getUrl().indexOf("cartRegResult") > -1)
+        {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

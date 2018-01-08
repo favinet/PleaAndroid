@@ -104,12 +104,12 @@
         android:visibility="gone"/>
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/btn_plea"
-        android:src="@drawable/loading_animation_01"
+        android:src="@drawable/image_plea"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="35dp"/>
 </RelativeLayout>
