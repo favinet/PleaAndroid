@@ -68,7 +68,6 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error callUserRegist = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -93,16 +92,13 @@ public class DataInterface extends BaseDataInterface{
     {
         try {
             Call<UserInfoResultData> call = service.callUserLogin(params);
-            Logger.log(Logger.LogState.E, "call userLogin = " + Utils.getStringByObject(params));
             call.enqueue(new RetryableCallback<UserInfoResultData>(call, context) {
                 @Override
                 public void onFinalResponse(Call<UserInfoResultData> call, retrofit2.Response<UserInfoResultData> response) {
                     if (callback == null) return;
-                    Logger.log(Logger.LogState.E, "call userLogin response = " + Utils.getStringByObject(response));
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userLogin = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -136,7 +132,7 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userEmailCheck = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.D, "error userEmailCheck = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -171,7 +167,6 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userSendPasswordMail = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -205,7 +200,6 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userNickNameCheck = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -241,7 +235,6 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userUpdate = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -275,7 +268,7 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userDelete = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.D, "error userDelete = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -309,7 +302,7 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error userNoticeCnt = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.D, "error userNoticeCnt = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -343,7 +336,7 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error getVersion = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.D, "error getVersion = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }
@@ -382,7 +375,7 @@ public class DataInterface extends BaseDataInterface{
                     if (response.isSuccessful()) {
                         callback.onSuccess(response.body());
                     } else {
-                        Logger.log(Logger.LogState.E, "error callUserRegist = " + response.errorBody().toString());
+                        Logger.log(Logger.LogState.D, "error callUserRegist = " + response.errorBody().toString());
                         callback.onError();
                     }
                 }

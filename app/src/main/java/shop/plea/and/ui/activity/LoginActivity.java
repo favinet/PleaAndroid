@@ -36,8 +36,6 @@ public class LoginActivity extends PleaActivity {
         String action = null;
         String pushUrl = null;
 
-        Log.e("PLEA", "getIntent() : " + getIntent().getExtras());
-
         if(getIntent().getExtras() != null)
         {
             action = getIntent().getExtras().getString("action", null);
@@ -45,7 +43,6 @@ public class LoginActivity extends PleaActivity {
         }
 
         String token = FirebaseInstanceId.getInstance().getToken();
-        Logger.log(Logger.LogState.E, "start token: " + token);
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
         IntentData indata = new IntentData();

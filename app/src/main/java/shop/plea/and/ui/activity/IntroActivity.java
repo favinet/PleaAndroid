@@ -51,8 +51,6 @@ public class IntroActivity extends PleaActivity {
         public void run() {
 
             stopIndicator();
-            Log.e("PLEA", "action!" + action);
-            Log.e("PLEA", "pushUrl!" + pushUrl);
             IntentData indata = new IntentData();
             indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
             indata.link = Constants.BASE_URL;
@@ -76,7 +74,6 @@ public class IntroActivity extends PleaActivity {
         this.context = this;
 
         Bundle bundle = getIntent().getExtras();
-        Logger.log(Logger.LogState.E, "bundle::::" + bundle);
         if(bundle != null)
         {
             action = bundle.getString("action");
@@ -85,24 +82,19 @@ public class IntroActivity extends PleaActivity {
                 if(action.equals("URL_PUSH"))
                 {
                     pushUrl = Utils.decode(bundle.getString("url"), "UTF-8");
-                    Logger.log(Logger.LogState.E, "pushUrl::::" + pushUrl);
                 }
             }
             else
             {
                 Uri uri = getIntent().getData();
-                Log.e("PLEA", "비밀번호!" + uri);
                 if(uri != null)
                 {
                     String uriStr = uri.toString();
                     uriStr = Utils.decode(uriStr, "UTF-8");
-                    Log.e("PLEA", "uriStr!" + uriStr);
                     String[] urls = uriStr.split("url=");
-                    Log.e("PLEA", "urls!" + urls.length);
                     if(urls.length > 1)
                     {
                         pushUrl = urls[1];
-                        Log.e("PLEA", "주소!" + pushUrl);
                         if(uri.toString().contains("reset_password"))
                         {
                             action = "RESET_PASSWORD";
@@ -116,18 +108,14 @@ public class IntroActivity extends PleaActivity {
         else
         {
             Uri uri = getIntent().getData();
-            Log.e("PLEA", "비밀번호!" + uri);
             if(uri != null)
             {
                 String uriStr = uri.toString();
                 uriStr = Utils.decode(uriStr, "UTF-8");
-                Log.e("PLEA", "uriStr!" + uriStr);
                 String[] urls = uriStr.split("url=");
-                Log.e("PLEA", "urls!" + urls.length);
                 if(urls.length > 1)
                 {
                     pushUrl = urls[1];
-                    Log.e("PLEA", "주소!" + pushUrl);
                     if(uri.toString().contains("reset_password"))
                     {
                         action = "RESET_PASSWORD";
@@ -200,12 +188,10 @@ public class IntroActivity extends PleaActivity {
     private void start() {
 
         String token = FirebaseInstanceId.getInstance().getToken();
-        Logger.log(Logger.LogState.E, "start token: " + token);
-        BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
 
+        BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
-        Logger.log(Logger.LogState.E, "start locale: " + locale);
 
         setLocale(locale);
 
@@ -263,8 +249,6 @@ public class IntroActivity extends PleaActivity {
                     }
                     else
                     {
-                        Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
-
                         UserInfoData userInfoData = response.userData;
                         UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());

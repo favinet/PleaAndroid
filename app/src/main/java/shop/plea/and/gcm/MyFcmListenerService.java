@@ -42,12 +42,8 @@ public class MyFcmListenerService extends FirebaseMessagingService{
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Logger.log(Logger.LogState.E, "receive gcm message = " + remoteMessage.getData());
-
 
         String data = remoteMessage.getData().get("data");
-
-        Logger.log(Logger.LogState.E, "receive gcm data = " + Utils.getStringByObject(data));
         if(!TextUtils.isEmpty(data))
         {
             msg = remoteMessage.getData().get("message");
@@ -56,7 +52,6 @@ public class MyFcmListenerService extends FirebaseMessagingService{
             pushData = new Gson().fromJson(data, PushData.class);
 
             showNotification();
-
 
         }
     }

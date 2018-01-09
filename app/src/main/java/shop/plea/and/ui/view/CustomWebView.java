@@ -122,11 +122,10 @@ public class CustomWebView {
     private class MyCustomWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Logger.log(Logger.LogState.D, "webviewview load : " + url);
 
             if (Utils.getNetWorkType(base) == Utils.NETWORK_NO) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(base);
-                dialog.setTitle(R.string.app_name).setMessage("네트워크 상태를 확인해주세요").setPositiveButton("예", null).create().show();
+                dialog.setTitle(R.string.app_name).setMessage(base.getString(R.string.network_error)).setPositiveButton(base.getString(R.string.yes), null).create().show();
 
                 return true;
             }
@@ -152,13 +151,11 @@ public class CustomWebView {
             }
 
             String action = Utils.queryToMap(url).get("name");
-            Logger.log(Logger.LogState.E, "action!" + action);
             if(action != null)
             {
                 if(action.equals("setTopMenu"))
                 {
                     String json = Utils.queryToMap(url).get("params");
-                    Logger.log(Logger.LogState.E, "setTopMenu!" + json);
                     try
                     {
                         JSONObject jsonObject = new JSONObject(json);
@@ -182,7 +179,6 @@ public class CustomWebView {
                     String outLink = Utils.queryToMap(url).get("url");
                     if(outLink != null)
                     {
-                        Log.e("outLink : ",outLink);
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.decode(outLink, "UTF-8")));
                         base.startActivity(intent);
                     }
@@ -269,8 +265,6 @@ public class CustomWebView {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Logger.log(Logger.LogState.E, "onPageStarted load : " + url);
-
             super.onPageStarted(view, url, favicon);
 
             if(mBtnPlea != null)
@@ -279,6 +273,9 @@ public class CustomWebView {
                 if(url.indexOf("/memberView/") > -1 || url.indexOf("/main") > -1 || url.indexOf("/search/") > -1) {
                     mBtnPlea.setVisibility(View.VISIBLE);
                 }
+                if(url.indexOf("/search/user/") > -1) {
+                    mBtnPlea.setVisibility(View.GONE);
+                }
 
             }
         }
@@ -286,8 +283,6 @@ public class CustomWebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             CookieSyncManager.getInstance().sync();
-
-            Logger.log(Logger.LogState.E, "onPageFinished!" + url);
 
             if(titleArr.get(url) != null && !titleArr.get(url).equals(""))
             {

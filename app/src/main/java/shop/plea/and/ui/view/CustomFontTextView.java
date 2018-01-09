@@ -51,7 +51,6 @@ public class CustomFontTextView extends TextView {
 
         if(asset == null)
         {
-            Logger.log(Logger.LogState.E, "setCustomFont = " + Utils.getStringByObject(asset));
             return false;
         }
         else

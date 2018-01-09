@@ -68,7 +68,7 @@ public class InAppWebView extends PleaActivity{
 
     public void initScreen()
     {
-        Log.e("PLEA", "타이틀!" + inData.title);
+
         if(inData.screenType.equals(Constants.SCREEN_TYPE.SHOP))
             inapp_title.setSelected(true);
         else if(inData.screenType.equals(Constants.SCREEN_TYPE.INAPP)){

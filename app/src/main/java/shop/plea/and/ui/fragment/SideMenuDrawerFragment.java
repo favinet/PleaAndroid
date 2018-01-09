@@ -185,7 +185,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onSuccess(ResponseData response) {
 
-                Logger.log(Logger.LogState.E, "setNoticeCnt = " + Utils.getStringByObject(response));
                 if(response.getResult().equals(Constants.API_SUCCESS))
                 {
                     if(response.count == 0)
@@ -206,7 +205,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "updateUser 실패!!", Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -218,7 +217,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onSuccess(ResponseData response) {
                 stopIndicator();
-                Logger.log(Logger.LogState.E, "setVersion = " + Utils.getStringByObject(response));
                 try
                 {
                     String androidVersion = (response.getData().has("androidVersion")) ? response.getData().getString("androidVersion") : "1.0.0";
@@ -231,7 +229,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
             @Override
             public void onError() {
-                Toast.makeText(getActivity(), "updateUser 실패!!", Toast.LENGTH_LONG).show();
                 stopIndicator();
             }
         });
@@ -243,19 +240,16 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         final UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         UserInfo.getInstance().clearParams();
         String id = userInfoData.getId();
-        Logger.log(Logger.LogState.E, "updateUser id = " + Utils.getStringByObject(id));
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, updateLocale);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.ID, id);
 
 
         HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
-        Logger.log(Logger.LogState.E, "updateUser params = " + Utils.getStringByObject(params));
 
         DataManager.getInstance(getActivity()).api.userUpdate(getActivity(), id, params, new DataInterface.ResponseCallback<UserInfoResultData>() {
             @Override
             public void onSuccess(UserInfoResultData response) {
                 stopIndicator();
-                Logger.log(Logger.LogState.E, "updateUser = " + Utils.getStringByObject(response));
                 UserInfoData userInfoData = response.userData;
                 UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
                 BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
@@ -291,7 +285,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 BasePreference.getInstance(getActivity()).removeAll();
-                Logger.log(Logger.LogState.E, "signOut!!!");
                 IntentData indata = new IntentData();
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -314,9 +307,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         final UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(getActivity());
 
         String id = userInfoData.getId();
-
-        Logger.log(Logger.LogState.E, "deleteUser  id= " + id);
-
         UserInfo.getInstance().clearParams();
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.UID, id);
 
@@ -326,7 +316,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onSuccess(ResponseData response) {
                 stopIndicator();
-                Logger.log(Logger.LogState.E, "deleteUser = " + Utils.getStringByObject(response));
                 BasePreference.getInstance(getActivity()).removeAll();
                 IntentData indata = new IntentData();
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;

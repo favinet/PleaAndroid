@@ -167,7 +167,6 @@ public class LoginFragment extends BaseFragment{
     {
         emailLength = ed_email.getText().toString().length();
         passLength = ed_password.getText().toString().length();
-        Log.e("PLEA", "ed_password : " + String.valueOf(passLength));
         if(emailLength > 0 && passLength > 0)
         {
             btn_login.setBackgroundResource(R.drawable.btn_round_stroke_corner);
@@ -247,7 +246,6 @@ public class LoginFragment extends BaseFragment{
                 @Override
                 public void onSuccess(UserInfoResultData response) {
                     stopIndicator();
-                    Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
 
                     String result = response.getResult();
                     if(result.equals(Constants.API_FAIL))

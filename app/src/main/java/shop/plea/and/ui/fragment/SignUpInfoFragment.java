@@ -152,10 +152,6 @@ public class SignUpInfoFragment extends BaseFragment{
             initToobar();
             initScreen();
             setTextSpan();
-
-            Logger.log(Logger.LogState.E, "CHK : " + getEmail());
-            Logger.log(Logger.LogState.E, "CHK : " + getPassword());
-            Logger.log(Logger.LogState.E, "CHK : " + getJoinType());
         }
 
         return mView;
@@ -226,7 +222,6 @@ public class SignUpInfoFragment extends BaseFragment{
 
                 birth = (String) spinner_birth.getSelectedItem();
                 if(birth.equals(getString(R.string.birth))) birth = null;
-                Logger.log(Logger.LogState.E, "birth = " + Utils.getStringByObject(birth));
                 formStatusCheck();
 
             }
@@ -319,7 +314,6 @@ public class SignUpInfoFragment extends BaseFragment{
     {
         emailLength = ed_email.getText().toString().length();
         nickLength = ed_nickname.getText().toString().length();
-        Log.e("PLEA", "ed_nickname : " + String.valueOf(nickLength));
         if(emailLength > 0 && nickLength > 0 && birth != null && gender != null)
         {
             btn_regist_end.setBackgroundResource(R.drawable.round_stroke_corner_focus);
@@ -431,8 +425,6 @@ public class SignUpInfoFragment extends BaseFragment{
 
     private void registUser()
     {
-        Logger.log(Logger.LogState.E, "registUser gender = " + Utils.getStringByObject(gender));
-        Logger.log(Logger.LogState.E, "registUser birth = " + Utils.getStringByObject(birth));
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         if(gender == null)
         {
@@ -448,9 +440,7 @@ public class SignUpInfoFragment extends BaseFragment{
             Map<String, RequestBody> params = new HashMap<>();
 
             String joinType = getJoinType();
-            Logger.log(Logger.LogState.E, "registUser joinType = " + Utils.getStringByObject(joinType));
             String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
-            Logger.log(Logger.LogState.E, "registUser locale = " + Utils.getStringByObject(locale));
             File file = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
             RequestBody loginTypBody = RequestBody.create(MediaType.parse(MULTI_PART), joinType);
@@ -473,9 +463,6 @@ public class SignUpInfoFragment extends BaseFragment{
                 if(authIdBody != null) params.put(Constants.API_PARAMS_KEYS.AUTHID, authIdBody);
                 if(profileImgBody != null) params.put(Constants.API_PARAMS_KEYS.PROFILE_IMG, profileImgBody);
                 if(snsEmailBody != null) params.put(Constants.API_PARAMS_KEYS.SNS_EMAIL, snsEmailBody);
-
-                Logger.log(Logger.LogState.E, "registUser getSnsEmail = " + Utils.getStringByObject(getSnsEmail()));
-                Logger.log(Logger.LogState.E, "registUser getAuthId = " + Utils.getStringByObject(getAuthId()));
             }
 
             RequestBody deviceTypeBody = RequestBody.create(MediaType.parse(MULTI_PART), "android");
@@ -494,13 +481,10 @@ public class SignUpInfoFragment extends BaseFragment{
             RequestBody localeBody = RequestBody.create(MediaType.parse(MULTI_PART), locale);
             params.put(Constants.API_PARAMS_KEYS.LOCALE, localeBody);
 
-            Logger.log(Logger.LogState.E, "userRegist params = " + Utils.getStringByObject(params));
-
             DataManager.getInstance(getActivity()).api.userRegist(getActivity(), params, file, new DataInterface.ResponseCallback<UserInfoResultData>() {
                 @Override
                 public void onSuccess(UserInfoResultData response) {
                     stopIndicator();
-                    Logger.log(Logger.LogState.E, "userRegist = " + Utils.getStringByObject(response));
 
                     String result = response.getResult();
                     if(result.equals(Constants.API_FAIL))
@@ -532,8 +516,6 @@ public class SignUpInfoFragment extends BaseFragment{
         String joinType = userInfoData.getJoinType();
         String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
 
-        Logger.log(Logger.LogState.E, "userLogin userInfoData= " + Utils.getStringByObject(userInfoData));
-
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
 
         if(joinType.equals(Constants.LOGIN_TYPE.EMAIL))
@@ -558,7 +540,6 @@ public class SignUpInfoFragment extends BaseFragment{
             @Override
             public void onSuccess(UserInfoResultData response) {
                 stopIndicator();
-                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
 
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
@@ -630,7 +611,6 @@ public class SignUpInfoFragment extends BaseFragment{
                     gender_f.setBackgroundResource(R.drawable.round_txt_gender_rtrb_off);
                     gender_f.setTextColor(Color.BLACK);
                     gender = "M";
-                    Logger.log(Logger.LogState.E, "gender = " + Utils.getStringByObject(gender));
                     formStatusCheck();
                     break;
                 case R.id.gender_f :
@@ -639,7 +619,6 @@ public class SignUpInfoFragment extends BaseFragment{
                     gender_f.setBackgroundResource(R.drawable.round_txt_gender_rtrb_on);
                     gender_f.setTextColor(Color.WHITE);
                     gender = "F";
-                    Logger.log(Logger.LogState.E, "gender = " + Utils.getStringByObject(gender));
                     formStatusCheck();
                     break;
                 case R.id.btn_regist_end :

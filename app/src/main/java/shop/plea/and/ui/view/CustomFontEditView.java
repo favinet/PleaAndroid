@@ -50,7 +50,6 @@ public class CustomFontEditView extends EditText {
     public boolean setCustomFont(Context ctx, String asset) {
         if(asset == null)
         {
-            Logger.log(Logger.LogState.E, "setCustomFont = " + Utils.getStringByObject(asset));
             return false;
         }
         else

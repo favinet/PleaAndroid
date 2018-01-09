@@ -61,19 +61,9 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Logger.log(Logger.LogState.E, "onActivityResult Main requestCode : " + requestCode);
-        Logger.log(Logger.LogState.E, "onActivityResult Main resultCode: " + resultCode);
-        if(curFragment != null)
-            Logger.log(Logger.LogState.E, "onActivityResult Main : " + curFragment.getTag());
-
         Fragment signUpFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.SINGUP));
         Fragment signUpInfoFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.SIGN_INFO));
         Fragment loginFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(Constants.FRAGMENT_MENUID.LOGIN));
-
-        Logger.log(Logger.LogState.E, "onActivityResult Main signUpFragment : " + signUpFragment);
-        Logger.log(Logger.LogState.E, "onActivityResult Main signUpInfoFragment : " + signUpInfoFragment);
-        Logger.log(Logger.LogState.E, "onActivityResult Main : loginFragment " + loginFragment);
-
 
         if (signUpFragment != null) {
             ((SignUpFragment) signUpFragment).onActivityResult(requestCode, resultCode, data);
@@ -100,7 +90,6 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         Intent intent = getIntent();
         if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.INTENT_DATA_KEY)) {
             inData = intent.getParcelableExtra(Constants.INTENT_DATA_KEY);
-            Logger.log(Logger.LogState.D, intent.getParcelableExtra(Constants.INTENT_DATA_KEY).toString());
         }
 
         progressDlg = new ProgressDialog(this, R.style.Theme_CustomProgressDialog);
@@ -150,15 +139,12 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
             }
         }
 
-        Logger.log(Logger.LogState.E, "locale : " + locale);
         BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
 
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
 
     }
-
-
 
     public boolean backPressed()
     {
@@ -227,7 +213,6 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Logger.log(Logger.LogState.E, "BASE onKeyDown!");
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             ActivityManager actM = (ActivityManager) getSystemService(ACTIVITY_SERVICE);

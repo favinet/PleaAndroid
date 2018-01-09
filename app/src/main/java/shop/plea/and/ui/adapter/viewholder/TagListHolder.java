@@ -42,7 +42,7 @@ public class TagListHolder extends BaseViewHolder<String> implements View.OnClic
     @Override
     public void onBindView(String strings) {
         if(mTextView == null)
-            Log.e("mTextView : ", "NULL");
+            Log.d("mTextView : ", "NULL");
         else
         {
             if(strings == null)

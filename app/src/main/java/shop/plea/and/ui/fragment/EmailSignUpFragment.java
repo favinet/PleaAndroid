@@ -112,7 +112,6 @@ public class EmailSignUpFragment extends BaseFragment{
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
                     emailLength = ed_email.getText().toString().length();
-                    Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
                     if(emailLength > 0 && passwordLength > 0)
                     {
                         btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner_focus);
@@ -136,7 +135,6 @@ public class EmailSignUpFragment extends BaseFragment{
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
                 passwordLength = ed_password.getText().toString().length();
-                Log.e("PLEA", "passwordLength : " + String.valueOf(passwordLength));
                 if(emailLength > 0 && passwordLength > 0)
                 {
                     btn_regist_next.setBackgroundResource(R.drawable.round_stroke_corner_focus);

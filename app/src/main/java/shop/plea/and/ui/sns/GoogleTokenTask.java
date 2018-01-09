@@ -39,7 +39,6 @@ public class GoogleTokenTask extends AsyncTask<String, Void, String> {
         {
             String url = params[0];
             token = GoogleAuthUtil.getToken(mContext, acct.getEmail(), url);
-            Logger.log(Logger.LogState.D, "google token  : " + token);
         }
         catch (Exception e)
         {

@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import shop.plea.and.R;
 import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.tool.Logger;
 
@@ -70,15 +71,14 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     private void retryPopup()
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle("플리").setMessage("데이터 요청에 실패하였습니다.\n사용중인 네트워크 상태를 확인해 주세요.\n다시 요청하시겠습니까?").setCancelable(false).setPositiveButton("예", new DialogInterface.OnClickListener() {
+        dialog.setTitle(context.getString(R.string.app_name)).setMessage(context.getString(R.string.network_data_error)).setCancelable(false).setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 retry();
             }
-        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Logger.log(Logger.LogState.E, "BaseActivity ?? " +  (context instanceof BaseActivity));
                 if(context instanceof BaseActivity)
                 {
                     ((BaseActivity)context).stopIndicator();

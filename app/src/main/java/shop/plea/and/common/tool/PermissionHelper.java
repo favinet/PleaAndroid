@@ -101,9 +101,6 @@ public class PermissionHelper {
     public void requestPermission(int requestCode, PermissionCallback callback)
     {
         this.callback = callback;
-        Log.e("requestPermission callback : ", "" + this.callback);
-        Log.e("requestPermission activity : ", "" + this.activity);
-        Log.e("requestPermission needPermissions : ", "" + this.needPermissions);
         activity.requestPermissions(needPermissions.toArray(new String[needPermissions.size()]), requestCode);
 
         activity = null;

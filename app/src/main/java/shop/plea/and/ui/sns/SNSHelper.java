@@ -79,7 +79,6 @@ public class SNSHelper {
         facebookLogin.registerCallback(facebookCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Logger.log(Logger.LogState.E, "facebook login ok!!");
 
                 final Profile profile = Profile.getCurrentProfile();
 
@@ -133,8 +132,6 @@ public class SNSHelper {
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
-                        Logger.log(Logger.LogState.E, response.toString());
-                        Logger.log(Logger.LogState.E, "FACEBOOK : " + Utils.getStringByObject(object));
 
                         String token = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
                         String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
@@ -181,17 +178,6 @@ public class SNSHelper {
 
     private void userCheck(HashMap<String, String> params)
     {
-        Logger.log(Logger.LogState.E, "userCheck = " + Utils.getStringByObject(params));
-        /*
-        if(isLogin)
-        {
-            userLogin(params);
-        }
-        else
-        {
-            nextScreen(params);
-        }
-        */
         userLogin(params);
     }
 
@@ -203,7 +189,6 @@ public class SNSHelper {
             @Override
             public void onSuccess(UserInfoResultData response) {
                 base.stopIndicator();
-                Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
 
                 String result = response.getResult();
                 if(result.equals(Constants.API_FAIL))
@@ -301,7 +286,6 @@ public class SNSHelper {
 
         if ( requestCode == RC_GOOGLE_SIGN_IN ) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            Logger.log(Logger.LogState.E, "RC_GOOGLE_SIGN_IN" + Utils.getStringByObject(result));
             if ( result.isSuccess() ) {
                 GoogleSignInAccount account = result.getSignInAccount();
 
@@ -314,7 +298,6 @@ public class SNSHelper {
                 Uri profileImg = account.getPhotoUrl();
 
                 String gcmToken = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
-                Logger.log(Logger.LogState.E, "gcmToken : " + gcmToken);
 
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.AUTHID, req.authId);
                 UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, req.joinType);
@@ -333,7 +316,6 @@ public class SNSHelper {
             }
             else
             {
-                Logger.log(Logger.LogState.E, "RC_GOOGLE_SIGN_IN" + Utils.getStringByObject(result));
                 AlertDialog.Builder dialog = new AlertDialog.Builder(base);
                 dialog.setTitle(R.string.app_name).setMessage(base.getString(R.string.google_error) + "\n" + Utils.getStringByObject(result)).setPositiveButton(base.getString(R.string.yes), null).create().show();
             }

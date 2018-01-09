@@ -63,4 +63,6 @@
     <string name="delete_user">After delete account, login and contents check are impossible. Do you want to leave?</string>
     <string name="logout">Are you sure?</string>
     <string name="google_error">Google sign-in failed.</string>
+    <string name="network_data_error">Data request failed. \nCheck the network status. \nPlease ask again.</string>
+    <string name="network_error">Please check the network status</string>
 </resources>

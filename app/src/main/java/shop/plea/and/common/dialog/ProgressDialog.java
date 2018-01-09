@@ -36,10 +36,6 @@ public class ProgressDialog extends Dialog {
         progressWheel = (ImageView) this.findViewById(R.id.progress_wheel);
         frameAnimation = (AnimationDrawable) progressWheel.getBackground();
 
-        Logger.log(Logger.LogState.E, "progressWheel setContentView: " + progressWheel);
-        // here you can get your drawer buttons and define how they
-        // should behave and what must they do, so you won't be
-        // needing to repeat it in every activity class
     }
 
     @Override

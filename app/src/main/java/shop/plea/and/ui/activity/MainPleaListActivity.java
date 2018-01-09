@@ -105,7 +105,6 @@ public class MainPleaListActivity extends PleaActivity{
     private sideMenuCallback mSideMenuCallback = new sideMenuCallback() {
         @Override
         public void onReceive(String url) {
-            Logger.log(Logger.LogState.E, "mSideMenuCallback : " + url);
             closeDrawer();
             customWebView.initContentView(url);
         }
@@ -186,8 +185,6 @@ public class MainPleaListActivity extends PleaActivity{
                 fileInfoList.clear();
                 fileInfoList.add(new MainPleaListActivity.FileInfo(result, file));
 
-                Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " +requestCode);
-
                 File fileImg = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
                 String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
@@ -196,9 +193,7 @@ public class MainPleaListActivity extends PleaActivity{
                     @Override
                     public void onSuccess(ResponseData response) {
                         stopIndicator();
-                        Logger.log(Logger.LogState.E, "onActivityResult MainPleaListActivity MainPleaListActivity : " + Utils.getStringByObject(response));
                         customWebView.initContentView("javascript:setProfileImg('"+response.getProfileImg()+"');");
-
                     }
 
                     @Override
@@ -277,13 +272,11 @@ public class MainPleaListActivity extends PleaActivity{
                 if(alertBt.equals("Y"))
                 {
                     JSONArray tickers = (jsonObject.has("tickers")) ? jsonObject.getJSONArray("tickers") : null;
-                    Logger.log(Logger.LogState.E, "header tickers!" + Utils.getStringByObject(tickers));
                     if(tickers != null)
                     {
                         for(int i = 0; i < tickers.length(); i++)
                         {
                             JSONObject ticker = tickers.getJSONObject(i);
-                            Logger.log(Logger.LogState.E, "header ticker!" + Utils.getStringByObject(ticker));
                             String name = ticker.getString("name");
                             String cnt = ticker.getString("cnt");
                             if(name.equals("noti"))
@@ -335,7 +328,6 @@ public class MainPleaListActivity extends PleaActivity{
                 else
                 {
                     toolbar_title.setVisibility(View.VISIBLE);
-                    Log.e("타이틀!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", Utils.decode(title, "UTF-8"));
                     toolbar_title.setText(Utils.decode(title, "UTF-8").replace("&amp;", "&"));
                     toolbar_header.findViewById(R.id.btn_toolbar_img).setVisibility(View.GONE);
                 }
@@ -402,7 +394,7 @@ public class MainPleaListActivity extends PleaActivity{
                     ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                            Logger.log(Logger.LogState.E, "onEditorAction = " + Utils.getStringByObject(actionId));
+
                             switch (actionId) {
 
                                 case EditorInfo.IME_ACTION_SEARCH:
@@ -418,14 +410,11 @@ public class MainPleaListActivity extends PleaActivity{
                     if(customWebView.mView.getUrl().contains("tag"))
                     {
                         String url = customWebView.mView.getUrl();
-                        Log.e("PLEA", "url = " + url);
                         String[] urls = url.split("/");
                         int urlLen = urls.length;
                         if(urlLen > 4)
                         {
                             String tag = Utils.decode(urls[5], "UTF-8");
-                            Log.e("PLEA", "tag = " + tag);
-                            Log.e("PLEA", "tag = " + tag.indexOf("?"));
                             tag = tag.substring(0, tag.indexOf("?"));
 
                             ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).setText(tag);
@@ -546,8 +535,6 @@ public class MainPleaListActivity extends PleaActivity{
                 }
                 else
                 {
-                    Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(response));
-
                     UserInfoData userInfoData = response.userData;
                     UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.LOCALE, userInfoData.getLocale());
@@ -597,7 +584,7 @@ public class MainPleaListActivity extends PleaActivity{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Logger.log(Logger.LogState.E, "MAIN onKeyDown!");
+
         if(keyCode == KeyEvent.KEYCODE_BACK)
         {
             if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
@@ -606,13 +593,11 @@ public class MainPleaListActivity extends PleaActivity{
                 return true;
             }
 
-
             if(customWebView.canBack())
             {
                 customWebView.goBack();
                 return true;
             }
-
 
             try {
                 FragmentListener fragmentListener = (FragmentListener) curFragment;
@@ -628,9 +613,6 @@ public class MainPleaListActivity extends PleaActivity{
 
             }
 
-
-           // boolean check = backPressed();
-           // if(check) return check;
         }
 
         return super.onKeyDown(keyCode, event);
@@ -647,8 +629,6 @@ public class MainPleaListActivity extends PleaActivity{
             e.printStackTrace();
         }
 
-        Logger.log(Logger.LogState.E, "preAction!" + preAction);
-        Logger.log(Logger.LogState.E, "target!" + target);
         if(preAction.equals("T"))
         {
             customWebView.initContentView(target);
@@ -686,8 +666,6 @@ public class MainPleaListActivity extends PleaActivity{
         {
             String keyword = ((CustomFontEditView)toolbar_header.findViewById(R.id.btn_toolbar_searchbox)).getText().toString();
             String searchAction = "javascript:searchAction('"+keyword+"');";
-            Logger.log(Logger.LogState.E, "keyword = " + searchAction);
-            Logger.log(Logger.LogState.E, "keyword = " + Utils.encode(searchAction));
             customWebView.initContentView(searchAction);
         }
         else
@@ -741,7 +719,6 @@ public class MainPleaListActivity extends PleaActivity{
     private void signOut()
     {
         BasePreference.getInstance(this).removeAll();
-        Logger.log(Logger.LogState.E, "signOut!!!");
         IntentData indata = new IntentData();
         indata.aniType = Constants.VIEW_ANIMATION.ANI_FLIP;
         Intent intent = new Intent(this, LoginActivity.class);
@@ -853,7 +830,6 @@ public class MainPleaListActivity extends PleaActivity{
                     if(clipData != null)
                     {
                         ClipData.Item item = clipData.getItemAt(0);
-                        Log.e("PLEA", "클립보드 : " + item.getText().toString());
                         clipUrl = item.getText().toString();
                         boolean isUrl = Patterns.WEB_URL.matcher(clipUrl).matches();
                         if(isUrl)

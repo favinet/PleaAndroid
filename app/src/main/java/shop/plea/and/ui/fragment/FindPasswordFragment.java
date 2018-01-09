@@ -124,7 +124,6 @@ public class FindPasswordFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
                 emailLength = ed_email.getText().toString().length();
-                Log.e("PLEA", "emailLength : " + String.valueOf(emailLength));
                 if(emailLength > 0)
                 {
                     btn_send_password_set_mail.setBackgroundResource(R.drawable.round_stroke_corner_focus);
@@ -151,7 +150,6 @@ public class FindPasswordFragment extends BaseFragment {
             DataManager.getInstance(getActivity()).api.userSendPasswordMail(getActivity(), email, locale, new DataInterface.ResponseCallback<ResponseData>() {
                 @Override
                 public void onSuccess(ResponseData response) {
-                    Logger.log(Logger.LogState.E, "response : " + Utils.getStringByObject(response));
                     if(response.getResult().equals(Constants.API_FAIL))
                     {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());

@@ -91,7 +91,6 @@ public class PleaInsertActivity extends PleaActivity {
                 inData.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, shareUrl);
             }
         }
-        Log.e("PLEA", "타이틀!" + inData.link);
 
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), null);
         customWebView.initContentView(inData.link);
