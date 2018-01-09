@@ -103,6 +103,10 @@ public class Utils {
         File file = null;
         Cursor pCursor = context.getContentResolver().query(uri, null, null, null, null);
         String pDisplay = "";
+
+        if(pCursor == null)
+            return null;
+
         while (pCursor.moveToNext()) {
             pDisplay = pCursor.getString(1);
 

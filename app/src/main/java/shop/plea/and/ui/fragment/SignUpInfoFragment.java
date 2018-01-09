@@ -115,10 +115,18 @@ public class SignUpInfoFragment extends BaseFragment{
                 Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
 
                 File file = Utils.getAlbum(getActivity(), result);
+                if(file == null)
+                {
+                    stopIndicator();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle(R.string.app_name).setMessage(getString(R.string.gallery_error)).setPositiveButton(getString(R.string.yes), null).create().show();
+                }
+                else
+                {
+                    fileInfoList.add(new FileInfo(result, file));
+                    refreshThums();
+                }
 
-                fileInfoList.add(new FileInfo(result, file));
-
-                refreshThums();
                 return;
             }
         }

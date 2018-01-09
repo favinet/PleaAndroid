@@ -128,7 +128,8 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
         side_btn_version.setText(String.format(getString(R.string.menu_version), "1.0.0"));
 
-        side_btn_language.setText((userInfoData.getLocale().equals("en") ? "English" : "Korean"));
+        String locale = (userInfoData.getLocale().equals("en") ? "English" : "Korean");
+        side_btn_language.setText(locale);
 
         setNoticeCnt();
 

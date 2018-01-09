@@ -260,6 +260,7 @@ public class LoginFragment extends BaseFragment{
                         BasePreference.getInstance(getActivity()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                         BasePreference.getInstance(getActivity()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                         BasePreference.getInstance(getActivity()).put(BasePreference.LOCALE, userInfoData.getLocale());
+                        BasePreference.getInstance(getActivity()).put(BasePreference.ID, userInfoData.getId());
                         BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                         String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);

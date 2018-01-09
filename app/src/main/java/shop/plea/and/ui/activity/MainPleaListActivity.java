@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
@@ -182,26 +183,35 @@ public class MainPleaListActivity extends PleaActivity{
                 Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
 
                 File file = Utils.getAlbum(this, result);
-                fileInfoList.clear();
-                fileInfoList.add(new MainPleaListActivity.FileInfo(result, file));
+                if(file == null)
+                {
+                    stopIndicator();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainPleaListActivity.this);
+                    dialog.setTitle(R.string.app_name).setMessage(getString(R.string.gallery_error)).setPositiveButton(getString(R.string.yes), null).create().show();
+                }
+                else
+                {
+                    fileInfoList.clear();
+                    fileInfoList.add(new MainPleaListActivity.FileInfo(result, file));
 
-                File fileImg = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
+                    File fileImg = (fileInfoList.size() > 0) ? fileInfoList.get(0).file : null;
 
-                String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
+                    String uid = BasePreference.getInstance(this).getValue(BasePreference.ID, "");
 
-                DataManager.getInstance(this).api.uploadProfile(this, uid, fileImg, new DataInterface.ResponseCallback<ResponseData>() {
-                    @Override
-                    public void onSuccess(ResponseData response) {
-                        stopIndicator();
-                        customWebView.initContentView("javascript:setProfileImg('"+response.getProfileImg()+"');");
-                    }
+                    DataManager.getInstance(this).api.uploadProfile(this, uid, fileImg, new DataInterface.ResponseCallback<ResponseData>() {
+                        @Override
+                        public void onSuccess(ResponseData response) {
+                            stopIndicator();
+                            customWebView.initContentView("javascript:setProfileImg('"+response.getProfileImg()+"');");
+                        }
 
-                    @Override
-                    public void onError() {
+                        @Override
+                        public void onError() {
 
-                        stopIndicator();
-                    }
-                });
+                            stopIndicator();
+                        }
+                    });
+                }
 
                 return;
             }
@@ -241,7 +251,7 @@ public class MainPleaListActivity extends PleaActivity{
     }
 
 
-    private void initToobar(JSONObject jsonObject)
+    public void initToobar(JSONObject jsonObject)
     {
         try
         {
@@ -538,6 +548,7 @@ public class MainPleaListActivity extends PleaActivity{
                     UserInfoData userInfoData = response.userData;
                     UserInfo.getInstance().setCurrentUserInfoData(getApplicationContext(), userInfoData);
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.LOCALE, userInfoData.getLocale());
+                    BasePreference.getInstance(getApplicationContext()).put(BasePreference.ID, userInfoData.getId());
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                     BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
@@ -635,18 +646,15 @@ public class MainPleaListActivity extends PleaActivity{
         }
         else if(preAction.equals("B"))
         {
-            customWebView.goBack();
+            if(customWebView.mView.canGoBack())
+                customWebView.goBack();
+            else
+            {
+                UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
+                String url = String.format(Constants.MAIN_URL, userInfoData.getId());
+                customWebView.initContentView(url);
+            }
         }
-
-        if(customWebView.mView.canGoBack())
-            customWebView.goBack();
-        else
-        {
-            UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
-            String url = String.format(Constants.MAIN_URL, userInfoData.getId());
-            customWebView.initContentView(url);
-        }
-
     }
 
     private void searchAction()
@@ -837,7 +845,7 @@ public class MainPleaListActivity extends PleaActivity{
                             indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, clipUrl);
                         }
                     }
-
+                    Logger.log(Logger.LogState.E, "indata.link  = " + Utils.getStringByObject(indata.link ));
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN;
                     Intent intent = new Intent(getApplicationContext(), PleaInsertActivity.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);

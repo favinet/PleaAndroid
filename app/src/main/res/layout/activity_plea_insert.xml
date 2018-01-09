@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include android:id="@+id/toolbar_header"
+        layout="@layout/custom_toolbar"
+        android:visibility="gone"/>
     <FrameLayout
         android:id="@+id/webview_frame"
-        android:layout_below="@id/inapp_top"
+        android:layout_below="@id/toolbar_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/inapp_footer">
+        android:layout_height="match_parent">
 
         <WebView
             android:id="@+id/webview"
@@ -19,11 +20,12 @@
 
     <FrameLayout
         android:id="@+id/content"
-        android:layout_below="@id/inapp_top"
+        android:layout_below="@id/toolbar_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/inapp_footer">
+        android:layout_height="wrap_content">
 
     </FrameLayout>
-
-</LinearLayout>
+    <include android:id="@+id/ticker_header"
+        layout="@layout/ticker"
+        android:visibility="gone"/>
+</RelativeLayout>

@@ -1,17 +1,8 @@
 package shop.plea.and.ui.activity;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
-
-import org.json.JSONObject;
-
-import java.util.List;
 
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
@@ -76,7 +67,7 @@ public class PleaInsertActivity extends PleaActivity {
 
     private void init()
     {
-
+        Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
         if(inData.link.equals(""))  //외부 공유
         {
 
@@ -91,7 +82,7 @@ public class PleaInsertActivity extends PleaActivity {
                 inData.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, shareUrl);
             }
         }
-
+        Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), null);
         customWebView.initContentView(inData.link);
     }

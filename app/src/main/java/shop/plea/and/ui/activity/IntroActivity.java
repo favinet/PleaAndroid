@@ -254,9 +254,10 @@ public class IntroActivity extends PleaActivity {
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.LOCALE, userInfoData.getLocale());
+                        BasePreference.getInstance(getApplicationContext()).put(BasePreference.ID, userInfoData.getId());
                         BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
+                        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, "en");
                         setLocale(locale);
                     }
                     handler.postDelayed(runMain, 1500);
