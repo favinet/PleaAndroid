@@ -3,6 +3,7 @@ package shop.plea.and.ui.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -38,6 +39,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.activity.LoginActivity;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.listener.FragmentListener;
@@ -80,6 +82,18 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     @BindView(R.id.side_btn_follower_following) RelativeLayout side_btn_follower_following;
 
 
+    public interface localeCallback
+    {
+        void onChageLocale();
+    }
+
+    localeCallback mLocaleCallback = new localeCallback() {
+        @Override
+        public void onChageLocale() {
+            base.finish();
+        }
+    };
+
     public static SideMenuDrawerFragment newInstance() {
 
         SideMenuDrawerFragment sideMenuDrawerFragment = new SideMenuDrawerFragment();
@@ -118,7 +132,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         side_btn_terms.setOnClickListener(mListener);
         side_btn_privacy.setOnClickListener(mListener);
         side_btn_version.setOnClickListener(mListener);
-        side_btn_update.setOnClickListener(mListener);
         side_btn_support.setOnClickListener(mListener);
         side_btn_reset_pwd.setOnClickListener(mListener);
         side_btn_signout.setOnClickListener(mListener);
@@ -126,10 +139,13 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         side_btn_language.setOnClickListener(mListener);
         side_btn_follower_following.setOnClickListener(mListener);
 
-        side_btn_version.setText(String.format(getString(R.string.menu_version), "1.0.0"));
-
         String locale = (userInfoData.getLocale().equals("en") ? "English" : "Korean");
+        //Toast.makeText(getActivity(), locale, Toast.LENGTH_LONG).show();
         side_btn_language.setText(locale);
+
+        Locale localeParam = (locale.equals("English")) ? Locale.ENGLISH : Locale.KOREA;
+
+        setLanguage(localeParam);
 
         setNoticeCnt();
 
@@ -218,14 +234,28 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
             @Override
             public void onSuccess(ResponseData response) {
                 stopIndicator();
-                try
-                {
-                    String androidVersion = (response.getData().has("androidVersion")) ? response.getData().getString("androidVersion") : "1.0.0";
+
+                    //Logger.log(Logger.LogState.E, "androidVersion getStringByObject = " + Utils.getStringByObject(response));
+                    String androidVersion = response.getData().getAndroidVersion();
+                    String sversion = BasePreference.getInstance(getActivity()).getValue(BasePreference.VERSION, null);
+                    //Logger.log(Logger.LogState.E, "androidVersion = " + androidVersion);
+                    //Logger.log(Logger.LogState.E, "androidVersion = " + sversion);
+                    if(sversion == null)
+                    {
+                        BasePreference.getInstance(getActivity()).put(BasePreference.VERSION, androidVersion);
+                       // Logger.log(Logger.LogState.E, "androidVersion = " + androidVersion);
+                    }
+                    else
+                    {
+                        if(!sversion.equals(androidVersion))
+                        {
+                            side_btn_update.setBackgroundColor(Color.parseColor("#4C3994"));
+                            side_btn_update.setTextColor(Color.WHITE);
+                            side_btn_update.setOnClickListener(mListener);
+                        }
+
+                    }
                     side_btn_version.setText(String.format(getString(R.string.menu_version), androidVersion));
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
@@ -258,7 +288,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 BasePreference.getInstance(getActivity()).put(BasePreference.LOCALE, updateLocale);
                 setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN));
 
-                base.finish();
+                mLocaleCallback.onChageLocale();
             }
 
             @Override
@@ -271,12 +301,16 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
     private void setLanguage(Locale locale)
     {
+        /*
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
 
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
+        */
+        String localeStr = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+        LocaleChage.wrap(getActivity(), localeStr);
     }
 
     private void signOut()
@@ -414,7 +448,11 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     menuCallback.onReceive(url);
                     break;
                 case R.id.side_btn_update :
-                    setVersion();
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=" + getActivity().getPackageName()));
+                    startActivity(intent);
+                    getActivity().finish();
                     break;
                 case R.id.side_btn_support :
 
@@ -484,4 +522,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
     public boolean onBackPressed() {
         return false;
     }
+
+
 }

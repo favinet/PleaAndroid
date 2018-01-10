@@ -57,6 +57,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
 import shop.plea.and.ui.fragment.SignUpInfoFragment;
 import shop.plea.and.ui.listener.FragmentListener;
@@ -67,6 +68,7 @@ import shop.plea.and.ui.view.DrawerLayoutHorizontalSupport;
 
 /**
  * Created by kwon7575 on 2017-10-27.
+ * 언어 변경 http://devdeeds.com/android-change-language-at-runtime/
  */
 
 public class MainPleaListActivity extends PleaActivity{
@@ -833,19 +835,27 @@ public class MainPleaListActivity extends PleaActivity{
                     ClipData clipData = clipboardManager.getPrimaryClip();
                     String clipUrl;
 
-                    indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, "");
+                    indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, "", "N");
 
                     if(clipData != null)
                     {
                         ClipData.Item item = clipData.getItemAt(0);
-                        clipUrl = item.getText().toString();
+                        clipUrl = item.getText().toString().trim();
+                        Logger.log(Logger.LogState.E, "clipUrl 1 = " + clipUrl);
                         boolean isUrl = Patterns.WEB_URL.matcher(clipUrl).matches();
                         if(isUrl)
                         {
-                            indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, clipUrl);
+                            indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, clipUrl.replace("?&", "?"), "N");
+                        }
+                        else
+                        {
+                            clipUrl = Utils.getParseUrl(clipUrl);
+                            //Logger.log(Logger.LogState.E, "clipUrl 2 = " + clipUrl);
+                            indata.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, clipUrl.replace("?&", "?"), "N");
                         }
                     }
-                    Logger.log(Logger.LogState.E, "indata.link  = " + Utils.getStringByObject(indata.link ));
+
+                    Logger.log(Logger.LogState.E, "indata.link  = " + Utils.getStringByObject(indata.link));
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN;
                     Intent intent = new Intent(getApplicationContext(), PleaInsertActivity.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
@@ -853,5 +863,10 @@ public class MainPleaListActivity extends PleaActivity{
                     break;
             }
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleChage.wrap(newBase, BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "ko")));
     }
 }

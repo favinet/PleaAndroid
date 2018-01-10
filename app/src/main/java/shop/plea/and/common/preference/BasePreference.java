@@ -23,6 +23,7 @@ public class BasePreference {
     public static final String USERINFO_DATA = "USERINFO_DATA";
     public static final String LOCALE = "LOCALE";
     public static final String GCM_TOKEN = "GCM_TOKEN";
+    public static final String VERSION = "VERSION";
 
 
     static Context mContext;

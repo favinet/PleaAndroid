@@ -37,7 +37,7 @@ public class Constants {
         public static final String EMAIL_RECEIVE = "http://" + Constants.DOING_DOMAIN + "/member/mailSetting?uid=%s";
         public static final String PLEA = "http://" + Constants.DOING_DOMAIN + "/cart/reg?txtUrl=%s&uid=%s";
         public static final String FRIEND_MGR = "http://" + Constants.DOING_DOMAIN + "/member/followList/%s?uid=%s";
-        public static final String PLEA_INSERT = "http://" + Constants.DOING_DOMAIN + "/cart/reg?uid=%s&txtUrl=%s";
+        public static final String PLEA_INSERT = "http://" + Constants.DOING_DOMAIN + "/cart/reg?uid=%s&txtUrl=%s&brower=%s";
 
     }
 

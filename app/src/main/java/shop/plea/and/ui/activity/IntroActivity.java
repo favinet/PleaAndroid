@@ -36,6 +36,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 
 /**
  * Created by shimtaewoo on 2017-10-02.
@@ -296,4 +297,6 @@ public class IntroActivity extends PleaActivity {
     public void onResume() {
         super.onResume();
     }
+
+
 }

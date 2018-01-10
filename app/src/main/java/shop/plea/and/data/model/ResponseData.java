@@ -1,5 +1,6 @@
 package shop.plea.and.data.model;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,7 +34,7 @@ public class ResponseData {
 
     @SerializedName("data")
     @Expose
-    public JSONObject data = new JSONObject();
+    public VerSionData data = new VerSionData();
 
     public String getResult() {
         return result;
@@ -67,11 +68,11 @@ public class ResponseData {
         this.count = count;
     }
 
-    public JSONObject getData() {
+    public VerSionData getData() {
         return data;
     }
 
-    public void setData(JSONObject data) {
+    public void setData(VerSionData data) {
         this.data = data;
     }
 

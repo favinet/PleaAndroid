@@ -66,4 +66,5 @@
     <string name="network_data_error">Data request failed. \nCheck the network status. \nPlease ask again.</string>
     <string name="network_error">Please check the network status</string>
     <string name="gallery_error">Failed to fetch photo information.</string>
+    <string name="plea_inserted">Plea is registered.</string>
 </resources>

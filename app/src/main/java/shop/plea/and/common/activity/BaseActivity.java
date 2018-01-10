@@ -37,6 +37,7 @@ import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.fragment.FindPasswordFragment;
 import shop.plea.and.ui.fragment.LoginFragment;
 import shop.plea.and.ui.fragment.ResetPasswordFragment;
@@ -139,10 +140,14 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
             }
         }
 
+        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(locale));
+        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(config.locale));
         BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
 
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+
+        LocaleChage.wrap(this, locale);
 
     }
 

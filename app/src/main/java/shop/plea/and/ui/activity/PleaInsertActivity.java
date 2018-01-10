@@ -1,8 +1,16 @@
 package shop.plea.and.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.KeyEvent;
+import android.webkit.URLUtil;
+import android.widget.Toast;
+
+import java.net.URL;
 
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
@@ -21,6 +29,7 @@ import shop.plea.and.ui.view.CustomWebView;
 public class PleaInsertActivity extends PleaActivity {
 
     public CustomWebView customWebView;
+    private boolean isExternal = false;
 
     private pleaCallBack mPleaCallback = new pleaCallBack() {
         @Override
@@ -30,6 +39,13 @@ public class PleaInsertActivity extends PleaActivity {
 
         @Override
         public void onPleaComplected() {
+            if(isExternal)  //외부 공유
+            {
+                Toast.makeText(PleaInsertActivity.this, getString(R.string.plea_inserted), Toast.LENGTH_LONG).show();
+            }
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData data = ClipData.newPlainText("", "");
+            clipboardManager.setPrimaryClip(data);          //클립보드 초기화
             setResult(MainPleaListActivity.INTENT_CALL_PLEA_COMPLECT);
             finish();
         }
@@ -67,10 +83,10 @@ public class PleaInsertActivity extends PleaActivity {
 
     private void init()
     {
-        Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
+        //Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
         if(inData.link.equals(""))  //외부 공유
         {
-
+            isExternal = true;
             Intent intent = getIntent();
             String action = intent.getAction();
             String type = intent.getType();
@@ -78,11 +94,18 @@ public class PleaInsertActivity extends PleaActivity {
             if(Intent.ACTION_SEND.equals(action) && type != null)
             {
                 String shareUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
+                //Logger.log(Logger.LogState.E, "PleaInsertActivity shareUrl = " + shareUrl);
+                boolean isUrl = Patterns.WEB_URL.matcher(shareUrl).matches();
+                if(!isUrl)
+                {
+                    shareUrl = Utils.getParseUrl(shareUrl);
+                }
                 String id = BasePreference.getInstance(this).getValue(BasePreference.ID, null);
-                inData.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, shareUrl);
+               // Toast.makeText(this, "shareUrl : " + shareUrl, Toast.LENGTH_LONG).show();
+                inData.link = String.format(Constants.MENU_LINKS.PLEA_INSERT, id, shareUrl.replace("?&", "?"), "Y");
             }
         }
-        Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
+        //Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
         customWebView = new CustomWebView(this, this.findViewById(R.id.content).getRootView(), null);
         customWebView.initContentView(inData.link);
     }

@@ -87,6 +87,47 @@ public class Utils {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr); return matcher.matches();
     }
 
+    public static String getParseUrl(String url)
+    {
+        Logger.log(Logger.LogState.E, "getParseUrl  = " + url);
+        String result = "";
+        /*
+        String regex = "((http(s?))\\:\\/\\/)([0-9a-zA-Z\\-]+\\.)+[a-zA-Z]{2,6}(\\:[0-9]+)?(\\/\\S*)?(\\?([^#\\s]*))?$";
+        Logger.log(Logger.LogState.E, "getParseUrl regex = " + regex);
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(url);
+        Logger.log(Logger.LogState.E, "getParseUrl m.matches() = " + m.matches());
+        if(m.matches())
+        {
+            for(int i=0;i<=m.groupCount();i++)
+            {
+                result = m.group(i);
+                Logger.log(Logger.LogState.E, "getParseUrl  = " + result);
+            }
+        }
+        */
+        if(url.indexOf("http") > -1)
+        {
+            String[] splitUrl = url.split("http");
+            if(splitUrl.length > 0)
+            {
+                Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
+                result = "http"+ splitUrl[1];
+            }
+        }
+        if(url.indexOf("https") > -1)
+        {
+            String[] splitUrl = url.split("https");
+            if(splitUrl.length > 0)
+            {
+                Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
+                result = "https"+ splitUrl[1];
+            }
+        }
+        Logger.log(Logger.LogState.E, "getParseUrl  result = " + result);
+        return result;
+
+    }
 
     // A method to find height of the status bar
     public static int getStatusBarHeight(Context context) {
