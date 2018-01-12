@@ -5,10 +5,10 @@ package shop.plea.and.data.config;
  */
 
 public class Constants {
-    public static final boolean IS_DEV = false;
+    public static final boolean IS_DEV = true;
 
     public static final String REAL_DOMAIN = "plea.shop";
-    public static final String TEST_DOMAIN = "plea.shop";
+    public static final String TEST_DOMAIN = "dev.plea.shop";
     public static final String DOING_DOMAIN = IS_DEV ? TEST_DOMAIN : REAL_DOMAIN;
     public static final String BASE_URL = "http://" + Constants.DOING_DOMAIN;
     public static final String MAIN_URL = "http://" + Constants.DOING_DOMAIN + "/main?uid=%s";
