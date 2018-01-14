@@ -2,18 +2,15 @@ package shop.plea.and.ui.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -24,12 +21,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,11 +36,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import shop.plea.and.R;
-import shop.plea.and.common.activity.BaseActivity;
 import shop.plea.and.common.preference.BasePreference;
 import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.Utils;
@@ -59,7 +52,6 @@ import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
-import shop.plea.and.ui.fragment.SignUpInfoFragment;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
@@ -556,7 +548,7 @@ public class MainPleaListActivity extends PleaActivity{
                     BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                     String locale = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.LOCALE, null);
-                    setLocale(locale);
+                    //setLocale(locale);
 
                     ((SideMenuDrawerFragment)drawer_Fragment).setUserData(userInfoData);
                     customWebView.initContentView("javascript:userUpdateFinish();");
@@ -867,6 +859,8 @@ public class MainPleaListActivity extends PleaActivity{
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleChage.wrap(newBase, BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "ko")));
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "en");
+        Logger.log(Logger.LogState.E, "locale = " + locale);
+        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
     }
 }

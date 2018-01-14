@@ -566,7 +566,7 @@ public class SignUpInfoFragment extends BaseFragment{
                     BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                     String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
-                    ((BaseActivity)getActivity()).setLocale(locale);
+                    //((BaseActivity)getActivity()).setLocale(locale);
 
                     IntentData indata = new IntentData();
                     indata.isRegist = true;

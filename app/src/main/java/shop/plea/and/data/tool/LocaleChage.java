@@ -9,10 +9,10 @@ import android.os.Build;
 import java.util.Locale;
 
 /**
- * Created by kwon on 2018-01-10.
+ * Created by kwonchulho on 2018. 1. 14..
  */
 
-public class LocaleChage extends ContextWrapper{
+public class LocaleChage extends ContextWrapper {
     public LocaleChage(Context base) {
         super(base);
     }

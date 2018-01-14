@@ -214,7 +214,7 @@ public class SNSHelper {
                     BasePreference.getInstance(base).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                     String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
-                    base.setLocale(locale);
+                    //base.setLocale(locale);
 
                     IntentData indata = new IntentData();
                     indata.isRegist = false;

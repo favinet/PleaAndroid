@@ -3,8 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include android:id="@+id/toolbar_header"
-        layout="@layout/custom_toolbar"
-        android:visibility="gone"/>
+        layout="@layout/custom_toolbar"/>
     <FrameLayout
         android:id="@+id/webview_frame"
         android:layout_below="@id/toolbar_header"
@@ -25,7 +24,5 @@
         android:layout_height="wrap_content">
 
     </FrameLayout>
-    <include android:id="@+id/ticker_header"
-        layout="@layout/ticker"
-        android:visibility="gone"/>
+
 </RelativeLayout>

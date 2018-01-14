@@ -264,7 +264,7 @@ public class LoginFragment extends BaseFragment{
                         BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                         String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
-                        ((BaseActivity)getActivity()).setLocale(locale);
+                        //((BaseActivity)getActivity()).setLocale(locale);
 
                         IntentData indata = new IntentData();
                         indata.isRegist = false;
@@ -286,6 +286,7 @@ public class LoginFragment extends BaseFragment{
         }
         else
         {
+            stopIndicator();
             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
             dialog.setTitle(R.string.app_name).setMessage(getString(R.string.email_pattern_error)).setPositiveButton(getString(R.string.yes), null).create().show();
         }

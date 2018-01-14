@@ -2,7 +2,6 @@ package shop.plea.and.ui.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,9 +17,6 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,7 +35,6 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
-import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.activity.LoginActivity;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.listener.FragmentListener;
@@ -145,7 +140,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
         Locale localeParam = (locale.equals("English")) ? Locale.ENGLISH : Locale.KOREA;
 
-        setLanguage(localeParam);
+        setLanguage(localeParam, false);
 
         setNoticeCnt();
 
@@ -286,9 +281,9 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
                 side_btn_language.setText((updateLocale.equals("en") ? "English" : "Korean"));
                 BasePreference.getInstance(getActivity()).put(BasePreference.LOCALE, updateLocale);
-                setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN));
+                setLanguage((updateLocale.equals("en") ? Locale.ENGLISH : Locale.KOREAN), true);
 
-                mLocaleCallback.onChageLocale();
+
             }
 
             @Override
@@ -299,7 +294,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         });
     }
 
-    private void setLanguage(Locale locale)
+    private void setLanguage(Locale locale, boolean finish)
     {
         /*
         Locale.setDefault(locale);
@@ -309,8 +304,13 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
         getActivity().getBaseContext().getResources().updateConfiguration(config,
                 getActivity().getBaseContext().getResources().getDisplayMetrics());
         */
-        String localeStr = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
-        LocaleChage.wrap(getActivity(), localeStr);
+        //String localeStr = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
+        //LocaleChage.wrap(getActivity(), localeStr);
+        Logger.log(Logger.LogState.E, "locale.getLanguage() = " + locale.getLanguage());
+        String strLocale = (locale.getLanguage().equals("en")) ? "en" : "ko";
+        //base.setLocale(strLocale);
+        if(finish)
+            mLocaleCallback.onChageLocale();
     }
 
     private void signOut()

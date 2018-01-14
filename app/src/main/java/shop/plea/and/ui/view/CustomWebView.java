@@ -63,6 +63,7 @@ public class CustomWebView {
     public FrameLayout mContainer;
     public Map<String, String> titleArr = new HashMap<>();
     private MainPleaListActivity.headerJsonCallback callback;
+    private PleaInsertActivity.headerJsonCallback callbackPleaInsert;
     private MainPleaListActivity.userUpdateCallBack userUpdateCallBack;
     private PleaInsertActivity.pleaCallBack pleaCallBack;
     private InAppWebView.titleCallback callbackTitle;
@@ -157,7 +158,7 @@ public class CustomWebView {
                 if(action.equals("setTopMenu"))
                 {
                     String json = Utils.queryToMap(url).get("params");
-
+                    Logger.log(Logger.LogState.E, "json = " + json);
                     try
                     {
                         JSONObject jsonObject = new JSONObject(json);
@@ -423,6 +424,7 @@ public class CustomWebView {
 
     private void setWebViewHeaderJson(JSONObject jsonObject) {
         if(callback != null) callback.onReceive(jsonObject);
+        if(callbackPleaInsert != null) callbackPleaInsert.onReceive(jsonObject);
     }
 
     private void setUpdateUserJson(JSONObject jsonObject) {
@@ -432,6 +434,11 @@ public class CustomWebView {
     public void setWebHeaderCallback(MainPleaListActivity.headerJsonCallback listener)
     {
         callback = listener;
+    }
+
+    public void setWebHeaderPleaInsertCallback(PleaInsertActivity.headerJsonCallback listener)
+    {
+        callbackPleaInsert = listener;
     }
 
     public void setUserUpdateCallback(MainPleaListActivity.userUpdateCallBack listener)

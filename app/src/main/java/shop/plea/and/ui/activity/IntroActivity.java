@@ -6,27 +6,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
-import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.PermissionHelper;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -194,7 +188,7 @@ public class IntroActivity extends PleaActivity {
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
         String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
 
-        setLocale(locale);
+        //setLocale(locale);
 
         String stoken = BasePreference.getInstance(this).getValue(BasePreference.GCM_TOKEN, null);
 
@@ -259,7 +253,7 @@ public class IntroActivity extends PleaActivity {
                         BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
                         String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, "en");
-                        setLocale(locale);
+                        //setLocale(locale);
                     }
                     handler.postDelayed(runMain, 1500);
 

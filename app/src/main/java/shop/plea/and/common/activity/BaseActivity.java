@@ -6,25 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -38,7 +30,6 @@ import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.LocaleChage;
-import shop.plea.and.ui.fragment.FindPasswordFragment;
 import shop.plea.and.ui.fragment.LoginFragment;
 import shop.plea.and.ui.fragment.ResetPasswordFragment;
 import shop.plea.and.ui.fragment.SignUpFragment;
@@ -108,46 +99,32 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
 
     public void setLocale(String locale)
     {
-        Configuration config = new Configuration();
-        Locale defaultLocale = Locale.getDefault();
 
-        if(locale == null)
-        {
-            if(defaultLocale.equals(Locale.KOREA) || defaultLocale.equals(Locale.KOREAN))
-            {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
-                locale = "ko";
-            }
-            else
-            {
-                Locale.setDefault(Locale.ENGLISH);
-                config.locale = Locale.ENGLISH;
-                locale = "en";
-            }
-        }
-        else
-        {
-            if(locale.equals("ko"))
-            {
-                Locale.setDefault(Locale.KOREA);
-                config.locale = Locale.KOREA;
-            }
-            else
-            {
-                Locale.setDefault(Locale.ENGLISH);
-                config.locale = Locale.ENGLISH;
-            }
-        }
 
         Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(locale));
-        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(config.locale));
         BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
 
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+      //  getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
 
-        LocaleChage.wrap(this, locale);
+       // LocaleChage.wrap(this, locale);
+
+        /*
+        Locale localeOri = (locale.equals("en")) ? Locale.ENGLISH : Locale.KOREA;
+        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(localeOri.getLanguage()));
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+            configuration.setLocale(localeOri);
+            getApplicationContext().createConfigurationContext(configuration);
+        }
+        else{
+            configuration.locale = localeOri;
+            resources.updateConfiguration(configuration,displayMetrics);
+        }
+        */
 
     }
 
