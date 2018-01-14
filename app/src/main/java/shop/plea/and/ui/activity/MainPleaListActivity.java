@@ -547,9 +547,6 @@ public class MainPleaListActivity extends PleaActivity{
                     BasePreference.getInstance(getApplicationContext()).put(BasePreference.AUTH_ID, userInfoData.getAuthId());
                     BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                    String locale = BasePreference.getInstance(MainPleaListActivity.this).getValue(BasePreference.LOCALE, null);
-                    //setLocale(locale);
-
                     ((SideMenuDrawerFragment)drawer_Fragment).setUserData(userInfoData);
                     customWebView.initContentView("javascript:userUpdateFinish();");
                 }

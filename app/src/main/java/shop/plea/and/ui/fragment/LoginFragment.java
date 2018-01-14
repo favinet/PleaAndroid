@@ -263,9 +263,6 @@ public class LoginFragment extends BaseFragment{
                         BasePreference.getInstance(getActivity()).put(BasePreference.ID, userInfoData.getId());
                         BasePreference.getInstance(getActivity()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
-                        //((BaseActivity)getActivity()).setLocale(locale);
-
                         IntentData indata = new IntentData();
                         indata.isRegist = false;
                         indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());

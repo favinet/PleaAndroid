@@ -296,19 +296,6 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
 
     private void setLanguage(Locale locale, boolean finish)
     {
-        /*
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-
-        getActivity().getBaseContext().getResources().updateConfiguration(config,
-                getActivity().getBaseContext().getResources().getDisplayMetrics());
-        */
-        //String localeStr = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, "en");
-        //LocaleChage.wrap(getActivity(), localeStr);
-        Logger.log(Logger.LogState.E, "locale.getLanguage() = " + locale.getLanguage());
-        String strLocale = (locale.getLanguage().equals("en")) ? "en" : "ko";
-        //base.setLocale(strLocale);
         if(finish)
             mLocaleCallback.onChageLocale();
     }

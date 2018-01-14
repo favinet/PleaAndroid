@@ -1,9 +1,11 @@
 package shop.plea.and.ui.activity;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -30,6 +32,7 @@ import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.CustomWebView;
@@ -109,6 +112,7 @@ public class PleaInsertActivity extends PleaActivity {
 
     private void init()
     {
+
         //Logger.log(Logger.LogState.E, "PleaInsertActivity indata.link  = " + Utils.getStringByObject(inData.link ));
         if(inData.link.equals(""))  //외부 공유
         {
@@ -193,5 +197,12 @@ public class PleaInsertActivity extends PleaActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, "en");
+        Logger.log(Logger.LogState.E, "locale = " + locale);
+        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
     }
 }

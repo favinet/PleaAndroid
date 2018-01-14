@@ -17,6 +17,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
@@ -183,12 +184,8 @@ public class IntroActivity extends PleaActivity {
     private void start() {
 
         String token = FirebaseInstanceId.getInstance().getToken();
-
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, token);
         UserInfoData userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, null);
-
-        //setLocale(locale);
 
         String stoken = BasePreference.getInstance(this).getValue(BasePreference.GCM_TOKEN, null);
 
@@ -252,8 +249,6 @@ public class IntroActivity extends PleaActivity {
                         BasePreference.getInstance(getApplicationContext()).put(BasePreference.ID, userInfoData.getId());
                         BasePreference.getInstance(getApplicationContext()).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                        String locale = BasePreference.getInstance(IntroActivity.this).getValue(BasePreference.LOCALE, "en");
-                        //setLocale(locale);
                     }
                     handler.postDelayed(runMain, 1500);
 

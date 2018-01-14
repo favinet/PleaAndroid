@@ -97,37 +97,6 @@ public class BaseActivity extends AppCompatActivity implements UpdateListener{
         startTransition();
    }
 
-    public void setLocale(String locale)
-    {
-
-
-        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(locale));
-        BasePreference.getInstance(this).put(BasePreference.LOCALE, locale);
-
-      //  getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-
-       // LocaleChage.wrap(this, locale);
-
-        /*
-        Locale localeOri = (locale.equals("en")) ? Locale.ENGLISH : Locale.KOREA;
-        Logger.log(Logger.LogState.E, "BASE = " + Utils.getStringByObject(localeOri.getLanguage()));
-
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-            configuration.setLocale(localeOri);
-            getApplicationContext().createConfigurationContext(configuration);
-        }
-        else{
-            configuration.locale = localeOri;
-            resources.updateConfiguration(configuration,displayMetrics);
-        }
-        */
-
-    }
-
     public boolean backPressed()
     {
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -213,9 +213,6 @@ public class SNSHelper {
                     BasePreference.getInstance(base).put(BasePreference.LOCALE, userInfoData.getLocale());
                     BasePreference.getInstance(base).putObject(BasePreference.USERINFO_DATA, userInfoData);
 
-                    String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
-                    //base.setLocale(locale);
-
                     IntentData indata = new IntentData();
                     indata.isRegist = false;
                     indata.link = String.format(Constants.MAIN_URL, userInfoData.getId());
