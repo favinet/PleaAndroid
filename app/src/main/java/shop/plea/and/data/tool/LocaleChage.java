@@ -36,10 +36,11 @@ public class LocaleChage extends ContextWrapper {
             } else {
                 setSystemLocaleLegacy(config, locale);
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //Logger.log(Logger.LogState.E, "누겟 CHANGE locale = " + locale);
                 context = context.createConfigurationContext(config);
             } else {
-                Logger.log(Logger.LogState.E, "CHANGE locale = " + locale);
+                //Logger.log(Logger.LogState.E, "CHANGE locale = " + locale);
                 context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
             }
         }
@@ -64,6 +65,7 @@ public class LocaleChage extends ContextWrapper {
 
     @TargetApi(Build.VERSION_CODES.N)
     public static void setSystemLocale(Configuration config, Locale locale){
+        //Logger.log(Logger.LogState.E, "누겟 setSystemLocale locale = " + locale);
         config.setLocale(locale);
     }
 }
