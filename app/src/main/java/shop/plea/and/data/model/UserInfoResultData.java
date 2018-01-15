@@ -1,7 +1,7 @@
 package shop.plea.and.data.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by kwon7575 on 2017-10-17.
@@ -9,6 +9,9 @@ import java.util.List;
 
 public class UserInfoResultData extends ResponseData {
 
+
+    @SerializedName("userData")
+    @Expose
     public UserInfoData userData;
 
     public UserInfoResultData(){

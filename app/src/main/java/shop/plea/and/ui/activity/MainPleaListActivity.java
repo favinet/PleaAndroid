@@ -854,10 +854,12 @@ public class MainPleaListActivity extends PleaActivity{
         }
     }
 
+
     @Override
     protected void attachBaseContext(Context newBase) {
         String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "en");
         Logger.log(Logger.LogState.E, "locale = " + locale);
         super.attachBaseContext(LocaleChage.wrap(newBase, locale));
     }
+
 }

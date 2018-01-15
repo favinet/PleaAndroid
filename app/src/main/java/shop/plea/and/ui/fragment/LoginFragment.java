@@ -241,12 +241,12 @@ public class LoginFragment extends BaseFragment{
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.LOCALE, locale);
 
             HashMap<String, String> params = UserInfo.getInstance().getLoginParams();
-
+            Logger.log(Logger.LogState.E, "params = " + Utils.getStringByObject(params));
             DataManager.getInstance(getActivity()).api.userLogin(getActivity(), params, new DataInterface.ResponseCallback<UserInfoResultData>() {
                 @Override
                 public void onSuccess(UserInfoResultData response) {
                     stopIndicator();
-
+                    Logger.log(Logger.LogState.E, "response = " + Utils.getStringByObject(response));
                     String result = response.getResult();
                     if(result.equals(Constants.API_FAIL))
                     {
@@ -255,6 +255,7 @@ public class LoginFragment extends BaseFragment{
                     }
                     else
                     {
+
                         UserInfoData userInfoData = response.userData;
                         UserInfo.getInstance().setCurrentUserInfoData(getActivity(), userInfoData);
                         BasePreference.getInstance(getActivity()).put(BasePreference.JOIN_TYPE, userInfoData.getJoinType());
@@ -271,6 +272,7 @@ public class LoginFragment extends BaseFragment{
                         intent.putExtra(Constants.INTENT_DATA_KEY, indata);
                         startActivity(intent);
                         getActivity().finish();
+
                     }
                 }
 

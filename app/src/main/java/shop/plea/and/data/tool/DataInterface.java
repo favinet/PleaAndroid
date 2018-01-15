@@ -90,6 +90,7 @@ public class DataInterface extends BaseDataInterface{
 
     public void userLogin(Context context, HashMap<String, String> params, final ResponseCallback callback)
     {
+        Logger.log(Logger.LogState.E, "userLogin callback = " + Utils.getStringByObject(callback));
         try {
             Logger.log(Logger.LogState.E, "params = " + Utils.getStringByObject(params));
             Call<UserInfoResultData> call = service.callUserLogin(params);
@@ -107,6 +108,7 @@ public class DataInterface extends BaseDataInterface{
 
                 @Override
                 public void onFinalFailure(Call<UserInfoResultData> call, Throwable t) {
+                    Logger.log(Logger.LogState.E, "userLogin = " + Utils.getStringByObject(t));
                     if (callback == null)
                         return;
                     t.printStackTrace();

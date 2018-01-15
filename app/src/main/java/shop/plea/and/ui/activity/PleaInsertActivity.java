@@ -199,10 +199,12 @@ public class PleaInsertActivity extends PleaActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     @Override
     protected void attachBaseContext(Context newBase) {
         String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, "en");
         Logger.log(Logger.LogState.E, "locale = " + locale);
         super.attachBaseContext(LocaleChage.wrap(newBase, locale));
     }
+
 }
