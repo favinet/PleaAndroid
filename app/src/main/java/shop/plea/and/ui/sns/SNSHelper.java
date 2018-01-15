@@ -2,6 +2,7 @@ package shop.plea.and.ui.sns;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.fragment.SignUpInfoFragment;
 
@@ -134,7 +136,8 @@ public class SNSHelper {
                             GraphResponse response) {
 
                         String token = BasePreference.getInstance(base).getValue(BasePreference.GCM_TOKEN, "");
-                        String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
+                        Configuration config = base.getResources().getConfiguration();
+                        String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
                         RequestData req = new RequestData();
                         req.authId = profile.getId();
@@ -286,7 +289,8 @@ public class SNSHelper {
             if ( result.isSuccess() ) {
                 GoogleSignInAccount account = result.getSignInAccount();
 
-                String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, null);
+                Configuration config = base.getResources().getConfiguration();
+                String locale = BasePreference.getInstance(base).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
                 RequestData req = new RequestData();
                 req.authId = account.getId();

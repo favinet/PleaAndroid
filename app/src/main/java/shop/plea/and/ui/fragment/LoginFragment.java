@@ -2,6 +2,7 @@ package shop.plea.and.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -44,6 +45,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.sns.SNSHelper;
 
@@ -228,10 +230,10 @@ public class LoginFragment extends BaseFragment{
         if(Utils.checkEmail(email)) {
 
             startIndicator("");
-
+            Configuration config = getActivity().getResources().getConfiguration();
             String joinType = Constants.LOGIN_TYPE.EMAIL;
             String gcmToken = BasePreference.getInstance(getActivity()).getValue(BasePreference.GCM_TOKEN, "");
-            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
+            String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
             UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.EMAIL, ed_email.getText().toString());

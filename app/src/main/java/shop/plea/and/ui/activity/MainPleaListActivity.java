@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -508,7 +509,8 @@ public class MainPleaListActivity extends PleaActivity{
     {
         UserInfoData userInfoData = UserInfo.getInstance().getCurrentUserInfoData(this);
         String joinType = userInfoData.getJoinType();
-        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, null);
+        Configuration config = getResources().getConfiguration();
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.GCM_TOKEN, userInfoData.getDeviceToken());
@@ -858,7 +860,7 @@ public class MainPleaListActivity extends PleaActivity{
     @Override
     protected void attachBaseContext(Context newBase) {
         String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "en");
-        Logger.log(Logger.LogState.E, "locale = " + locale);
+        Logger.log(Logger.LogState.E, "Main locale = " + locale);
         super.attachBaseContext(LocaleChage.wrap(newBase, locale));
     }
 

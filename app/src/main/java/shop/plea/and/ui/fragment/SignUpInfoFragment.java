@@ -2,6 +2,7 @@ package shop.plea.and.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import shop.plea.and.data.model.UserInfoResultData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.activity.InAppWebView;
 import shop.plea.and.ui.activity.MainPleaListActivity;
 import shop.plea.and.ui.adapter.SpinnerBirthAdapter;
@@ -369,8 +371,10 @@ public class SignUpInfoFragment extends BaseFragment{
             @Override
             public void onClick(View widget) {
                 IntentData indata = new IntentData();
+                Configuration config = getResources().getConfiguration();
+                String slocale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
                 UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-                String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+                String locale = (userInfoData == null) ? slocale : userInfoData.getLocale();
                 indata.link = String.format(Constants.MENU_LINKS.TERMS, locale);
                 indata.title = getString(R.string.menu_term);
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
@@ -390,8 +394,10 @@ public class SignUpInfoFragment extends BaseFragment{
             @Override
             public void onClick(View widget) {
                 IntentData indata = new IntentData();
+                Configuration config = getResources().getConfiguration();
+                String slocale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
                 UserInfoData userInfoData = BasePreference.getInstance(getActivity()).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
-                String locale = (userInfoData == null) ? "en" : userInfoData.getLocale();
+                String locale = (userInfoData == null) ? slocale : userInfoData.getLocale();
                 indata.link = String.format(Constants.MENU_LINKS.POLICY, locale);
                 indata.title = getString(R.string.menu_privacy);
                 indata.aniType = Constants.VIEW_ANIMATION.ANI_END_ENTER;
@@ -522,7 +528,8 @@ public class SignUpInfoFragment extends BaseFragment{
         UserInfo.getInstance().clearParams();
 
         String joinType = userInfoData.getJoinType();
-        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, null);
+        Configuration config = getResources().getConfiguration();
+        String locale = BasePreference.getInstance(getActivity()).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
         UserInfo.getInstance().setParams(Constants.API_PARAMS_KEYS.JOIN_TYPE, joinType);
 

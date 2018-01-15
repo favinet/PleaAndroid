@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.util.Locale;
 import io.fabric.sdk.android.Fabric;
 import shop.plea.and.R;
 import shop.plea.and.common.preference.BasePreference;
+import shop.plea.and.common.tool.Logger;
 import shop.plea.and.common.tool.PermissionHelper;
 import shop.plea.and.common.tool.Utils;
 import shop.plea.and.data.config.Constants;
@@ -205,7 +207,8 @@ public class IntroActivity extends PleaActivity {
     private void userLogin(UserInfoData userInfoData)
     {
         String joinType = userInfoData.getJoinType();
-        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, null);
+        Configuration config = getResources().getConfiguration();
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
 
         if(joinType == null)
             userInfoData = BasePreference.getInstance(this).getObject(BasePreference.USERINFO_DATA, UserInfoData.class);
@@ -287,5 +290,11 @@ public class IntroActivity extends PleaActivity {
         super.onResume();
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Configuration config = newBase.getResources().getConfiguration();
+        String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
+        Logger.log(Logger.LogState.E, "Intro locale = " + locale);
+        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+    }
 }

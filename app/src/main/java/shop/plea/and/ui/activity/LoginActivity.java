@@ -1,6 +1,8 @@
 package shop.plea.and.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +19,7 @@ import shop.plea.and.common.tool.Logger;
 import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.parcel.IntentData;
+import shop.plea.and.data.tool.LocaleChage;
 import shop.plea.and.ui.fragment.LoginFragment;
 import shop.plea.and.ui.fragment.SignUpFragment;
 import shop.plea.and.ui.fragment.SignUpInfoFragment;
@@ -114,5 +117,11 @@ public class LoginActivity extends PleaActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Configuration config = newBase.getResources().getConfiguration();
+        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
+        Logger.log(Logger.LogState.E, "locale = " + locale);
+        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+    }
 }
