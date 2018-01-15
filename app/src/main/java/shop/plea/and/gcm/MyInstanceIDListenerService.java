@@ -16,7 +16,7 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService{
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-        Logger.log(Logger.LogState.E, "Refreshed token: " + refreshedToken);
+        //Logger.log(Logger.LogState.E, "Refreshed token: " + refreshedToken);
 
         BasePreference.getInstance(getApplicationContext()).put(BasePreference.GCM_TOKEN, refreshedToken);
     }

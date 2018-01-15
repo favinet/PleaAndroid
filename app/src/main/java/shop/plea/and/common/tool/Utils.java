@@ -89,7 +89,7 @@ public class Utils {
 
     public static String getParseUrl(String url)
     {
-        Logger.log(Logger.LogState.E, "getParseUrl  = " + url);
+        //Logger.log(Logger.LogState.E, "getParseUrl  = " + url);
         String result = "";
         /*
         String regex = "((http(s?))\\:\\/\\/)([0-9a-zA-Z\\-]+\\.)+[a-zA-Z]{2,6}(\\:[0-9]+)?(\\/\\S*)?(\\?([^#\\s]*))?$";
@@ -111,7 +111,7 @@ public class Utils {
             String[] splitUrl = url.split("http");
             if(splitUrl.length > 0)
             {
-                Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
+                //Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
                 result = "http"+ splitUrl[1];
             }
         }
@@ -120,11 +120,11 @@ public class Utils {
             String[] splitUrl = url.split("https");
             if(splitUrl.length > 0)
             {
-                Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
+                //Logger.log(Logger.LogState.E, "getParseUrl  = " + splitUrl[1]);
                 result = "https"+ splitUrl[1];
             }
         }
-        Logger.log(Logger.LogState.E, "getParseUrl  result = " + result);
+        //Logger.log(Logger.LogState.E, "getParseUrl  result = " + result);
         return result;
 
     }

@@ -152,13 +152,13 @@ public class CustomWebView {
             }
 
             String action = Utils.queryToMap(url).get("name");
-            Logger.log(Logger.LogState.E, "action = " + action);
+            //Logger.log(Logger.LogState.E, "action = " + action);
             if(action != null)
             {
                 if(action.equals("setTopMenu"))
                 {
                     String json = Utils.queryToMap(url).get("params");
-                    Logger.log(Logger.LogState.E, "json = " + json);
+                    //Logger.log(Logger.LogState.E, "json = " + json);
                     try
                     {
                         JSONObject jsonObject = new JSONObject(json);

@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -33,6 +34,7 @@ import shop.plea.and.data.config.Constants;
 import shop.plea.and.data.model.UserInfoData;
 import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.LocaleChage;
+import shop.plea.and.data.tool.LocaleWrapper;
 import shop.plea.and.ui.view.CustomFontEditView;
 import shop.plea.and.ui.view.CustomFontTextView;
 import shop.plea.and.ui.view.CustomWebView;
@@ -143,7 +145,7 @@ public class PleaInsertActivity extends PleaActivity {
 
     public void initToobar(JSONObject jsonObject)
     {
-        Logger.log(Logger.LogState.E, "Plea Insert = " + Utils.getStringByObject(jsonObject));
+        //Logger.log(Logger.LogState.E, "Plea Insert = " + Utils.getStringByObject(jsonObject));
         try
         {
             if(jsonObject == null)
@@ -202,9 +204,12 @@ public class PleaInsertActivity extends PleaActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, "en");
-        Logger.log(Logger.LogState.E, "locale = " + locale);
-        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        Configuration config = newBase.getResources().getConfiguration();
+        String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
+        //Logger.log(Logger.LogState.E, "Insert locale = " + locale);
+        //super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        LocaleWrapper.setLocale(locale);
+        super.attachBaseContext(LocaleWrapper.wrap(newBase));
     }
 
 }

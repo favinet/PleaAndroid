@@ -52,6 +52,7 @@ import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.data.tool.LocaleChage;
+import shop.plea.and.data.tool.LocaleWrapper;
 import shop.plea.and.ui.fragment.SideMenuDrawerFragment;
 import shop.plea.and.ui.listener.FragmentListener;
 import shop.plea.and.ui.view.CustomFontEditView;
@@ -832,7 +833,7 @@ public class MainPleaListActivity extends PleaActivity{
                     {
                         ClipData.Item item = clipData.getItemAt(0);
                         clipUrl = item.getText().toString().trim();
-                        Logger.log(Logger.LogState.E, "clipUrl 1 = " + clipUrl);
+                        //Logger.log(Logger.LogState.E, "clipUrl 1 = " + clipUrl);
                         boolean isUrl = Patterns.WEB_URL.matcher(clipUrl).matches();
                         if(isUrl)
                         {
@@ -846,7 +847,7 @@ public class MainPleaListActivity extends PleaActivity{
                         }
                     }
 
-                    Logger.log(Logger.LogState.E, "indata.link  = " + Utils.getStringByObject(indata.link));
+                    //Logger.log(Logger.LogState.E, "indata.link  = " + Utils.getStringByObject(indata.link));
                     indata.aniType = Constants.VIEW_ANIMATION.ANI_SLIDE_DOWN_IN;
                     Intent intent = new Intent(getApplicationContext(), PleaInsertActivity.class);
                     intent.putExtra(Constants.INTENT_DATA_KEY, indata);
@@ -859,9 +860,12 @@ public class MainPleaListActivity extends PleaActivity{
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        String locale = BasePreference.getInstance(this).getValue(BasePreference.LOCALE, "en");
-        Logger.log(Logger.LogState.E, "Main locale = " + locale);
-        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        Configuration config = newBase.getResources().getConfiguration();
+        String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
+        //Logger.log(Logger.LogState.E, "Main locale = " + locale);
+        //super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        LocaleWrapper.setLocale(locale);
+        super.attachBaseContext(LocaleWrapper.wrap(newBase));
     }
 
 }

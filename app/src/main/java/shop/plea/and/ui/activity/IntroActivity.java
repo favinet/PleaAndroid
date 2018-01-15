@@ -34,6 +34,7 @@ import shop.plea.and.data.parcel.IntentData;
 import shop.plea.and.data.tool.DataInterface;
 import shop.plea.and.data.tool.DataManager;
 import shop.plea.and.data.tool.LocaleChage;
+import shop.plea.and.data.tool.LocaleWrapper;
 
 /**
  * Created by shimtaewoo on 2017-10-02.
@@ -294,7 +295,9 @@ public class IntroActivity extends PleaActivity {
     protected void attachBaseContext(Context newBase) {
         Configuration config = newBase.getResources().getConfiguration();
         String locale = BasePreference.getInstance(newBase).getValue(BasePreference.LOCALE, LocaleChage.getSystemLocale(config).getLanguage());
-        Logger.log(Logger.LogState.E, "Intro locale = " + locale);
-        super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        //Logger.log(Logger.LogState.E, "Intro locale = " + locale);
+        //super.attachBaseContext(LocaleChage.wrap(newBase, locale));
+        LocaleWrapper.setLocale(locale);
+        super.attachBaseContext(LocaleWrapper.wrap(newBase));
     }
 }
