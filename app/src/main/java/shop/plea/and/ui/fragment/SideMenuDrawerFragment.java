@@ -231,7 +231,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                 stopIndicator();
 
                     //Logger.log(Logger.LogState.E, "androidVersion getStringByObject = " + Utils.getStringByObject(response));
-                    String androidVersion = response.getData().getAndroidVersion();
+                    final String androidVersion = response.getData().getAndroidVersion();
                     String sversion = BasePreference.getInstance(getActivity()).getValue(BasePreference.VERSION, null);
                     //Logger.log(Logger.LogState.E, "androidVersion = " + androidVersion);
                     //Logger.log(Logger.LogState.E, "androidVersion = " + sversion);
@@ -246,7 +246,16 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                         {
                             side_btn_update.setBackgroundColor(Color.parseColor("#4C3994"));
                             side_btn_update.setTextColor(Color.WHITE);
-                            side_btn_update.setOnClickListener(mListener);
+                            side_btn_update.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    BasePreference.getInstance(getActivity()).put(BasePreference.VERSION, androidVersion);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse("market://details?id=" + getActivity().getPackageName()));
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            });
                         }
 
                     }
@@ -434,13 +443,7 @@ public class SideMenuDrawerFragment extends BaseFragment implements FragmentList
                     url = String.format(Constants.MENU_LINKS.POLICY, locale);
                     menuCallback.onReceive(url);
                     break;
-                case R.id.side_btn_update :
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + getActivity().getPackageName()));
-                    startActivity(intent);
-                    getActivity().finish();
-                    break;
                 case R.id.side_btn_support :
 
                     /*
