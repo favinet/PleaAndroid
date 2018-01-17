@@ -5,7 +5,7 @@ package shop.plea.and.data.config;
  */
 
 public class Constants {
-    public static final boolean IS_DEV = false;
+    public static final boolean IS_DEV = true;
 
     public static final String REAL_DOMAIN = "plea.shop";
     public static final String TEST_DOMAIN = "dev.plea.shop";
